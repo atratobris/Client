@@ -1,3 +1,5 @@
+import './rxjs-extensions';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { NgModule } from '@angular/core';
