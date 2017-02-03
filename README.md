@@ -1,6 +1,7 @@
 # Client
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
+Please refer to [ng2-dragula](https://github.com/valor-software/ng2-dragula) for drag and drop library documentations
 
 ## Prerequisites
 ```bash
