@@ -1,16 +1,19 @@
 import { Point } from './point';
+import { BoardConfig } from './board-config';
 
 export class Board {
   private center: Point;
   private width: number;
   private height: number;
   private offset: Point;
+  private boardConfig: BoardConfig;
 
-  constructor(posX: number, posY: number, width: number, height: number) {
+  constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig) {
     this.center = new Point(posX, posY);
     this.width = width;
     this.height = height;
     this.offset = new Point( 0, 0);
+    this.boardConfig = b_config || new BoardConfig();
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -71,8 +74,12 @@ export class Board {
     return this.offset.getY();
   }
 
+  getBoardConfig(): BoardConfig {
+    return this.boardConfig;
+  }
+
   copy(): Board {
-    return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight());
+    return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), this.getBoardConfig());
   }
 
 }

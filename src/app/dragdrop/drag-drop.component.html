@@ -27,10 +27,21 @@
     </div>
 </div> -->
 
-<button (click)="changeMode('Add')"> Add </button>
+
+<!-- <button (click)="changeMode('Add')"> Add </button>
 <button (click)="changeMode('Delete')"> Delete </button>
 <button (click)="changeMode('Drag')"> Drag </button>
 <button (click)="changeMode('Select')"> Select </button>
 <div>{{operationMode}}</div>
-<canvas #myCanvas width="800" height="500" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
+    <div class="row">
+        <div class="col-sm-9">
+            <canvas #myCanvas width="{{width}}" height="{{height}}" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
+            </canvas>
+        </div>
+        <div class="col-sm-3">
+            <app-board-details [board]="selectedBoard"></app-board-details>
+        </div>
+    </div> -->
+
+<canvas #myCanvas width="{{width}}" height="{{height}}" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
 </canvas>

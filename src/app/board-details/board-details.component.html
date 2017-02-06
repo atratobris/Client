@@ -1,0 +1,15 @@
+<div *ngIf="board">
+  <h2>{{board.name}} details!</h2>
+  <div>
+    <label>type: </label>{{board.type}}</div>
+  <div>
+    <label>subtype: </label>{{board.subtype}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="board.name" placeholder="name" />
+  </div>
+  <div>
+    <label>mac: </label>
+    <input [(ngModel)]="board.mac" placeholder="mac" />
+  </div>
+</div>

@@ -1,26 +1,46 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener } from '@angular/core';
+import {
+  Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit,
+  NgZone, HostListener, Input, EventEmitter, Output, SimpleChange, OnChanges
+} from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board';
 import { WorkspaceCanvas } from '../workspace-canvas';
+import { BoardDetailsComponent } from '../board-details/board-details.component';
+import { BoardConfig } from '../board-config';
 
 @Component({
   selector: 'app-drag-drop',
   templateUrl: './drag-drop.component.html',
   styleUrls: ['./drag-drop.component.sass'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class DragDropComponent implements OnInit, AfterViewInit {
-
+export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() myboards: Board[];
+  @Input() operationMode: string;
+  @Output() onSelected = new EventEmitter<BoardConfig>();
+  @Output() onDeselected = new EventEmitter<void>();
   @ViewChild('myCanvas') canvasRef: ElementRef;
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
   private rect: ClientRect;
   private boards: Board[];
-  private operationMode: string;
+  // private operationMode: string;
   private dragging = false;
   private selected = false;
   private canSelect = false;
+  private linking = false;
+  private selectedBoard: BoardConfig;
 
+  width = 1000;
+  height = 500;
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.wsc.resetCursorLocation();
+    this.dragging = false;
+    this.linking = false;
+    this.canSelect = false;
+  }
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     if (this.operationMode === 'Add' || ( this.operationMode === 'Drag' && this.dragging)) {
@@ -33,6 +53,9 @@ export class DragDropComponent implements OnInit, AfterViewInit {
         this.canSelect = false;
       }
     }
+    if (this.operationMode === 'Link' && this.linking) {
+      this.wsc.updateLinking(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    }
   }
 
   @HostListener('mousedown', ['$event'])
@@ -41,7 +64,14 @@ export class DragDropComponent implements OnInit, AfterViewInit {
       this.dragging = this.wsc.dragStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
     if (this.operationMode === 'Select') {
-      this.selected = this.wsc.select(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      if (this.wsc.select(event.clientX - this.rect.left, event.clientY - this.rect.top)) {
+        this.select();
+      } else {
+        this.deselect();
+      }
+    }
+    if (this.operationMode === 'Link') {
+      this.linking = this.wsc.linkStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
   }
 
@@ -57,38 +87,52 @@ export class DragDropComponent implements OnInit, AfterViewInit {
         this.canSelect = false;
       }
     }
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  onkeyup(event: KeyboardEvent) {
-    if ( this.operationMode === 'Select' && this.selected && event.keyCode === 8) {
-      this.wsc.removeSelected();
-      this.selected = false;
+    if (this.operationMode === 'Link' && this.linking) {
+      this.wsc.linkEnd(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      this.linking = false;
     }
   }
 
-  constructor(private ngZone: NgZone) {}
-  // constructor(private dragulaService: DragulaService) {
-  //   console.log(dragulaService);
-  //     dragulaService.setOptions('bag-one', {
-  //       copy: true,
-  //       accepts: (el, target, source, sibling) => {
-  //         return !target.classList.contains('menu');
-  //       }
-  //     });
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.refreshRect();
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event) {
+    this.refreshRect();
+  }
+
+  // @HostListener('window:keydown', ['$event'])
+  // onkeyup(event: KeyboardEvent) {
+  //   if ( this.operationMode === 'Select' && this.selected && event.keyCode === 8) {
+  //     this.wsc.removeSelected();
+  //     this.selected = false;
+  //     delete this.selectedBoard;
+  //   }
   // }
+
+  constructor(private ngZone: NgZone) {}
 
   ngOnInit() {
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
-    this.operationMode = 'Add';
   }
 
   ngAfterViewInit() {
-    this.rect = this.canvasRef.nativeElement.getBoundingClientRect();
-    this.wsc = new WorkspaceCanvas(this.ctx, this.rect);
+    this.refreshRect();
+    this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
     this.ngZone.runOutsideAngular(() => this.wsc.draw());
   }
 
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    if (changes['operationMode']) {
+      this.deselect();
+    }
+  }
+
+  refreshRect() {
+    this.rect = this.canvasRef.nativeElement.getBoundingClientRect();
+  }
   clicked(event): void {
     if (this.operationMode === 'Add') {
       const drawn = this.wsc.drawAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
@@ -99,8 +143,20 @@ export class DragDropComponent implements OnInit, AfterViewInit {
 
   changeMode(operation: string): void {
     this.operationMode = operation;
-    this.selected = false;
+    this.deselect();
   }
 
+  select(): void {
+    this.selected = true;
+    this.onSelected.emit(this.wsc.getSelectedBoard());
+  }
+
+  deselect(): void {
+    if (this.selected) {
+      this.selected = false;
+      this.wsc.deselect();
+      this.onDeselected.emit();
+    }
+  }
 
 }

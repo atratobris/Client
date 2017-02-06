@@ -1,3 +1,16 @@
-<p>
-  dashboard works!
-</p>
+<button (click)="changeMode('Add')"> Add </button>
+<button (click)="changeMode('Delete')"> Delete </button>
+<button (click)="changeMode('Drag')"> Drag </button>
+<button (click)="changeMode('Select')"> Select </button>
+<button (click)="changeMode('Link')"> Link </button>
+<div>{{operationMode}}</div>
+
+<div class="row">
+    <div class="col-sm-9">
+        <app-drag-drop [operationMode]="operationMode" (onSelected)="onSelected($event)" (onDeselected)="onDeselected()"></app-drag-drop>
+    </div>
+    <div class="col-sm-3">
+        <app-board-details [board]="selectedBoard"></app-board-details>
+    </div>
+</div>
+

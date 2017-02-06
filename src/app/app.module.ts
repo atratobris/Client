@@ -10,12 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DragDropComponent } from './dragdrop/drag-drop.component';
+import { BoardDetailsComponent } from './board-details/board-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     DragDropComponent,
+    BoardDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,3 +30,4 @@ import { DragDropComponent } from './dragdrop/drag-drop.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
