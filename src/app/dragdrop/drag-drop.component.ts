@@ -41,8 +41,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   width = 1000;
   height = 500;
 
-  @HostListener('mouseleave')
-  onMouseLeave() {
+  @HostListener('mouseleave', ['$event'])
+  onMouseLeave(event) {
+    event.preventDefault();
     this.wsc.resetCursorLocation();
     this.dragging = false;
     this.linking = false;
@@ -50,6 +51,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
+    event.preventDefault();
     if (this.operationMode === 'Add' || ( this.operationMode === 'Drag' && this.dragging)) {
       this.wsc.updateCursorLocation(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
@@ -67,6 +69,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent) {
+    event.preventDefault();
     if (this.operationMode === 'Drag') {
       this.dragging = this.wsc.dragStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
@@ -84,6 +87,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   @HostListener('mouseup', ['$event'])
   onMouseup(event: MouseEvent) {
+    event.preventDefault();
     if (this.operationMode === 'Drag' && this.dragging) {
       this.wsc.dragEnd(event.clientX - this.rect.left, event.clientY - this.rect.top);
       this.dragging = false;
