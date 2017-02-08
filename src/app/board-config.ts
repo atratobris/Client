@@ -10,6 +10,7 @@ export class BoardConfig {
   private type: string;
   private name: string;
   private subtype: string;
+
   constructor(obj?: IBoardConfig) {
     this.mac = obj && obj.mac || '';
     this.type = obj && obj.type || 'input';

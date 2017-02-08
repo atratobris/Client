@@ -196,4 +196,15 @@ export class WorkspaceCanvas {
     this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));
   }
 
+  buildSketch(): Sketch {
+    const boardsInterface: BoardInterface[] = this.boards.map( (board: Board) => board.prepare());
+    const linksInterface: LinkInterface[] = this.links.map( ( link: Link) => link.prepare());
+
+    return new Sketch({
+      id: this.sketch.getId(),
+      boards: boardsInterface,
+      links: linksInterface
+    });
+  }
+
 }

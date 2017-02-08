@@ -25,4 +25,8 @@ export class Sketch {
   getLinks(): LinkInterface[] {
     return this.links;
   }
+
+  getId(): number {
+    return this.id;
+  }
 }

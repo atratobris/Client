@@ -132,7 +132,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getSketch(): void {
-    this.sketchService.getSketch(1).then( (sketch: Sketch) => {
+    this.sketchService.get(1).then( (sketch: Sketch) => {
       this.sketch = sketch;
       this.loadSketch();
     } );
@@ -146,6 +146,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (changes['operationMode']) {
       this.deselect();
+      if (this.operationMode === 'Save') {
+        this.sketchService.update(this.wsc.buildSketch());
+      }
     }
   }
 

@@ -12,6 +12,7 @@ export class Link {
   private end: Point;
   private startBoard: Board;
   private endBoard: Board;
+  private logic: string;
   constructor(startX: number, startY: number, endX: number, endY: number, startBoard?: Board, endBoard?: Board);
   constructor(linkInterface: LinkInterface, bArray: Board[]);
   constructor(startXOrLinkInterface: any, startYOrBArray: any, endX?: number, endY?: number, startBoard?: Board, endBoard?: Board) {
@@ -22,13 +23,23 @@ export class Link {
       this.end = new Point(endX, endY);
       this.startBoard = startBoard || null;
       this.endBoard = endBoard || null;
+      this.logic = 'toggle';
     } else  {
       const linkInterface: LinkInterface = startXOrLinkInterface;
       const bArray: Board[] = startYOrBArray;
+      this.logic = linkInterface.logic;
       this.startBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.from)[0] || null;
       this.endBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.to)[0] || null;
       this.linkToBoard();
     }
+  }
+
+  prepare(): LinkInterface {
+    return {
+      to: this.endBoard.getMac(),
+      from: this.startBoard.getMac(),
+      logic: this.logic
+    } as LinkInterface;
   }
 
   setStart(x: number, y: number, startBoard?: Board): void {

@@ -32,6 +32,15 @@ export class Board {
     }
   }
 
+  prepare(): BoardInterface {
+    return {
+      centre: this.centre.prepare(),
+      width: this.width,
+      height: this.height,
+      mac: this.getMac()
+    } as BoardInterface;
+  }
+
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.fillRect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);
   }

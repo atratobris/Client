@@ -19,6 +19,13 @@ export class Point {
     }
   }
 
+  prepare(): PointInterface {
+    return {
+      x: this.x,
+      y: this.y
+    } as PointInterface;
+  }
+
   getX(): number {
     return this.x;
   }
