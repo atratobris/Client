@@ -110,4 +110,8 @@ export class Board {
     return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), this.getBoardConfig());
   }
 
+  getMac(): string {
+    return this.boardConfig.getMac();
+  }
+
 }

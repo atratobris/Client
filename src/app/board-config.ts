@@ -20,4 +20,8 @@ export class BoardConfig {
   setMac(mac: string): void {
     this.mac = mac;
   }
+
+  getMac(): string {
+    return this.mac;
+  }
 }

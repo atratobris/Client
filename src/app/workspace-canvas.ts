@@ -1,6 +1,6 @@
 import { Board, BoardInterface } from './board';
 import { Point } from './point';
-import { Link } from './link';
+import { Link, LinkInterface } from './link';
 import { BoardConfig } from './board-config';
 
 import { Sketch } from './sketch/sketch';
@@ -192,7 +192,8 @@ export class WorkspaceCanvas {
 
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
-    this.boards = this.sketch.boards.map((boardIf: BoardInterface) => new Board(boardIf));
+    this.boards = this.sketch.getBoards().map((boardIf: BoardInterface) => new Board(boardIf));
+    this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));
   }
 
 }

@@ -13,14 +13,21 @@ export class Link {
   private startBoard: Board;
   private endBoard: Board;
   constructor(startX: number, startY: number, endX: number, endY: number, startBoard?: Board, endBoard?: Board);
-  constructor(LinkInterface: LinkInterface);
-  constructor(startXOrLinkInterface: any, startY?: number, endX?: number, endY?: number, startBoard?: Board, endBoard?: Board) {
+  constructor(linkInterface: LinkInterface, bArray: Board[]);
+  constructor(startXOrLinkInterface: any, startYOrBArray: any, endX?: number, endY?: number, startBoard?: Board, endBoard?: Board) {
     if (typeof startXOrLinkInterface === 'number') {
       const startX = startXOrLinkInterface;
+      const startY = startYOrBArray;
       this.start = new Point(startX, startY);
       this.end = new Point(endX, endY);
       this.startBoard = startBoard || null;
       this.endBoard = endBoard || null;
+    } else  {
+      const linkInterface: LinkInterface = startXOrLinkInterface;
+      const bArray: Board[] = startYOrBArray;
+      this.startBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.from)[0] || null;
+      this.endBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.to)[0] || null;
+      this.linkToBoard();
     }
   }
 
@@ -72,7 +79,6 @@ export class Link {
   }
 
   linkToBoard(): void {
-    console.log(this.endBoard);
     this.start = this.startBoard.getCentre();
     this.end = this.endBoard.getCentre();
   }
