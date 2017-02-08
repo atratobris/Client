@@ -12,6 +12,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 
+import { SketchService } from './sketch/sketch.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,7 @@ import { BoardDetailsComponent } from './board-details/board-details.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [SketchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
