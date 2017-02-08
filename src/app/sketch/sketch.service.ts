@@ -7,7 +7,7 @@ import { Sketch } from './sketch';
 
 @Injectable()
 export class SketchService {
-  private apiUrl = 'http://localhost:3000/api/sketches/';
+  private apiUrl = 'http://localhost:3000/api/sketch';
 
   constructor(private http: Http) { }
 

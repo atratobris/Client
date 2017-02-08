@@ -24,33 +24,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private selectedBoard: BoardConfig;
 
   constructor(private ngZone: NgZone) {}
-  // constructor(private dragulaService: DragulaService) {
-  //   console.log(dragulaService);
-  //     dragulaService.setOptions('bag-one', {
-  //       copy: true,
-  //       accepts: (el, target, source, sibling) => {
-  //         return !target.classList.contains('menu');
-  //       }
-  //     });
-  // }
 
   ngOnInit() {
-    // this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.operationMode = 'Select';
   }
 
   ngAfterViewInit() {
-    // this.rect = this.canvasRef.nativeElement.getBoundingClientRect();
-    // this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
-    // this.ngZone.runOutsideAngular(() => this.wsc.draw());
   }
 
   clicked(event): void {
-    // if (this.operationMode === 'Add') {
-    //   const drawn = this.wsc.drawAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
-    // } else if (this.operationMode === 'Delete') {
-    //   this.wsc.deleteAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
-    // }
   }
 
   changeMode(operation: string): void {

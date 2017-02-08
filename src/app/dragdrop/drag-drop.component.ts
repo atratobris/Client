@@ -8,6 +8,9 @@ import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
 
+import { SketchService } from '../sketch/sketch.service';
+import { Sketch } from '../sketch/sketch';
+
 @Component({
   selector: 'app-drag-drop',
   templateUrl: './drag-drop.component.html',
@@ -30,6 +33,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private canSelect = false;
   private linking = false;
   private selectedBoard: BoardConfig;
+
+  private sketch: Sketch;
 
   width = 1000;
   height = 500;
@@ -112,15 +117,22 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   //   }
   // }
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService) {}
 
   ngOnInit() {
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
+    this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
+    this.getSketch();
+  }
+
+  getSketch(): void {
+    this.sketchService.getSketch(1).then( (sketch: Sketch) => {
+      this.sketch = sketch;
+    } );
   }
 
   ngAfterViewInit() {
     this.refreshRect();
-    this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
     this.ngZone.runOutsideAngular(() => this.wsc.draw());
   }
 
