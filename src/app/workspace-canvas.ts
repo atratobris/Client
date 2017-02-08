@@ -1,15 +1,16 @@
-import { Board } from './board';
+import { Board, BoardInterface } from './board';
 import { Point } from './point';
 import { Link } from './link';
 import { BoardConfig } from './board-config';
 
-import { BOARDS, LINKS } from './mock-sketch';
+import { Sketch } from './sketch/sketch';
 
 export class WorkspaceCanvas {
   private ctx: CanvasRenderingContext2D;
   private rect: ClientRect;
   private boards: Board[];
   private links: Link[];
+  private sketch: Sketch;
   private cursor: Board;
   private savedBoard: Board;
   private selectedBoard: Board;
@@ -21,8 +22,8 @@ export class WorkspaceCanvas {
   constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
     this.ctx = ctx;
     this.rect = rect;
-    this.boards = BOARDS;
-    this.links = LINKS;
+    this.boards = [];
+    this.links = [];
     this.currentLink = null;
     this.cursor = null;
     this.width = width;
@@ -182,6 +183,11 @@ export class WorkspaceCanvas {
     const index: number = this.boards.indexOf(this.selectedBoard);
     this.boards.splice(index, 1);
     this.selectedBoard = null;
+  }
+
+  loadSketch(sketch: Sketch): void {
+    this.sketch = sketch;
+    this.boards = this.sketch.boards.map((boardIf: BoardInterface) => new Board(boardIf));
   }
 
 }

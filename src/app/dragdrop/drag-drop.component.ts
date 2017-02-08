@@ -130,6 +130,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   getSketch(): void {
     this.sketchService.getSketch(1).then( (sketch: Sketch) => {
       this.sketch = sketch;
+      this.loadSketch();
     } );
   }
 
@@ -171,6 +172,10 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       this.wsc.deselect();
       this.onDeselected.emit();
     }
+  }
+
+  loadSketch(): void {
+    this.wsc.loadSketch(this.sketch);
   }
 
 }
