@@ -9,7 +9,7 @@ export class BoardInterface {
 }
 
 export class Board {
-  private center: Point;
+  private centre: Point;
   private width: number;
   private height: number;
   private offset: Point;
@@ -21,11 +21,11 @@ export class Board {
     this.boardConfig = b_config || new BoardConfig();
     this.offset = new Point( 0, 0);
     if ( typeof posXorBoardInterface === 'number') {
-      this.center = new Point(posXorBoardInterface, posY);
+      this.centre = new Point(posXorBoardInterface, posY);
       this.width = width;
       this.height = height;
     } else if ( typeof posXorBoardInterface === 'object') {
-      this.center = new Point(posXorBoardInterface.centre);
+      this.centre = new Point(posXorBoardInterface.centre);
       this.width = posXorBoardInterface.width;
       this.height = posXorBoardInterface.height;
       this.boardConfig.setMac(posXorBoardInterface.mac);
@@ -45,11 +45,23 @@ export class Board {
   }
 
   getPosX(): number {
-    return this.center.getX();
+    return this.centre.getX();
   }
 
   getPosY(): number {
-    return this.center.getY();
+    return this.centre.getY();
+  }
+
+  getCentre(): Point {
+    return this.centre;
+  }
+
+  setCentre(p: Point): void {
+    this.centre = p;
+  }
+
+  deepSetCentre(p: Point): void {
+    this.centre.set(p.getX(), p.getY());
   }
 
   collides(board: Board): boolean {
@@ -75,7 +87,7 @@ export class Board {
   }
 
   set(x: number, y: number): void {
-    this.center.set(x - this.getOffsetX(), y - this.getOffsetY());
+    this.centre.set(x - this.getOffsetX(), y - this.getOffsetY());
   }
 
   setOffset(offsetX: number, offsetY: number): void {

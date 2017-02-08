@@ -33,13 +33,14 @@ export class WorkspaceCanvas {
   drawAtPoint( x, y ): boolean {
     // this.ctx.clearRect(0, 0, 500, 500);
     const new_board: Board = this.cursor.copy();
-    delete this.cursor;
+    new_board.setCentre(this.cursor.getCentre());
     for (const board of this.boards) {
       if (board.collides(new_board)) {
         console.log('Colliding');
         return false;
       }
     }
+    delete this.cursor;
     // new_board.draw(this.ctx);
     new_board.setOffset(0, 0);
     this.boards.push(new_board);
@@ -94,11 +95,14 @@ export class WorkspaceCanvas {
   }
 
   resetCursorLocation(): void {
-    this.cursor = null;
     if (this.savedBoard) {
+      this.cursor.deepSetCentre(this.savedBoard.getCentre());
+      this.savedBoard.setCentre(this.cursor.getCentre());
       this.boards.push(this.savedBoard);
       this.savedBoard = null;
+      console.log(this.links);
     }
+    this.cursor = null;
     this.currentLink = null;
   }
 
@@ -115,7 +119,7 @@ export class WorkspaceCanvas {
   linkStart(x: number, y: number): boolean {
     const selectedBoard: Board =  this.findAtPoint(x, y);
     if (selectedBoard) {
-      this.currentLink = new Link(selectedBoard.getPosX(), selectedBoard.getPosY(), x, y);
+      this.currentLink = new Link(selectedBoard.getPosX(), selectedBoard.getPosY(), x, y, selectedBoard);
       return true;
     } else {
       return false;
@@ -125,8 +129,8 @@ export class WorkspaceCanvas {
   linkEnd(x: number, y: number): void {
     const selectedBoard: Board =  this.findAtPoint(x, y);
     if (selectedBoard) {
-      this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY());
-      this.links.push(this.currentLink.copy());
+      this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
+      this.links.push(this.currentLink.exportFinished());
     }
     this.currentLink = null;
   }
@@ -137,7 +141,7 @@ export class WorkspaceCanvas {
       const index: number = this.boards.indexOf(selectedBoard);
       this.boards.splice(index, 1);
       this.savedBoard = selectedBoard.copy();
-      this.cursor = selectedBoard.copy();
+      this.cursor = selectedBoard;
       this.cursor.setOffset(x - selectedBoard.getPosX(), y - selectedBoard.getPosY());
       return true;
     } else {
@@ -149,6 +153,7 @@ export class WorkspaceCanvas {
 
   dragEnd(x: number, y: number): void {
     if (!this.drawAtPoint(x, y)) {
+      this.cursor.setCentre(this.savedBoard.getCentre());
       this.boards.push(this.savedBoard);
     }
     this.savedBoard = null;
