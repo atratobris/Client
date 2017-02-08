@@ -7,12 +7,12 @@ import { Sketch } from './sketch';
 
 @Injectable()
 export class SketchService {
-  private apiUrl = 'http://localhost:3000/api/sketches';
+  private apiUrl = 'http://localhost:3000/api/sketches/';
 
   constructor(private http: Http) { }
 
-  getSketch(): Promise<Sketch> {
-    return this.http.get(this.apiUrl)
+  getSketch(id: number): Promise<Sketch> {
+    return this.http.get(`${this.apiUrl}/${id}`)
       .toPromise()
       .then( response => response.json().data as Sketch)
       .catch(this.handleError);
