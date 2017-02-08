@@ -16,4 +16,8 @@ export class BoardConfig {
     this.subtype = obj && obj.subtype || 'button';
     this.name = obj && obj.name || `${this.type} Component`;
   }
+
+  setMac(mac: string): void {
+    this.mac = mac;
+  }
 }

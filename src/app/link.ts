@@ -1,11 +1,22 @@
 import { Point } from './point';
 
+export interface LinkInterface {
+  to: string;
+  from: string;
+  logic: string;
+}
+
 export class Link {
   private start: Point;
   private end: Point;
-  constructor(startX: number, startY: number, endX: number, endY: number) {
-    this.start = new Point(startX, startY);
-    this.end = new Point(endX, endY);
+  constructor(startX: number, startY: number, endX: number, endY: number);
+  constructor(LinkInterface: LinkInterface);
+  constructor(startXOrLinkInterface: any, startY?: number, endX?: number, endY?: number) {
+    if (typeof startXOrLinkInterface === 'number') {
+      const startX = startXOrLinkInterface;
+      this.start = new Point(startX, startY);
+      this.end = new Point(endX, endY);
+    }
   }
 
   setStart(x, y): void {

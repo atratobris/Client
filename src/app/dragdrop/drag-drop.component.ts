@@ -11,6 +11,8 @@ import { BoardConfig } from '../board-config';
 import { SketchService } from '../sketch/sketch.service';
 import { Sketch } from '../sketch/sketch';
 
+import { Point, PointInterface } from '../point';
+
 @Component({
   selector: 'app-drag-drop',
   templateUrl: './drag-drop.component.html',

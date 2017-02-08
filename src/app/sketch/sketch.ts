@@ -1,5 +1,17 @@
-export class Sketch {
+import { BoardInterface } from '../board';
+import { LinkInterface } from '../link';
+
+interface SketchInterface {
   id: number;
-  links: [{to: string, from: string, logic: string}];
-  boards: [{mac: string, width: number, height: number, centre: {x: number, y: number}}];
+  boards: BoardInterface[];
+}
+
+export class Sketch {
+  private id: number;
+  boards: BoardInterface[];
+
+  constructor(sketch: SketchInterface) {
+    this.id = sketch.id;
+    this.boards = sketch.boards;
+  }
 }

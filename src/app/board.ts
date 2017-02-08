@@ -1,5 +1,12 @@
-import { Point } from './point';
+import { Point, PointInterface } from './point';
 import { BoardConfig } from './board-config';
+
+export class BoardInterface {
+  centre: PointInterface;
+  width: number;
+  height: number;
+  mac: string;
+}
 
 export class Board {
   private center: Point;
@@ -8,12 +15,21 @@ export class Board {
   private offset: Point;
   private boardConfig: BoardConfig;
 
-  constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig) {
-    this.center = new Point(posX, posY);
-    this.width = width;
-    this.height = height;
-    this.offset = new Point( 0, 0);
+  constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig);
+  constructor(centre: BoardInterface);
+  constructor(posXorBoardInterface: any, posY?: number, width?: number, height?: number, b_config?: BoardConfig) {
     this.boardConfig = b_config || new BoardConfig();
+    this.offset = new Point( 0, 0);
+    if ( typeof posXorBoardInterface === 'number') {
+      this.center = new Point(posXorBoardInterface, posY);
+      this.width = width;
+      this.height = height;
+    } else if ( typeof posXorBoardInterface === 'object') {
+      this.center = new Point(posXorBoardInterface.centre);
+      this.width = posXorBoardInterface.width;
+      this.height = posXorBoardInterface.height;
+      this.boardConfig.setMac(posXorBoardInterface.mac);
+    }
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
