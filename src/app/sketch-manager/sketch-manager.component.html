@@ -1,0 +1,8 @@
+<div *ngIf="sketches">
+  <ul>
+    <li *ngFor="let sketch of sketches">
+      {{sketch.id}}
+      {{sketch.status}}
+    </li>
+  </ul>
+</div>

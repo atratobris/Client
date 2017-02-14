@@ -1,21 +1,25 @@
 import { BoardInterface } from '../board/board';
 import { LinkInterface } from '../link';
 
-interface SketchInterface {
+export interface SketchInterface {
   id: number;
+  status: string;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
 
 export class Sketch {
   private id: number;
+  private status: string;
   private boards: BoardInterface[];
   private links: LinkInterface[];
 
   constructor(sketch: SketchInterface) {
+    // debugger
     this.id = sketch.id;
     this.boards = sketch.boards;
     this.links = sketch.links;
+    this.status = sketch.status;
   }
 
   getBoards(): BoardInterface[] {

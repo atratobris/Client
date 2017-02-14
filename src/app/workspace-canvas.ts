@@ -203,7 +203,8 @@ export class WorkspaceCanvas {
     return new Sketch({
       id: this.sketch.getId(),
       boards: boardsInterface,
-      links: linksInterface
+      links: linksInterface,
+      status: "pending"
     });
   }
 

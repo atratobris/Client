@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Sketch } from './sketch';
+import { Sketch, SketchInterface } from './sketch';
 
 @Injectable()
 export class SketchService {
@@ -18,6 +18,17 @@ export class SketchService {
       .toPromise()
       .then( response => new Sketch(response.json()) )
       .catch( this.handleError );
+  }
+
+  all(): Promise<Sketch[]> {
+    return this.http
+      .get(`${this.apiUrl}`)
+      .toPromise()
+      .then( response => {
+        return Array.from(response.json(), ( x: SketchInterface )=> {
+          return new Sketch(x);
+        });
+      }).catch( this.handleError);
   }
 
   update(sketch: Sketch): Promise<Sketch> {

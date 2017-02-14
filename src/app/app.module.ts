@@ -7,10 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
+
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { BoardDetailsComponent } from './board-details/board-details.component';
+import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
 
 import { SketchService } from './sketch/sketch.service';
 import { BoardService } from './board/board.service';
@@ -21,6 +23,7 @@ import { BoardService } from './board/board.service';
     DashboardComponent,
     DragDropComponent,
     BoardDetailsComponent,
+    SketchManagerComponent
   ],
   imports: [
     BrowserModule,
