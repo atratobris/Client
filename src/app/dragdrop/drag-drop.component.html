@@ -1,3 +1,5 @@
+<canvas #myCanvas width="{{width}}" height="{{height}}" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
+</canvas>
 <!--   <div>
     <div class='wrapper'>
       <div class='container source' [dragula]='"bag-one"'>
@@ -42,6 +44,3 @@
             <app-board-details [board]="selectedBoard"></app-board-details>
         </div>
     </div> -->
-
-<canvas #myCanvas width="{{width}}" height="{{height}}" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
-</canvas>

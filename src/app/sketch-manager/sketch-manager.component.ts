@@ -17,8 +17,11 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.sketchService.all().then( (sketches: Sketch[] ) => {
       this.sketches = sketches;
-      console.log(this.sketches);
     });
+  }
+
+  open(sketch: Sketch) {
+    this.router.navigate(['/component-one']);
   }
 
   ngAfterViewInit() {

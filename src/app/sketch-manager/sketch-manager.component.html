@@ -1,8 +1,8 @@
 <div *ngIf="sketches">
   <ul>
     <li *ngFor="let sketch of sketches">
-      {{sketch.id}}
-      {{sketch.status}}
+      <a routerLink="/dashboard/sketch/{{sketch.id}}" >dashboard</a>
+      id: {{sketch.id}}, status: {{sketch.status}}
     </li>
   </ul>
 </div>

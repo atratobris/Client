@@ -2,6 +2,7 @@ import {
   Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit,
   NgZone, HostListener, Input, EventEmitter, Output, SimpleChange, OnChanges
 } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board/board';
 import { WorkspaceCanvas } from '../workspace-canvas';
@@ -20,6 +21,7 @@ import { Point, PointInterface } from '../point';
   encapsulation: ViewEncapsulation.None,
 })
 export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
+
   @Input() operationMode: string;
   @Output() onSelected = new EventEmitter<BoardConfig>();
   @Output() onDeselected = new EventEmitter<void>();
@@ -121,15 +123,21 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   //   }
   // }
 
-  constructor(private ngZone: NgZone, private sketchService: SketchService) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.params
+      .switchMap((params: Params) => this.sketchService.get(+params['id']))
+      .subscribe((sketch: Sketch) => {
+        this.sketch = sketch;
+        this.loadSketch();
+      });
+
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
-    this.getSketch();
   }
 
-  getSketch(): void {
+  getSketch(id: number): void {
     this.sketchService.get(1).then( (sketch: Sketch) => {
       this.sketch = sketch;
       this.loadSketch();
