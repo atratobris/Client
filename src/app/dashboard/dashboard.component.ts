@@ -1,9 +1,10 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { Board } from '../board';
+import { Board } from '../board/board';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
+import { BoardService } from '../board/board.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,18 +13,11 @@ import { BoardConfig } from '../board-config';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('myCanvas') canvasRef: ElementRef;
-  private ctx: CanvasRenderingContext2D;
-  private wsc: WorkspaceCanvas;
-  private rect: ClientRect;
-  private boards: Board[];
   private operationMode: string;
-  private dragging = false;
   private selected = false;
-  private canSelect = false;
   private selectedBoard: BoardConfig;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private boardService: BoardService) {}
 
   ngOnInit() {
     this.operationMode = 'Select';
@@ -40,8 +34,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.selected = false;
   }
 
-  onSelected(board: BoardConfig): void {
-    this.selectedBoard = board;
+  onSelected(selected_board: BoardConfig): void {
+    this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
+      this.selectedBoard = board;
+      console.log(board)
+    });
   }
 
   onDeselected(): void {

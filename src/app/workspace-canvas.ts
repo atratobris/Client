@@ -1,4 +1,4 @@
-import { Board, BoardInterface } from './board';
+import { Board, BoardInterface } from './board/board';
 import { Point } from './point';
 import { Link, LinkInterface } from './link';
 import { BoardConfig } from './board-config';

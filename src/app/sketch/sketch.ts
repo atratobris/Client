@@ -1,4 +1,4 @@
-import { BoardInterface } from '../board';
+import { BoardInterface } from '../board/board';
 import { LinkInterface } from '../link';
 
 interface SketchInterface {

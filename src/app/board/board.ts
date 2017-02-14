@@ -1,7 +1,7 @@
-import { Point, PointInterface } from './point';
-import { BoardConfig } from './board-config';
+import { Point, PointInterface } from '../point';
+import { BoardConfig } from '../board-config';
 
-export class BoardInterface {
+export interface BoardInterface {
   centre: PointInterface;
   width: number;
   height: number;

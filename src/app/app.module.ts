@@ -13,6 +13,7 @@ import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 
 import { SketchService } from './sketch/sketch.service';
+import { BoardService } from './board/board.service';
 
 @NgModule({
   declarations: [
@@ -28,8 +29,7 @@ import { SketchService } from './sketch/sketch.service';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService],
+  providers: [SketchService, BoardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

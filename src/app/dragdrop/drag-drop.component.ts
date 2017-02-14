@@ -3,7 +3,7 @@ import {
   NgZone, HostListener, Input, EventEmitter, Output, SimpleChange, OnChanges
 } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { Board } from '../board';
+import { Board } from '../board/board';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
@@ -20,7 +20,6 @@ import { Point, PointInterface } from '../point';
   encapsulation: ViewEncapsulation.None,
 })
 export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() myboards: Board[];
   @Input() operationMode: string;
   @Output() onSelected = new EventEmitter<BoardConfig>();
   @Output() onDeselected = new EventEmitter<void>();
@@ -28,7 +27,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
   private rect: ClientRect;
-  private boards: Board[];
   // private operationMode: string;
   private dragging = false;
   private selected = false;
@@ -73,7 +71,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.operationMode === 'Drag') {
       this.dragging = this.wsc.dragStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
-    if (this.operationMode === 'Select') {
+    if (this.operationMode === 'Select' || this.operationMode === "LinkRemove") {
       if (this.wsc.select(event.clientX - this.rect.left, event.clientY - this.rect.top)) {
         this.select();
       } else {
