@@ -53,11 +53,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   onSelected(selected_board: BoardConfig): void {
     this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
       this.selectedBoard = board;
+      this.selected = true;
     });
   }
 
   onDeselected(): void {
-    delete this.selectedBoard;
+    this.selected = false;
   }
 
 

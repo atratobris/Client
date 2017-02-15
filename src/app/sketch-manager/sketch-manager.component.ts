@@ -30,7 +30,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
   }
 
   onStatusChange(event, id){
-    console.log(this.sketches[id]);
     this.sketches[id].changeStatus(event);
     this.sketchService.update(this.sketches[id]);
   }
@@ -40,6 +39,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
   }
 
   newSketch(){
+    // send empty array for boards and links
     this.sketchService.create([], []).then( (sketch) => {
       this.selectedSketch = sketch;
       this.sketches.push(sketch);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
-import { BoardConfig } from '../board-config';
+import { BoardConfig, IBoardConfig } from '../board-config';
 import { Board } from './board';
 
 @Injectable()
@@ -18,6 +18,17 @@ export class BoardService {
       .toPromise()
       .then( response => new BoardConfig( response.json()) )
       .catch(this.handleError);
+  }
+
+  all(): Promise<BoardConfig[]> {
+    return this.http
+      .get(`${this.apiUrl}.json`)
+      .toPromise()
+      .then( response => {
+        return Array.from(response.json(), ( x: IBoardConfig )=> {
+          return new BoardConfig(x);
+        });
+      })
   }
 
   update(board: Board): Promise<BoardConfig> {

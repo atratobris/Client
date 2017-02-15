@@ -1,4 +1,4 @@
-interface IBoardConfig {
+export interface IBoardConfig {
   mac: string;
   type: string;
   subtype: string;

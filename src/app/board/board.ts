@@ -115,6 +115,10 @@ export class Board {
     return this.boardConfig;
   }
 
+  setBoardConfig(conf: BoardConfig): void {
+    this.boardConfig = conf;
+  }
+
   copy(): Board {
     return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), this.getBoardConfig());
   }
