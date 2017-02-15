@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
+import { Board } from '../board/board';
+import { Link } from '../link';
+
 import 'rxjs/add/operator/toPromise';
 
 import { Sketch, SketchInterface } from './sketch';
@@ -29,6 +32,16 @@ export class SketchService {
           return new Sketch(x);
         });
       }).catch( this.handleError);
+  }
+
+  create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
+    return this.http
+      .post(`${this.apiUrl}`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})
+      .toPromise()
+      .then( response => {
+        return new Sketch(response.json())
+      })
+      .catch(this.handleError);
   }
 
   update(sketch: Sketch): Promise<Sketch> {

@@ -7,8 +7,8 @@
 <div>{{operationMode}}</div>
 
 <div class="row">
-    <div class="col-sm-9">
-        <app-drag-drop [operationMode]="operationMode" (onSelected)="onSelected($event)" (onDeselected)="onDeselected()"></app-drag-drop>
+    <div *ngIf="sketch" class="col-sm-9">
+        <app-drag-drop [sketchId]="sketch.id" [operationMode]="operationMode" (onSelected)="onSelected($event)" (onDeselected)="onDeselected()"></app-drag-drop>
     </div>
     <div class="col-sm-3">
         <app-board-details [board]="selectedBoard"></app-board-details>

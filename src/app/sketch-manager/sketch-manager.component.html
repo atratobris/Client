@@ -1,8 +1,17 @@
 <div *ngIf="sketches">
   <ul>
-    <li *ngFor="let sketch of sketches">
-      <a routerLink="/dashboard/sketch/{{sketch.id}}" >dashboard</a>
-      id: {{sketch.id}}, status: {{sketch.status}}
+    <li *ngFor="let sketch of sketches; let idx = index">
+      id: {{idx+1}}, status:
+      <select [(ngModel)]="sketch.status" (ngModelChange)="onStatusChange($event, idx)">
+        <option *ngFor="let status of sketchTypes" [ngValue]="status">{{status}}</option>
+      </select>
+
+      <button type="button" name="button" (click)="onSketchEdit(idx)">Edit</button>
     </li>
   </ul>
+  <button type="button" name="button" (click)="newSketch()" >NewSketch</button>
+
+  <div *ngIf="selectedSketch"  class="">
+    <app-sketch-editor [sketchId]="selectedSketch.id" ></app-sketch-editor>
+  </div>
 </div>

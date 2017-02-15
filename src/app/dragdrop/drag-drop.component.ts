@@ -26,10 +26,10 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() onSelected = new EventEmitter<BoardConfig>();
   @Output() onDeselected = new EventEmitter<void>();
   @ViewChild('myCanvas') canvasRef: ElementRef;
+  @Input() sketchId: number;
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
   private rect: ClientRect;
-  // private operationMode: string;
   private dragging = false;
   private selected = false;
   private canSelect = false;
@@ -49,6 +49,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.linking = false;
     this.canSelect = false;
   }
+
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
@@ -126,22 +127,16 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(private ngZone: NgZone, private sketchService: SketchService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.params
-      .switchMap((params: Params) => this.sketchService.get(+params['id']))
-      .subscribe((sketch: Sketch) => {
-        this.sketch = sketch;
-        this.loadSketch();
-      });
-
+    this.getSketch(this.sketchId);
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
   }
 
   getSketch(id: number): void {
-    this.sketchService.get(1).then( (sketch: Sketch) => {
+    this.sketchService.get(id).then( (sketch: Sketch) => {
       this.sketch = sketch;
       this.loadSketch();
-    } );
+    });
   }
 
   ngAfterViewInit() {
@@ -150,11 +145,16 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    console.log("change")
     if (changes['operationMode']) {
       this.deselect();
       if (this.operationMode === 'Save') {
         this.sketchService.update(this.wsc.buildSketch());
       }
+    }
+    
+    if (changes["sketchId"]) {
+      this.getSketch(this.sketchId)
     }
   }
 

@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
@@ -17,13 +17,14 @@ import { SketchManagerComponent } from './sketch-manager/sketch-manager.componen
 import { SketchService } from './sketch/sketch.service';
 import { BoardService } from './board/board.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    SketchEditorComponent,
     DragDropComponent,
     BoardDetailsComponent,
-    SketchManagerComponent
+    SketchManagerComponent,
   ],
   imports: [
     BrowserModule,

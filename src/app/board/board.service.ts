@@ -14,7 +14,7 @@ export class BoardService {
 
   get(mac: string): Promise<BoardConfig> {
     return this.http
-      .get(`${this.apiUrl}/${mac}`)
+      .get(`${this.apiUrl}/${mac}.json`)
       .toPromise()
       .then( response => new BoardConfig( response.json()) )
       .catch(this.handleError);
