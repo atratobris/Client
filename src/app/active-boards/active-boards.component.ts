@@ -33,7 +33,7 @@ export class ActiveBoardsComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
+    this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
   }
 
 }
