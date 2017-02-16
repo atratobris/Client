@@ -21,7 +21,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     this.sketchService.all().then( (sketches: Sketch[] ) => {
       this.sketches = sketches;
     });
-    var types = Object.keys(SketchStatus)
+    const types = Object.keys(SketchStatus)
     this.sketchTypes = types.slice(types.length/2)
   }
 
