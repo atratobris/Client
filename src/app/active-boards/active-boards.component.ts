@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../board/board.service';
 import { BoardConfig } from '../board-config';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import {AnonymousSubscription} from "rxjs/Subscription";
 
 @Component({
@@ -15,11 +15,11 @@ export class ActiveBoardsComponent implements OnInit, OnDestroy {
 
   constructor(private boardService: BoardService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.refreshData();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
@@ -33,7 +33,7 @@ export class ActiveBoardsComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToData(): void {
-      this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
+    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshData());
   }
 
 }
