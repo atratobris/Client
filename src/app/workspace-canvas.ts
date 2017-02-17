@@ -52,12 +52,20 @@ export class WorkspaceCanvas {
     return true;
   }
 
+  removeBoardLinks(board: Board): void {
+    for(let idx in this.links){
+      let link = this.links[parseInt(idx)];
+      if( link.getEndBoard() === board || link.getStartBoard())
+        this.links.splice(parseInt(idx), 1 );
+    }
+  }
+
   deleteAtPoint(x , y): BoardConfig {
     const clickedBoard: Board = this.findAtPoint(x, y);
     if ( clickedBoard ) {
-
       const index: number = this.boards.indexOf(clickedBoard);
       this.boards.splice(index, 1);
+      this.removeBoardLinks(clickedBoard);
       return clickedBoard.getBoardConfig();
     } else {
       console.log('Nothing to delete');

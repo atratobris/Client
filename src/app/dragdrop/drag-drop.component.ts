@@ -24,10 +24,10 @@ import { Point, PointInterface } from '../point';
 export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() operationMode: string;
+  @Input() sketchId: number;
   @Output() onSelected = new EventEmitter<BoardConfig>();
   @Output() onDeselected = new EventEmitter<void>();
   @ViewChild('myCanvas') canvasRef: ElementRef;
-  @Input() sketchId: number;
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
   private rect: ClientRect;
@@ -132,7 +132,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(){
     this.getSketch(this.sketchId);
-    this.getAvailableBoards();
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
   }
@@ -140,11 +139,12 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   getSketch(id: number): void {
     this.sketchService.get(id).then( (sketch: Sketch) => {
       this.sketch = sketch;
+      this.getAvailableBoards(sketch);
       this.loadSketch();
     });
   }
 
-  getAvailableBoards():void {
+  getAvailableBoards(sketch: Sketch):void {
     this.boardService.all().then( (boards) => {
       for(let boardInUse of this.sketch.getBoards()){
         var idx_to_remove = boards.length;
@@ -177,7 +177,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (changes["sketchId"]) {
       this.boardService.all().then( (boards) => this.availableBoards = boards );
       this.getSketch(this.sketchId)
-      this.getAvailableBoards();
     }
   }
 
@@ -197,11 +196,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       if(deletedBoard)
         this.availableBoards.push(deletedBoard);
     }
-  }
-
-  changeMode(operation: string): void {
-    this.operationMode = operation;
-    this.deselect();
   }
 
   select(): void {

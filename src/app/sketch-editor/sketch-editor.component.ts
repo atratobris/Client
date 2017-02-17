@@ -18,25 +18,16 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   @Input() sketchId: number;
   private operationMode: string;
   private selected = false;
-  private sketch: Sketch;
   private selectedBoard: BoardConfig;
 
   constructor(private ngZone: NgZone, private boardService: BoardService, private sketchService: SketchService) {}
 
   ngOnInit() {
-    this.getSketch(this.sketchId);
-  }
 
-  getSketch(id: number): void {
-    this.sketchService.get(id).then( (sketch: Sketch) => {
-      this.sketch = sketch;
-    });
   }
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
-    if (changes["sketchId"]){
-      this.getSketch(this.sketchId);
-    }
+
   }
 
   ngAfterViewInit() {
@@ -60,6 +51,5 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   onDeselected(): void {
     this.selected = false;
   }
-
 
 }

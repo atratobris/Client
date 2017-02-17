@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div *ngIf="sketch" class="col-sm-9">
+  <div *ngIf="sketchId" class="col-sm-9">
     <button (click)="changeMode('Add')"> Add </button>
     <button (click)="changeMode('Delete')"> Delete </button>
     <button (click)="changeMode('Drag')"> Drag </button>
@@ -8,7 +8,7 @@
     <button (click)="changeMode('Link')"> Link </button>
     <button (click)="changeMode('Save')"> Save </button>
     <div>{{operationMode}}</div>
-    <app-drag-drop [sketchId]="sketch.id" [operationMode]="operationMode" (onSelected)="onSelected($event)" (onDeselected)="onDeselected()"></app-drag-drop>
+    <app-drag-drop [sketchId]="sketchId" [operationMode]="operationMode" (onSelected)="onSelected($event)" (onDeselected)="onDeselected()"></app-drag-drop>
   </div>
   <div class="col-sm-3">
     <div *ngIf="selected">
