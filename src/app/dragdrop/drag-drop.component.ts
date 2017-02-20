@@ -145,19 +145,19 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getAvailableBoards():void {
-    console.log(this.sketch);
-    this.boardService.all().then( (boards) => {
-      for(let boardInUse of this.sketch.getBoards()){
-        var idx_to_remove = boards.length;
-        for(let i in boards){
-          if (boards[i].getMac() == boardInUse.mac) {
-            idx_to_remove = parseInt(i);
+    if (this.availableBoards) return;
+    this.availableBoards = [];
+    this.boardService.all().then( (boards: BoardConfig[]) => {
+      for (let idx in boards) {
+        let remove: boolean = false;
+        for (let board of this.sketch.getBoards()) {
+          if (boards[idx].getMac() === board.mac) {
+            remove = true;
             break;
           }
         }
-        boards.splice(idx_to_remove);
+        if (!remove) this.availableBoards.push(boards[idx]);
       }
-      this.availableBoards = boards;
       console.log(this.availableBoards);
     });
   }

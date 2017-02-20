@@ -47,6 +47,10 @@ export class BoardConfig {
     this.id = id;
   }
 
+  getId(): number {
+    return this.id;
+  }
+
   setColour(): void {
     this.colour = this.colour || Colours.getColour(this.id);
   }
