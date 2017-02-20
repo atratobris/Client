@@ -1,39 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BoardService } from '../board/board.service';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { BoardConfig } from '../board-config';
-import { Observable } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-active-boards',
   templateUrl: './active-boards.component.html',
   styleUrls: ['./active-boards.component.sass']
 })
-export class ActiveBoardsComponent implements OnInit, OnDestroy {
+export class ActiveBoardsComponent {
+  @Input()
   boards: BoardConfig[];
-  private timerSubscription: AnonymousSubscription;
 
-  constructor(private boardService: BoardService) { }
-
-  public ngOnInit() {
-    this.refreshData();
-  }
-
-  public ngOnDestroy() {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
-  }
-
-  private refreshData(): void {
-    this.boardService.all().then( (boards: BoardConfig[]) => {
-      this.boards = boards;
-      this.subscribeToData();
-    })
-  }
-
-  private subscribeToData(): void {
-    // this.timerSubscription = Observable.timer(10000).first().subscribe(() => this.refreshData());
-  }
+  constructor() { }
 
 }

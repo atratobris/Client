@@ -1,7 +1,12 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, OnDestroy } from '@angular/core';
 import { SketchService } from '../sketch/sketch.service';
 
 import { Sketch, SketchStatus } from '../sketch/sketch';
+import { BoardService } from '../board/board.service';
+import { BoardConfig } from '../board-config';
+import { Observable } from 'rxjs/Rx';
+import { AnonymousSubscription } from "rxjs/Subscription";
+
 @Component({
   selector: 'app-sketch-manager',
   templateUrl: './sketch-manager.component.html',
@@ -10,12 +15,15 @@ import { Sketch, SketchStatus } from '../sketch/sketch';
 
 export class SketchManagerComponent implements OnInit, AfterViewInit {
 
-  sketchTypes: string[];
+  public sketchTypes: string[];
+  public boards: BoardConfig[];
+
   private sketches :Sketch[];
   private selectedSketch: Sketch;
   private editorOn: boolean;
+  private timerSubscription: AnonymousSubscription;
 
-  constructor(private ngZone: NgZone, private sketchService: SketchService) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService, private boardService: BoardService) {}
 
   ngOnInit() {
     this.sketchService.all().then( (sketches: Sketch[] ) => {
@@ -23,10 +31,28 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     });
     const types = Object.keys(SketchStatus)
     this.sketchTypes = types.slice(types.length/2)
+    this.refreshBoardData();
   }
 
   ngAfterViewInit() {
 
+  }
+
+  public ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  private refreshBoardData(): void {
+    this.boardService.all().then( (boards: BoardConfig[]) => {
+      this.boards = boards;
+      this.subscribeToData();
+    })
+  }
+
+  private subscribeToData(): void {
+    this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshBoardData());
   }
 
   onStatusChange(event, id){

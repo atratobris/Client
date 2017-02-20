@@ -21,7 +21,6 @@ export class Sketch {
   private links: LinkInterface[];
 
   constructor(sketch: SketchInterface) {
-    // debugger
     this.id = sketch.id;
     this.boards = sketch.boards;
     this.links = sketch.links;
