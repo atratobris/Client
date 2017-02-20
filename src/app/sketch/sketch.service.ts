@@ -45,7 +45,7 @@ export class SketchService {
   }
 
   update(sketch: Sketch): Promise<Sketch> {
-    const url = `${this.apiUrl}/${sketch.getId()}`;
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
       .put(url, JSON.stringify(sketch), {headers: this.headers})
       .toPromise()

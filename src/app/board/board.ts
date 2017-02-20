@@ -32,6 +32,7 @@ export class Board {
       this.boardConfig.setMac(posXorBoardInterface.mac);
     }
     this.path = new Path2D();
+
   }
 
   prepare(): BoardInterface {

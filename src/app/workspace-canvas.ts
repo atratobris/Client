@@ -3,7 +3,7 @@ import { Point } from './point';
 import { Link, LinkInterface } from './link';
 import { BoardConfig } from './board-config';
 
-import { Sketch, SketchStatus } from './sketch/sketch';
+import { Sketch } from './sketch/sketch';
 
 export class WorkspaceCanvas {
   private ctx: CanvasRenderingContext2D;
@@ -252,7 +252,7 @@ export class WorkspaceCanvas {
       id: this.sketch.getId(),
       boards: boardsInterface,
       links: linksInterface,
-      status: SketchStatus.pending
+      status: "pending"
     });
   }
 
