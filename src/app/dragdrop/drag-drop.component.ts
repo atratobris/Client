@@ -132,7 +132,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(){
     this.getSketch(this.sketchId);
-    this.getAvailableBoards();
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
   }
@@ -141,12 +140,13 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.sketchService.get(id).then( (sketch: Sketch) => {
       this.sketch = sketch;
       this.loadSketch();
+      this.getAvailableBoards();
     });
   }
 
   getAvailableBoards():void {
+    console.log(this.sketch);
     this.boardService.all().then( (boards) => {
-      if (!this.sketch) return; // CATALIN: At some point, this is undefined
       for(let boardInUse of this.sketch.getBoards()){
         var idx_to_remove = boards.length;
         for(let i in boards){
@@ -176,9 +176,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     if (changes["sketchId"]) {
-      this.boardService.all().then( (boards) => this.availableBoards = boards );
       this.getSketch(this.sketchId)
-      this.getAvailableBoards();
     }
   }
 
@@ -187,8 +185,10 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   clicked(event): void {
+    console.info(`Clicked(event) with operation ${this.operationMode}`);
     if (this.operationMode === 'Add') {
-      if(this.availableBoards.length > 0){
+      console.log(this.availableBoards);
+      if(this.availableBoards.length > 0) {
         const drawn = this.wsc.drawBoardAt(event.clientX - this.rect.left, event.clientY - this.rect.top, this.availableBoards[0]);
         if(drawn)
           this.availableBoards.splice(0, 1);
