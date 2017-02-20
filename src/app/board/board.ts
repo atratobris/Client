@@ -1,7 +1,7 @@
-import { Point, PointInterface } from './point';
-import { BoardConfig } from './board-config';
+import { Point, PointInterface } from '../point';
+import { BoardConfig } from '../board-config';
 
-export class BoardInterface {
+export interface BoardInterface {
   centre: PointInterface;
   width: number;
   height: number;
@@ -113,6 +113,10 @@ export class Board {
 
   getBoardConfig(): BoardConfig {
     return this.boardConfig;
+  }
+
+  setBoardConfig(conf: BoardConfig): void {
+    this.boardConfig = conf;
   }
 
   copy(): Board {

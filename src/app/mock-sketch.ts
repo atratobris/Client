@@ -1,4 +1,4 @@
-import { Board } from './board';
+import { Board } from './board/board';
 import { BoardConfig } from './board-config';
 import { Link } from './link';
 

@@ -1,9 +1,9 @@
-import { Board, BoardInterface } from './board';
+import { Board, BoardInterface } from './board/board';
 import { Point } from './point';
 import { Link, LinkInterface } from './link';
 import { BoardConfig } from './board-config';
 
-import { Sketch } from './sketch/sketch';
+import { Sketch, SketchStatus } from './sketch/sketch';
 
 export class WorkspaceCanvas {
   private ctx: CanvasRenderingContext2D;
@@ -30,7 +30,12 @@ export class WorkspaceCanvas {
     this.height = height;
   }
 
-  drawAtPoint( x, y ): boolean {
+  drawBoardAt( x, y, b: BoardConfig):boolean {
+    this.cursor.setBoardConfig(b);
+    return this.drawAtPoint(x, y);
+  }
+
+  drawAtPoint( x, y): boolean {
     // this.ctx.clearRect(0, 0, 500, 500);
     const new_board: Board = this.cursor.copy();
     new_board.setCentre(this.cursor.getCentre());
@@ -47,13 +52,16 @@ export class WorkspaceCanvas {
     return true;
   }
 
-  deleteAtPoint(x , y): void {
+  deleteAtPoint(x , y): BoardConfig {
     const clickedBoard: Board = this.findAtPoint(x, y);
     if ( clickedBoard ) {
+
       const index: number = this.boards.indexOf(clickedBoard);
       this.boards.splice(index, 1);
+      return clickedBoard.getBoardConfig();
     } else {
       console.log('Nothing to delete');
+      return null;
     }
   }
 
@@ -203,7 +211,8 @@ export class WorkspaceCanvas {
     return new Sketch({
       id: this.sketch.getId(),
       boards: boardsInterface,
-      links: linksInterface
+      links: linksInterface,
+      status: SketchStatus.pending
     });
   }
 

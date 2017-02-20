@@ -15,8 +15,8 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  ngOnChanges(): void {
-    // console.log(this.board);
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+
   }
 
 }

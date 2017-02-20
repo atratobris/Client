@@ -2,8 +2,10 @@ import {
   Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit,
   NgZone, HostListener, Input, EventEmitter, Output, SimpleChange, OnChanges
 } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { Board } from '../board';
+import { Board } from '../board/board';
+import { BoardService } from '../board/board.service';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
@@ -20,25 +22,25 @@ import { Point, PointInterface } from '../point';
   encapsulation: ViewEncapsulation.None,
 })
 export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() myboards: Board[];
+
   @Input() operationMode: string;
   @Output() onSelected = new EventEmitter<BoardConfig>();
   @Output() onDeselected = new EventEmitter<void>();
   @ViewChild('myCanvas') canvasRef: ElementRef;
+  @Input() sketchId: number;
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
   private rect: ClientRect;
-  private boards: Board[];
-  // private operationMode: string;
   private dragging = false;
   private selected = false;
   private canSelect = false;
   private linking = false;
   private selectedBoard: BoardConfig;
+  private availableBoards: BoardConfig[];
 
   private sketch: Sketch;
 
-  width = 1000;
+  width = 600;
   height = 500;
 
   @HostListener('mouseleave', ['$event'])
@@ -49,6 +51,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.linking = false;
     this.canSelect = false;
   }
+
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
@@ -73,7 +76,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.operationMode === 'Drag') {
       this.dragging = this.wsc.dragStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
     }
-    if (this.operationMode === 'Select') {
+    if (this.operationMode === 'Select' || this.operationMode === "LinkRemove") {
       if (this.wsc.select(event.clientX - this.rect.left, event.clientY - this.rect.top)) {
         this.select();
       } else {
@@ -123,22 +126,42 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   //   }
   // }
 
-  constructor(private ngZone: NgZone, private sketchService: SketchService) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService,
+                                      private route: ActivatedRoute,
+                                      private boardService: BoardService ) {}
 
-  ngOnInit() {
+  ngOnInit(){
+    this.getSketch(this.sketchId);
+    this.getAvailableBoards();
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
-    this.getSketch();
   }
 
-  getSketch(): void {
-    this.sketchService.get(1).then( (sketch: Sketch) => {
+  getSketch(id: number): void {
+    this.sketchService.get(id).then( (sketch: Sketch) => {
       this.sketch = sketch;
       this.loadSketch();
-    } );
+    });
   }
 
-  ngAfterViewInit() {
+  getAvailableBoards():void {
+    this.boardService.all().then( (boards) => {
+      for(let boardInUse of this.sketch.getBoards()){
+        var idx_to_remove = boards.length;
+        for(let i in boards){
+          if (boards[i].getMac() == boardInUse.mac) {
+            idx_to_remove = parseInt(i);
+            break;
+          }
+        }
+        boards.splice(idx_to_remove);
+      }
+      this.availableBoards = boards;
+      console.log(this.availableBoards);
+    });
+  }
+
+  ngAfterViewInit(): void{
     this.refreshRect();
     this.ngZone.runOutsideAngular(() => this.wsc.draw());
   }
@@ -147,8 +170,14 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (changes['operationMode']) {
       this.deselect();
       if (this.operationMode === 'Save') {
-        this.sketchService.update(this.wsc.buildSketch());
+        this.sketch = this.wsc.buildSketch();
+        this.sketchService.update( this.sketch );
       }
+    }
+    if (changes["sketchId"]) {
+      this.boardService.all().then( (boards) => this.availableBoards = boards );
+      this.getSketch(this.sketchId)
+      this.getAvailableBoards();
     }
   }
 
@@ -157,9 +186,16 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
   clicked(event): void {
     if (this.operationMode === 'Add') {
-      const drawn = this.wsc.drawAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      if(this.availableBoards.length > 0){
+        const drawn = this.wsc.drawBoardAt(event.clientX - this.rect.left, event.clientY - this.rect.top, this.availableBoards[0]);
+        if(drawn)
+          this.availableBoards.splice(0, 1);
+        console.log(this.availableBoards)
+      }
     } else if (this.operationMode === 'Delete') {
-      this.wsc.deleteAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      let deletedBoard = this.wsc.deleteAtPoint(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      if(deletedBoard)
+        this.availableBoards.push(deletedBoard);
     }
   }
 

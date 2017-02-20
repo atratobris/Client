@@ -1,0 +1,12 @@
+<div *ngIf="boards" class="row">
+  <div class="col-2" *ngFor="let board of boards">
+    <div class="row board">
+      <div class="col-6">
+        Mac: <p class="text-muted">{{board.mac}}</p>
+      </div>
+      <div class="col-6" [class]="board.status">
+        {{board.status}}
+      </div>
+    </div>
+  </div>
+</div>
