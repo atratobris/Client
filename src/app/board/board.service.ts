@@ -4,7 +4,6 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { BoardConfig, IBoardConfig } from '../board-config';
 import { Board } from './board';
-import { Colours } from '../lib/colours';
 
 @Injectable()
 export class BoardService {
@@ -27,7 +26,6 @@ export class BoardService {
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( board: IBoardConfig, idx: number ) => {
-          board["colour"] = Colours.getColour(idx)
           return new BoardConfig(board);
         });
       })

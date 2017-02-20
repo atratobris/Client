@@ -146,6 +146,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   getAvailableBoards():void {
     this.boardService.all().then( (boards) => {
+      if (!this.sketch) return; // CATALIN: At some point, this is undefined
       for(let boardInUse of this.sketch.getBoards()){
         var idx_to_remove = boards.length;
         for(let i in boards){
@@ -184,6 +185,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   refreshRect() {
     this.rect = this.canvasRef.nativeElement.getBoundingClientRect();
   }
+
   clicked(event): void {
     if (this.operationMode === 'Add') {
       if(this.availableBoards.length > 0){
@@ -218,6 +220,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   loadSketch(): void {
+    console.log(this.sketch);
     this.wsc.loadSketch(this.sketch);
   }
 

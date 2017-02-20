@@ -1,4 +1,7 @@
+import { Colours } from './lib/colours';
+
 export interface IBoardConfig {
+  id: number;
   mac: string;
   type: string;
   subtype: string;
@@ -10,6 +13,7 @@ export interface IBoardConfig {
 }
 
 export class BoardConfig {
+  private id: number;
   private mac: string;
   private type: string;
   private name: string;
@@ -17,9 +21,10 @@ export class BoardConfig {
   private status: string;
   public button: boolean;
   public last_activity: string;
-  public colour: string;
+  private colour: string;
 
   constructor(obj?: IBoardConfig) {
+    this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.type = obj && obj.type || 'input';
     this.subtype = obj && obj.subtype || 'button';
@@ -27,7 +32,7 @@ export class BoardConfig {
     this.button = obj && obj.button || false;
     this.status = obj && obj.status || "offline";
     this.last_activity = obj && obj.last_activity;
-    this.colour = obj && obj.colour;
+    this.colour = obj && obj.colour || Colours.getColour(this.id);
   }
 
   setMac(mac: string): void {
@@ -36,5 +41,17 @@ export class BoardConfig {
 
   getMac(): string {
     return this.mac;
+  }
+
+  setId(id: number): void {
+    this.id = id;
+  }
+
+  setColour(): void {
+    this.colour = this.colour || Colours.getColour(this.id);
+  }
+
+  getColour(): string {
+    return this.colour;
   }
 }
