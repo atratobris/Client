@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../board/board.service';
 import { BoardConfig } from '../board-config';
 import { Observable } from 'rxjs/Rx';
-import {AnonymousSubscription} from "rxjs/Subscription";
+import { AnonymousSubscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-active-boards',
@@ -33,7 +33,7 @@ export class ActiveBoardsComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToData(): void {
-    this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
+    // this.timerSubscription = Observable.timer(10000).first().subscribe(() => this.refreshData());
   }
 
 }

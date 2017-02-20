@@ -5,6 +5,7 @@ export interface IBoardConfig {
   name: string;
   button: boolean;
   status: string;
+  last_activity: string;
 }
 
 export class BoardConfig {
@@ -14,6 +15,7 @@ export class BoardConfig {
   private subtype: string;
   private status: string;
   public button: boolean;
+  public last_activity: string;
 
   constructor(obj?: IBoardConfig) {
     this.mac = obj && obj.mac || '';
@@ -22,6 +24,7 @@ export class BoardConfig {
     this.name = obj && obj.name || `${this.type} Component`;
     this.button = obj && obj.button || false;
     this.status = obj && obj.status || "offline";
+    this.last_activity = obj && obj.last_activity;
   }
 
   setMac(mac: string): void {

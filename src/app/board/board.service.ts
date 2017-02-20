@@ -25,7 +25,7 @@ export class BoardService {
       .get(`${this.apiUrl}.json`)
       .toPromise()
       .then( response => {
-        return Array.from(response.json(), ( x: IBoardConfig )=> {
+        return Array.from(response.json(), ( x: IBoardConfig ) => {
           return new BoardConfig(x);
         });
       })
