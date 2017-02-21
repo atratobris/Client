@@ -10,7 +10,7 @@ import { AnonymousSubscription } from "rxjs/Subscription";
 @Component({
   selector: 'app-sketch-manager',
   templateUrl: './sketch-manager.component.html',
-  styleUrls: []
+  styleUrls: ['./sketch-manager.component.sass']
 })
 
 export class SketchManagerComponent implements OnInit, AfterViewInit {

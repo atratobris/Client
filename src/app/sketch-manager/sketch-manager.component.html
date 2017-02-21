@@ -2,13 +2,13 @@
   <div class="col-sm-3">
     <div *ngIf="sketches">
       <ul>
-        <li *ngFor="let sketch of sketches; let idx = index">
+        <li class="sketch {{sketch.status}}" *ngFor="let sketch of sketches; let idx = index">
           id: {{idx+1}}, status:
           <select [(ngModel)]="sketch.status" (ngModelChange)="onStatusChange($event, idx)">
             <option *ngFor="let status of sketchTypes" [ngValue]="status">{{status}}</option>
           </select>
 
-          <button type="button" name="button" (click)="onSketchEdit(idx)">Edit</button>
+          <button class="btn btn-link" type="button" name="button" (click)="onSketchEdit(idx)">Edit</button>
         </li>
       </ul>
       <button type="button" name="button" (click)="newSketch()" >NewSketch</button>

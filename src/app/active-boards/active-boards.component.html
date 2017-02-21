@@ -4,7 +4,7 @@
       <p class="text-right">
         <span [class]="board.status">{{board.status}}</span>
       </p>
-      <p class="text-center">{{board.mac}}</p>
+      <p class="text-center mac">{{board.mac}}</p>
       <p *ngIf="board.status === 'offline'" class="text-muted text-center activity">
         last active {{board.last_activity}}
       </p>
