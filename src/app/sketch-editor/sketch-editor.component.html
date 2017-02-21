@@ -20,9 +20,13 @@
     <div *ngIf="boardSelected">
       <h2>Board details!</h2>
       <div>
-        <label>type: </label>{{selectedBoard.type}}</div>
+        <label>type: </label>
+        <input [(ngModel)]="selectedBoard.maintype" placeholder="type" />
+      </div>
       <div>
-        <label>subtype: </label>{{selectedBoard.subtype}}</div>
+        <label>subtype: </label>
+        <input [(ngModel)]="selectedBoard.subtype" placeholder="subtype" />
+      </div>
       <div>
         <label>name: </label>
         <input [(ngModel)]="selectedBoard.name" placeholder="name" />
