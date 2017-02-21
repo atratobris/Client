@@ -16,17 +16,16 @@ export class BrowserDetails {
   }
 
   static browser(userAgent): any {
-    let version;
-    let browserName  = navigator.appName;
+    let version, name;
     let majorVersion = parseInt(navigator.appVersion,10);
     let verOffset, ix;
 
     if ((verOffset = userAgent.indexOf("Chrome")) != -1) {
-     browserName = "Chrome";
+     name = "Chrome";
      version = userAgent.substring(verOffset + 7);
     }
     else if ((verOffset = userAgent.indexOf("Firefox")) != -1) {
-     browserName = "Firefox";
+     name = "Firefox";
      version = userAgent.substring(verOffset + 8);
     }
 
