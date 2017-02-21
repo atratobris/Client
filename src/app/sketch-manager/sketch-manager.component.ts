@@ -6,6 +6,7 @@ import { BoardService } from '../board/board.service';
 import { BoardConfig } from '../board-config';
 import { Observable } from 'rxjs/Rx';
 import { AnonymousSubscription } from "rxjs/Subscription";
+import { BrowserDetails } from '../lib/browser-details';
 
 @Component({
   selector: 'app-sketch-manager',
@@ -17,6 +18,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
 
   public sketchTypes: string[];
   public boards: BoardConfig[];
+  public browserDetails = BrowserDetails.getDetails();
 
   private sketches :Sketch[];
   private selectedSketch: Sketch;

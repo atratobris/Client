@@ -15,6 +15,7 @@
     </div>
   </div>
   <div class="col-sm-9">
+    {{browserDetails}}
     <app-active-boards [boards]="boards"></app-active-boards>
     <div *ngIf="selectedSketch">
       <app-sketch-editor [sketchId]="selectedSketch.id" ></app-sketch-editor>
