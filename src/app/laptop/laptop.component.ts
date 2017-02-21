@@ -15,7 +15,7 @@ export class LaptopComponent implements OnInit {
     this.ng2cable.subscribe(this.url, 'SketchChannel');
     //By default event name is 'channel name'. But you can pass from backend field { action: 'MyEventName'}
 
-    this.broadcaster.on<string>('ChatChannel').subscribe(
+    this.broadcaster.on<string>('SketchChannel').subscribe(
       message => {
         console.log(message);
       }
