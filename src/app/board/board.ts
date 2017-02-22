@@ -14,6 +14,7 @@ export class Board {
   private height: number;
   private offset: Point;
   private boardConfig: BoardConfig;
+  private path: Path2D;
 
   constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig);
   constructor(centre: BoardInterface);
@@ -32,6 +33,8 @@ export class Board {
       this.boardConfig.setId(posXorBoardInterface.id);
       this.boardConfig.setColour();
     }
+    this.path = new Path2D();
+
   }
 
   prepare(): BoardInterface {
@@ -47,7 +50,9 @@ export class Board {
     const colour = this.boardConfig.getColour();
     const oldColour = ctx.fillStyle;
     ctx.fillStyle = colour;
-    ctx.fillRect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);
+    this.path = new Path2D();
+    this.path.rect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);
+    ctx.fill(this.path);
     ctx.fillStyle = oldColour;
   }
 
@@ -90,15 +95,12 @@ export class Board {
     }
   }
 
-  containsPoint(x: number, y: number): boolean {
-    if ( this.getPosX() - this.getWidth() / 2 <= x &&
-      this.getPosX() + this.getWidth() / 2 >= x &&
-      this.getPosY() - this.getHeight() / 2 <= y &&
-      this.getPosY() + this.getHeight() / 2 >= y ) {
-      return true;
-    } else {
-      return false;
-    }
+  getPath(): Path2D {
+    return this.path;
+  }
+
+  containsPoint(ctx: CanvasRenderingContext2D, x: number, y: number): boolean {
+    return ctx.isPointInPath(this.path, x, y)
   }
 
   set(x: number, y: number): void {

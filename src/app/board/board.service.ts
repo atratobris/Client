@@ -31,7 +31,7 @@ export class BoardService {
       })
   }
 
-  update(board: Board): Promise<BoardConfig> {
+  update(board: BoardConfig): Promise<BoardConfig> {
     const url = `${this.apiUrl}/${board.getMac()}`;
     return this.http
       .put(url, JSON.stringify(board), {headers: this.headers})

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 
 import { BoardConfig } from '../board-config';
+import { BoardService } from '../board/board.service';
+
+import { Link } from '../link';
 
 @Component({
   selector: 'app-board-details',
@@ -9,8 +12,9 @@ import { BoardConfig } from '../board-config';
 })
 export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() board: BoardConfig;
+  @Input() link: Link;
 
-  constructor() { }
+  constructor(private boardService: BoardService) { }
 
   ngOnInit(): void {
   }

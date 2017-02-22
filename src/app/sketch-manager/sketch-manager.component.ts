@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, OnDestroy } from '@angular/core';
 import { SketchService } from '../sketch/sketch.service';
 
-import { Sketch, SketchStatus } from '../sketch/sketch';
+import { Sketch } from '../sketch/sketch';
 import { BoardService } from '../board/board.service';
 import { BoardConfig } from '../board-config';
 import { Observable } from 'rxjs/Rx';
@@ -29,9 +29,8 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     this.sketchService.all().then( (sketches: Sketch[] ) => {
       this.sketches = sketches;
     });
-    const types = Object.keys(SketchStatus)
-    this.sketchTypes = types.slice(types.length/2)
     this.refreshBoardData();
+    this.sketchTypes = ["pending", "active", "closed"]
   }
 
   ngAfterViewInit() {

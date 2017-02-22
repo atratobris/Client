@@ -3,20 +3,14 @@ import { LinkInterface } from '../link';
 
 export interface SketchInterface {
   id: number;
-  status: SketchStatus;
+  status: string;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
 
-export enum SketchStatus {
-    pending = 0,
-    active = 1,
-    closed = 2
-}
-
 export class Sketch {
   private id: number;
-  private status: SketchStatus;
+  private status: string;
   private boards: BoardInterface[];
   private links: LinkInterface[];
 
@@ -39,7 +33,7 @@ export class Sketch {
     return this.id;
   }
 
-  changeStatus(status: SketchStatus){
+  changeStatus(status: string){
     this.status  = status;
   }
 }
