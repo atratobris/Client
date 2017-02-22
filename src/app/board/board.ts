@@ -30,6 +30,8 @@ export class Board {
       this.width = posXorBoardInterface.width;
       this.height = posXorBoardInterface.height;
       this.boardConfig.setMac(posXorBoardInterface.mac);
+      this.boardConfig.setId(posXorBoardInterface.id);
+      this.boardConfig.setColour();
     }
     this.path = new Path2D();
 
@@ -45,9 +47,13 @@ export class Board {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+    const colour = this.boardConfig.getColour();
+    const oldColour = ctx.fillStyle;
+    ctx.fillStyle = colour;
     this.path = new Path2D();
     this.path.rect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);
     ctx.fill(this.path);
+    ctx.fillStyle = oldColour;
   }
 
   getWidth(): number {

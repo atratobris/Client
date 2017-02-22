@@ -2,6 +2,7 @@ import './rxjs-extensions';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { Ng2Cable, Broadcaster } from 'ng2-cable/js/index';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -17,6 +18,7 @@ import { SketchManagerComponent } from './sketch-manager/sketch-manager.componen
 import { SketchService } from './sketch/sketch.service';
 import { BoardService } from './board/board.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
+import { LaptopComponent } from './laptop/laptop.component';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { ActiveBoardsComponent } from './active-boards/active-boards.component';
     BoardDetailsComponent,
     SketchManagerComponent,
     ActiveBoardsComponent,
+    LaptopComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { ActiveBoardsComponent } from './active-boards/active-boards.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService, BoardService],
+  providers: [SketchService, BoardService, Ng2Cable, Broadcaster],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -145,25 +145,24 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   getSketch(id: number): void {
     this.sketchService.get(id).then( (sketch: Sketch) => {
       this.sketch = sketch;
-      this.getAvailableBoards(sketch);
       this.loadSketch();
+      this.getAvailableBoards();
     });
   }
 
-  getAvailableBoards(sketch: Sketch):void {
-    this.boardService.all().then( (boards) => {
-      for(let boardInUse of this.sketch.getBoards()){
-        var idx_to_remove = boards.length;
-        for(let i in boards){
-          if (boards[i].getMac() == boardInUse.mac) {
-            idx_to_remove = parseInt(i);
+  getAvailableBoards():void {
+    this.availableBoards = this.availableBoards || [];
+    this.boardService.all().then( (boards: BoardConfig[]) => {
+      for (let idx in boards) {
+        let remove: boolean = false;
+        for (let board of this.sketch.getBoards()) {
+          if (boards[idx].getMac() === board.mac) {
+            remove = true;
             break;
           }
         }
-        boards.splice(idx_to_remove);
+        if (!remove) this.availableBoards.push(boards[idx]);
       }
-      this.availableBoards = boards;
-      console.log(this.availableBoards);
     });
   }
 
@@ -181,7 +180,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     if (changes["sketchId"]) {
-      this.boardService.all().then( (boards) => this.availableBoards = boards );
       this.getSketch(this.sketchId)
     }
   }
@@ -197,7 +195,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         const drawn = this.wsc.drawBoardAt(selectedPoint, this.availableBoards[0]);
         if(drawn)
           this.availableBoards.splice(0, 1);
-        console.log(this.availableBoards)
       }
     } else if (this.operationMode === 'Delete') {
       // this.wsc.checkPoint(selectedPoint);
@@ -234,6 +231,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   loadSketch(): void {
+    console.log(this.sketch);
     this.wsc.loadSketch(this.sketch);
   }
 

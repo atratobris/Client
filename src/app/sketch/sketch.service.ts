@@ -31,7 +31,7 @@ export class SketchService {
         return Array.from(response.json(), ( x: SketchInterface )=> {
           return new Sketch(x);
         });
-      }).catch( this.handleError);
+      }).catch( this.handleError );
   }
 
   create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
@@ -53,7 +53,6 @@ export class SketchService {
       .catch(this.handleError);
 
   }
-
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
