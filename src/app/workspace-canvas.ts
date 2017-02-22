@@ -1,6 +1,6 @@
 import { Board, BoardInterface } from './board/board';
 import { Point } from './point';
-import { Link, LinkInterface } from './link';
+import { Link, LinkInterface } from './link/link';
 import { BoardConfig } from './board-config';
 
 import { Sketch } from './sketch/sketch';

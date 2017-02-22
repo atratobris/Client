@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board/board';
-import { Link } from '../link';
+import { Link } from '../link/link';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
@@ -16,7 +16,7 @@ import { SketchService } from '../sketch/sketch.service';
 })
 export class SketchEditorComponent implements OnInit, AfterViewInit {
 
-  @Input() sketchId: number;
+  @Input() sketch: Sketch;
   private operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
@@ -30,7 +30,9 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
-
+    if (changes["sketch"]) {
+      console.log("from sketch editor:", this.sketch)
+    }
   }
 
   ngAfterViewInit() {
@@ -41,8 +43,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   changeMode(operation: string): void {
     this.operationMode = operation;
-    this.boardSelected = false;
-    this.linkSelected = false;
+    this.onLinkDeselected();
+    this.onBoardDeselected();
   }
 
   onBoardSelected(selected_board: BoardConfig): void {
@@ -55,19 +57,15 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   onLinkSelected(link: Link): void{
     this.linkSelected = true;
     this.selectedLink = link;
-    console.log(this.selectedLink);
   }
-
-  updateBoard(board: BoardConfig): void {
-    this.boardService.update(board);
-  }
-
 
   onLinkDeselected(): void {
     this.linkSelected = false;
+    delete this.selectedLink;
   }
   onBoardDeselected(): void {
     this.boardSelected = false;
+    delete this.selectedBoard;
   }
 
 }

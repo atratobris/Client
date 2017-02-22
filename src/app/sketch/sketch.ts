@@ -1,5 +1,5 @@
 import { BoardInterface } from '../board/board';
-import { LinkInterface } from '../link';
+import { LinkInterface } from '../link/link';
 
 export interface SketchInterface {
   id: number;
