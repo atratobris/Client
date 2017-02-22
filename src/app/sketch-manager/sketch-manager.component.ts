@@ -22,6 +22,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
       this.sketches = sketches;
     });
     this.sketchTypes = ["pending", "active", "closed"]
+
   }
 
   ngAfterViewInit() {

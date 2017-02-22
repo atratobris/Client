@@ -17,7 +17,7 @@ export class SketchService {
 
   get(id: number): Promise<Sketch> {
     return this.http
-      .get(`${this.apiUrl}/${id}`)
+      .get(`${this.apiUrl}/${id}.json`)
       .toPromise()
       .then( response => new Sketch(response.json()) )
       .catch( this.handleError );
@@ -25,7 +25,7 @@ export class SketchService {
 
   all(): Promise<Sketch[]> {
     return this.http
-      .get(`${this.apiUrl}`)
+      .get(`${this.apiUrl}.json`)
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( x: SketchInterface )=> {

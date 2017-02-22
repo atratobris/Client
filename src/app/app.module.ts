@@ -16,6 +16,7 @@ import { SketchManagerComponent } from './sketch-manager/sketch-manager.componen
 
 import { SketchService } from './sketch/sketch.service';
 import { BoardService } from './board/board.service';
+import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { BoardService } from './board/board.service';
     DragDropComponent,
     BoardDetailsComponent,
     SketchManagerComponent,
+    ActiveBoardsComponent,
   ],
   imports: [
     BrowserModule,
