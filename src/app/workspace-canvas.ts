@@ -3,7 +3,7 @@ import { Point } from './point';
 import { Link, LinkInterface } from './link';
 import { BoardConfig } from './board-config';
 
-import { Sketch, SketchStatus } from './sketch/sketch';
+import { Sketch } from './sketch/sketch';
 
 export class WorkspaceCanvas {
   private ctx: CanvasRenderingContext2D;
@@ -13,10 +13,14 @@ export class WorkspaceCanvas {
   private sketch: Sketch;
   private cursor: Board;
   private savedBoard: Board;
+
   private selectedBoard: Board;
+  private selectedLink: Link;
+
   private currentLink: Link;
   private width: number;
   private height: number;
+  private completePath: Path2D;
 
 
   constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
@@ -30,9 +34,9 @@ export class WorkspaceCanvas {
     this.height = height;
   }
 
-  drawBoardAt( x, y, b: BoardConfig):boolean {
+  drawBoardAt(selectedPoint: Point, b: BoardConfig):boolean {
     this.cursor.setBoardConfig(b);
-    return this.drawAtPoint(x, y);
+    return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
 
   drawAtPoint( x, y): boolean {
@@ -52,12 +56,28 @@ export class WorkspaceCanvas {
     return true;
   }
 
-  deleteAtPoint(x , y): BoardConfig {
-    const clickedBoard: Board = this.findAtPoint(x, y);
-    if ( clickedBoard ) {
+  checkPoint(selectedPoint: Point): boolean{
+    if( this.findBoardAt(selectedPoint.getX(), selectedPoint.getY()) )
+      return true;
+    if( this.checkIfNearLink(selectedPoint))
+      return true;
+    return false;
+  }
 
+  removeBoardLinks(board: Board): void {
+    for(let idx in this.links){
+      let link = this.links[parseInt(idx)];
+      if( link.getEndBoard() === board || link.getStartBoard())
+        this.links.splice(parseInt(idx), 1 );
+    }
+  }
+
+  deleteAtPoint(selectedPoint: Point): BoardConfig {
+    const clickedBoard: Board = this.findBoardAt(selectedPoint.getX(), selectedPoint.getY());
+    if ( clickedBoard ) {
       const index: number = this.boards.indexOf(clickedBoard);
       this.boards.splice(index, 1);
+      this.removeBoardLinks(clickedBoard);
       return clickedBoard.getBoardConfig();
     } else {
       console.log('Nothing to delete');
@@ -66,6 +86,7 @@ export class WorkspaceCanvas {
   }
 
   redrawCanvas(): void {
+
     this.ctx.clearRect(0, 0, this.width, this.height);
     for (const board of this.boards) {
       board.draw(this.ctx);
@@ -116,7 +137,6 @@ export class WorkspaceCanvas {
 
   draw(): void {
     this.redrawCanvas();
-
     requestAnimationFrame(() => this.draw());
   }
 
@@ -125,7 +145,7 @@ export class WorkspaceCanvas {
   }
 
   linkStart(x: number, y: number): boolean {
-    const selectedBoard: Board =  this.findAtPoint(x, y);
+    const selectedBoard: Board =  this.findBoardAt(x, y);
     if (selectedBoard) {
       this.currentLink = new Link(selectedBoard.getPosX(), selectedBoard.getPosY(), x, y, selectedBoard);
       return true;
@@ -135,7 +155,7 @@ export class WorkspaceCanvas {
   }
 
   linkEnd(x: number, y: number): void {
-    const selectedBoard: Board =  this.findAtPoint(x, y);
+    const selectedBoard: Board =  this.findBoardAt(x, y);
     if (selectedBoard) {
       this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
       this.links.push(this.currentLink.exportFinished());
@@ -144,7 +164,7 @@ export class WorkspaceCanvas {
   }
 
   dragStart(x: number, y: number): boolean {
-    const selectedBoard: Board = this.findAtPoint(x, y);
+    const selectedBoard: Board = this.findBoardAt(x, y);
     if ( selectedBoard ) {
       const index: number = this.boards.indexOf(selectedBoard);
       this.boards.splice(index, 1);
@@ -168,10 +188,10 @@ export class WorkspaceCanvas {
     this.cursor = null;
   }
 
-  findAtPoint(x: number, y: number): Board {
+  findBoardAt(x: number, y: number): Board {
     let clickedBoard: Board = null;
     for (const board of this.boards) {
-      if ( board.containsPoint(x, y)) {
+      if (board.containsPoint(this.ctx, x, y)) {
         clickedBoard = board;
         break; // Never more than one board at one point
       }
@@ -179,12 +199,34 @@ export class WorkspaceCanvas {
     return clickedBoard;
   }
 
-  select(x: number, y: number): boolean {
-    this.selectedBoard = this.findAtPoint(x, y);
+
+
+  checkIfNearLink(point: Point): Link {
+    let selectedLink: Link = null;
+    for (const link of this.links){
+      if (link.closeTo(point, this.ctx)){
+        selectedLink = link;
+        break;
+      }
+    }
+    return selectedLink;
+  }
+
+  selectBoard(x: number, y: number): boolean {
+    this.selectedBoard = this.findBoardAt(x, y);
     return ( this.selectedBoard ) ? true : false;
   }
 
-  deselect(): void {
+  selectLink(point: Point): boolean {
+    this.selectedLink = this.checkIfNearLink(point);
+    return ( this.selectedLink ) ? true : false;
+  }
+
+  deselectLink(): void {
+    delete this.selectedLink;
+  }
+
+  deselectBoard(): void {
     delete this.selectedBoard;
   }
 
@@ -192,10 +234,8 @@ export class WorkspaceCanvas {
     return this.selectedBoard.getBoardConfig();
   }
 
-  removeSelected(): void {
-    const index: number = this.boards.indexOf(this.selectedBoard);
-    this.boards.splice(index, 1);
-    this.selectedBoard = null;
+  getSelectedLink(): Link {
+    return this.selectedLink;
   }
 
   loadSketch(sketch: Sketch): void {
@@ -212,7 +252,7 @@ export class WorkspaceCanvas {
       id: this.sketch.getId(),
       boards: boardsInterface,
       links: linksInterface,
-      status: SketchStatus.pending
+      status: "pending"
     });
   }
 
