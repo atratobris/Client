@@ -9,7 +9,8 @@ import { BrowserDetails } from '../lib/browser-details';
 })
 export class LaptopComponent implements OnInit {
   public events: string[] = [];
-  private url: string = "ws://localhost:3000/cable";
+  // private url: string = "ws://localhost:3000/cable";
+  private url: string = 'ws://caplatform.herokuapp.com/cable';
   private mac: string = BrowserDetails.getDetails();
 
   constructor(private ng2cable: Ng2Cable,

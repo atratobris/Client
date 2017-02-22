@@ -10,7 +10,8 @@ import { Sketch, SketchInterface } from './sketch';
 
 @Injectable()
 export class SketchService {
-  private apiUrl = 'http://localhost:3000/api/sketch';
+  private apiUrl = 'http://caplatform.herokuapp.com/api/sketch';
+  // private apiUrl = 'http://localhost:3000/api/sketch';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }

@@ -7,7 +7,8 @@ import { Board } from './board';
 
 @Injectable()
 export class BoardService {
-  private apiUrl = 'http://localhost:3000/api/board';
+  // private apiUrl = 'http://localhost:3000/api/board';
+  private apiUrl = 'http://caplatform.herokuapp.com/api/board';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
