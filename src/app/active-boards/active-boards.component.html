@@ -1,7 +1,10 @@
 <div *ngIf="boards" class="row">
   <div class="col-3" *ngFor="let board of boards">
     <div class="board" [ngStyle]="{'background-color': board.colour}">
-      <p class="text-right">
+      <p>
+        <span class="name">{{board.name}}</span>
+      </p>
+      <p>
         <span [class]="board.status">{{board.status}}</span>
       </p>
       <p class="text-center mac">{{board.mac}}</p>
