@@ -177,6 +177,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     if (changes["sketch"]) {
+      this.deselectLink();
+      this.deselectBoard();
       if(typeof this.wsc !== "undefined")
         this.loadSketch()
       this.getAvailableBoards();
