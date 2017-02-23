@@ -85,16 +85,15 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.operationMode === 'Select') {
       if (this.wsc.selectBoard(point.getX(), point.getY())) {
         this.selectBoard();
-        return;
-      } else {
-        this.deselectBoard();
-      }
-
-      if (this.wsc.selectLink(point)) {
-        this.selectLink();
-      } else {
         this.deselectLink();
+        return;
+      } else if (this.wsc.selectLink(point)) {
+        this.selectLink();
+        this.deselectBoard();
+        return;
       }
+      this.deselectLink();
+      this.deselectBoard();
     }
     if (this.operationMode === 'Link') {
       this.linking = this.wsc.linkStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
