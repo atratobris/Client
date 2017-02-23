@@ -148,7 +148,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getAvailableBoards():void {
-    this.availableBoards = this.availableBoards || [];
+    this.availableBoards = [];
     this.boardService.all().then( (boards: BoardConfig[]) => {
       for (let idx in boards) {
         let remove: boolean = false;
@@ -160,6 +160,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         }
         if (!remove) this.availableBoards.push(boards[idx]);
       }
+      console.log(this.availableBoards);
     });
   }
 
@@ -197,6 +198,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         if(drawn)
           this.availableBoards.splice(0, 1);
       }
+      console.log(this.availableBoards);
     } else if (this.operationMode === 'Delete') {
       // this.wsc.checkPoint(selectedPoint);
       let deletedBoard = this.wsc.deleteAtPoint(selectedPoint);

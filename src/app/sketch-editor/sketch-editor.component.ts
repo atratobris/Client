@@ -40,6 +40,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   }
 
   clicked(event): void {
+    this.sketch.setBoards([]);
   }
 
   changeMode(operation: string): void {

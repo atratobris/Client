@@ -6,6 +6,7 @@ export interface BoardInterface {
   width: number;
   height: number;
   mac: string;
+  boardConfig: BoardConfig;
 }
 
 export class Board {
@@ -42,7 +43,8 @@ export class Board {
       centre: this.centre.prepare(),
       width: this.width,
       height: this.height,
-      mac: this.getMac()
+      mac: this.getMac(),
+      boardConfig: this.getBoardConfig()
     } as BoardInterface;
   }
 

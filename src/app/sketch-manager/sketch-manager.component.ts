@@ -54,18 +54,25 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     // this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshBoardData());
   }
 
+  logSketch(){
+    console.log(this.selectedSketch);
+  }
+
   activateSketch(id){
     this.sketches[id].changeStatus("active")
-    this.sketchService.update(this.sketches[id]);
+    this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch)=>{
+      this.sketches[id] = sketch;
+    });
   }
 
   stopSketch(id){
     this.sketches[id].changeStatus("closed")
-    this.sketchService.update(this.sketches[id]);
+    this.sketchService.updateStatus(this.sketches[id]);
   }
 
   onSketchEdit(id){
     this.selectedSketch = this.sketches[id];
+
     console.log(this.selectedSketch)
   }
 

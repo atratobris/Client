@@ -29,8 +29,20 @@ export class Sketch {
     return this.links;
   }
 
+  setBoards(boards: BoardInterface[]): void {
+    this.boards = boards;
+  }
+
+  setLinks(links: LinkInterface[]): void {
+    this.links = links;
+  }
+
   getId(): number {
     return this.id;
+  }
+
+  getStatus(): string {
+    return this.status;
   }
 
   changeStatus(status: string){
