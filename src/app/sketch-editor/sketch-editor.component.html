@@ -11,6 +11,6 @@
     <app-drag-drop [sketch]="sketch" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()"></app-drag-drop>
   </div>
   <div class="col-sm-3">
-    <board-details [board]="selectedBoard" [link]="selectedLink"></board-details>
+    <board-details [board]="selectedBoard" [link]="selectedLink" (onLinkSave)="onLinkSave($event)"></board-details>
   </div>
 </div>

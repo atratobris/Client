@@ -54,6 +54,15 @@ export class SketchService {
       .catch(this.handleError);
   }
 
+  updateLinks(sketch: Sketch, links: LinkInterace[]): Promise<Sketch> {
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
+    return this.http
+      .put(url, JSON.stringify({"links": links }), {headers: this.headers})
+      .toPromise()
+      .then(() => sketch)
+      .catch(this.handleError);
+  }
+
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);

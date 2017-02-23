@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
-
+import { Component, Input, Output, OnInit, OnChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { BoardConfig } from '../board-config';
 import { BoardService } from '../board/board.service';
-
-import { Link } from '../link/link';
+import { Link, LinkInterface } from '../link/link';
+import { Sketch } from '../sketch/sketch';
+import { SketchService } from '../sketch/sketch.service';
 
 @Component({
   selector: 'board-details',
@@ -14,21 +14,24 @@ import { Link } from '../link/link';
 export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() board: BoardConfig;
   @Input() link: Link;
+  @Input() sketch: Sketch;
+  @Output() onLinkSave = new EventEmitter<LinkInterface>();
 
-  constructor(private boardService: BoardService) { }
+  constructor(private boardService: BoardService, private sketchService: SketchService) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+  }
 
+  updateLink(link): void {
+    console.log("triggering link save")
+    this.onLinkSave.emit(link.prepare());
   }
 
   updateBoard(board: BoardConfig): void {
     this.boardService.update(board);
-  }
-
-  updateLink(link: Link): void {
   }
 
 }

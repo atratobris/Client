@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board/board';
-import { Link } from '../link/link';
+import { Link, LinkInterface } from '../link/link';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { BoardConfig } from '../board-config';
@@ -31,7 +31,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
     if (changes["sketch"]) {
-      console.log("from sketch editor:", this.sketch)
+      this.onLinkDeselected();
+      this.onBoardDeselected();
     }
   }
 
@@ -57,6 +58,19 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
   onLinkSelected(link: Link): void{
     this.linkSelected = true;
     this.selectedLink = link;
+  }
+
+  onLinkSave(link: LinkInterface): void {
+    let links = this.sketch.getLinks();
+    console.log(links)
+    for(var l of links){
+      if(link["to"] === l["to"] && link["from"] === l["from"]){
+        l.logic = link.logic;
+        break;
+      }
+    }
+    this.sketchService.updateLinks(this.sketch, links);
+
   }
 
   onLinkDeselected(): void {

@@ -2,7 +2,11 @@
   <h2>Link Details</h2>
   <p>start board: {{link.startBoard.getBoardConfig().getMac()}}</p>
   <p>end board: {{link.endBoard.getBoardConfig().getMac()}}</p>
-  <p>{{link.logic}}</p>
+  <div>
+    <p>Link logic:</p>
+    <input [(ngModel)]="link.logic" placeholder="logic" />
+  </div>
+  <button type="button" name="button" (click)="updateLink(link)"  >update</button>
 </div>
 <div *ngIf="board">
   <h2>Board details!</h2>
