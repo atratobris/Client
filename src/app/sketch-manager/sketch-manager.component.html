@@ -1,30 +1,28 @@
-<div class="row">
-  <div class="col-sm-3">
-    <div *ngIf="sketches">
-      <ul>
-        <li class="sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
-          id: {{idx+1}}
-          <button type="button" name="button" (click)="activateSketch(idx)" > Activate </button>
-          <button type="button" name="button" (click)="stopSketch(idx)" > Stop </button>
-          <!-- <select [(ngModel)]="sketch.status" (ngModelChange)="onStatusChange($event, idx)">
-            <option *ngFor="let status of sketchTypes" [ngValue]="status">{{status}}</option>
-          </select> -->
-
-          <button type="button" name="button" (click)="onSketchEdit(idx)">Edit</button>
-          <span *ngIf="sketch === selectedSketch">Editing</span>
-          <div >
-            <button type="button" name="button" (click)="revertToActive(idx)" >Revert</button>
+<div class="box-size-proper">
+  <div class="row">
+    <div class="col-sm-3 pt-2">
+      <div *ngIf="sketches">
+          <div class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
+            <div class="text_center">
+              id: {{idx+1}}
+              <span *ngIf="sketch === selectedSketch">Editing</span>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+              <button type="button" class="btn btn-secondary" (click)="activateSketch(idx)" > Activate </button>
+              <button type="button" class="btn btn-secondary" (click)="stopSketch(idx)" > Stop </button>
+              <button type="button" class="btn btn-secondary" (click)="onSketchEdit(idx)">Edit</button>
+              <button type="button" class="btn btn-secondary" (click)="revertToActive(idx)" >Revert</button>
+            </div>
           </div>
-        </li>
-      </ul>
-      <button type="button" name="button" (click)="newSketch()" >NewSketch</button>
-      <button type="button" name="button"(click)="logSketch()">log sketch</button>
+        <button type="button" name="button" (click)="newSketch()" >NewSketch</button>
+        <button type="button" name="button"(click)="logSketch()">log sketch</button>
+      </div>
     </div>
-  </div>
-  <div class="col-sm-9">
-    <app-active-boards [boards]="boards"></app-active-boards>
-    <div *ngIf="selectedSketch">
-      <app-sketch-editor [sketch]="selectedSketch" ></app-sketch-editor>
+    <div class="col-sm-9 pt-2">
+      <app-active-boards [boards]="boards"></app-active-boards>
+      <div *ngIf="selectedSketch">
+        <app-sketch-editor [sketch]="selectedSketch" ></app-sketch-editor>
+      </div>
     </div>
   </div>
 </div>
