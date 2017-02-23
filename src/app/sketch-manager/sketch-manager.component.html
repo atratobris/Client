@@ -12,6 +12,9 @@
 
           <button type="button" name="button" (click)="onSketchEdit(idx)">Edit</button>
           <span *ngIf="sketch === selectedSketch">Editing</span>
+          <div >
+            <button type="button" name="button" (click)="revertToActive(idx)" >Revert</button>
+          </div>
         </li>
       </ul>
       <button type="button" name="button" (click)="newSketch()" >NewSketch</button>

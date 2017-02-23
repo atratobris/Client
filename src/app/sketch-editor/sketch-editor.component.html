@@ -1,13 +1,13 @@
 <div class="row">
   <div *ngIf="sketch" class="col-sm-9">
-    <button (click)="changeMode('Add')"> Add </button>
-    <button (click)="changeMode('Delete')"> Delete </button>
-    <button (click)="changeMode('Drag')"> Drag </button>
-    <button (click)="changeMode('Select')"> Select </button>
-    <button (click)="changeMode('Link')"> Link </button>
-    <button (click)="changeMode('Save')"> Save </button>
-    <div>{{operationMode}}</div>
-
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button [ngClass]="{'selected': operationMode==='Add' }" type="button" class="btn btn-secondary" (click)="changeMode('Add')"> Add </button>
+    <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary" (click)="changeMode('Delete')"> Delete </button>
+    <button [ngClass]="{'selected': operationMode==='Drag' }" type="button" class="btn btn-secondary" (click)="changeMode('Drag')"> Drag </button>
+    <button [ngClass]="{'selected': operationMode==='Select' }" type="button" class="btn btn-secondary" (click)="changeMode('Select')"> Select </button>
+    <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
+    <button [ngClass]="{'selected': operationMode==='Save' }" type="button" class="btn btn-secondary" (click)="changeMode('Save')"> Save </button>
+  </div>
     <app-drag-drop [sketch]="sketch" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()"></app-drag-drop>
   </div>
   <div class="col-sm-3">
