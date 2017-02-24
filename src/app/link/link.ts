@@ -1,5 +1,5 @@
-import { Point } from './point';
-import { Board } from './board/board';
+import { Point } from '../point';
+import { Board } from '../board/board';
 
 export interface LinkInterface {
   to: string;

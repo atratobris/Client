@@ -1,5 +1,5 @@
 import { BoardInterface } from '../board/board';
-import { LinkInterface } from '../link';
+import { LinkInterface } from '../link/link';
 
 export interface SketchInterface {
   id: number;
@@ -29,8 +29,20 @@ export class Sketch {
     return this.links;
   }
 
+  setBoards(boards: BoardInterface[]): void {
+    this.boards = boards;
+  }
+
+  setLinks(links: LinkInterface[]): void {
+    this.links = links;
+  }
+
   getId(): number {
     return this.id;
+  }
+
+  getStatus(): string {
+    return this.status;
   }
 
   changeStatus(status: string){

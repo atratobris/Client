@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import { Board } from '../board/board';
-import { Link } from '../link';
+import { Link, LinkInterface } from '../link/link';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -10,8 +10,8 @@ import { Sketch, SketchInterface } from './sketch';
 
 @Injectable()
 export class SketchService {
-  private apiUrl = 'http://caplatform.herokuapp.com/api/sketch';
-  // private apiUrl = 'http://localhost:3000/api/sketch';
+  // private apiUrl = 'http://caplatform.herokuapp.com/api/sketch';
+  private apiUrl = 'http://localhost:3000/api/sketch';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
@@ -52,8 +52,26 @@ export class SketchService {
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
-
   }
+
+  updateLinks(sketch: Sketch, links: LinkInterface[]): Promise<Sketch> {
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
+    return this.http
+      .put(url, JSON.stringify({"links": links, "status": "pending" }), {headers: this.headers})
+      .toPromise()
+      .then(() => sketch)
+      .catch(this.handleError);
+  }
+
+  updateStatus(sketch: Sketch): Promise<Sketch> {
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
+    return this.http
+      .put(url, JSON.stringify({"status": sketch.getStatus() }), {headers: this.headers})
+      .toPromise()
+      .then(() => sketch)
+      .catch(this.handleError);
+  }
+
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);

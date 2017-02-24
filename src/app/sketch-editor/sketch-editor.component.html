@@ -1,43 +1,16 @@
 <div class="row">
-  <div *ngIf="sketchId" class="col-sm-9">
-    <button (click)="changeMode('Add')"> Add </button>
-    <button (click)="changeMode('Delete')"> Delete </button>
-    <button (click)="changeMode('Drag')"> Drag </button>
-    <button (click)="changeMode('Select')"> Select </button>
-    <button (click)="changeMode('Link')"> Link </button>
-    <button (click)="changeMode('Save')"> Save </button>
-    <div>{{operationMode}}</div>
-    <app-drag-drop [sketchId]="sketchId" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()"></app-drag-drop>
+  <div *ngIf="sketch" class="col-sm-9">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button [ngClass]="{'selected': operationMode==='Add' }" type="button" class="btn btn-secondary" (click)="changeMode('Add')"> Add </button>
+    <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary" (click)="changeMode('Delete')"> Delete </button>
+    <button [ngClass]="{'selected': operationMode==='Drag' }" type="button" class="btn btn-secondary" (click)="changeMode('Drag')"> Drag </button>
+    <button [ngClass]="{'selected': operationMode==='Select' }" type="button" class="btn btn-secondary" (click)="changeMode('Select')"> Select </button>
+    <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
+    <button [ngClass]="{'selected': operationMode==='Save' }" type="button" class="btn btn-secondary" (click)="changeMode('Save')"> Save </button>
+  </div>
+    <app-drag-drop [sketch]="sketch" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()"></app-drag-drop>
   </div>
   <div class="col-sm-3">
-    <div *ngIf="linkSelected">
-      <h2>Link Details</h2>
-      <p>start board: {{selectedLink.startBoard.getBoardConfig().getMac()}}</p>
-      <p>end board: {{selectedLink.endBoard.getBoardConfig().getMac()}}</p>
-      <p>{{selectedLink.logic}}</p>
-    </div>
-    <div *ngIf="boardSelected">
-      <h2>Board details!</h2>
-      <div>
-        <label>type: </label>
-        <input [(ngModel)]="selectedBoard.maintype" placeholder="type" />
-      </div>
-      <div>
-        <label>subtype: </label>
-        <input [(ngModel)]="selectedBoard.subtype" placeholder="subtype" />
-      </div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedBoard.name" placeholder="name" />
-      </div>
-      <div>
-        <label>mac: </label>
-        <input [(ngModel)]="selectedBoard.mac" placeholder="mac" />
-      </div>
-      <div>
-        <input type="checkbox" [(ngModel)]="selectedBoard.button" name="button" [value]="selectedBoard.button">
-      </div>
-      <button type="button" name="button" (click)="updateBoard(selectedBoard)"  >update</button>
-    </div>
+    <board-details [board]="selectedBoard" [link]="selectedLink" (onLinkSave)="onLinkSave($event)"></board-details>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Board, BoardInterface } from './board/board';
 import { Point } from './point';
-import { Link, LinkInterface } from './link';
+import { Link, LinkInterface } from './link/link';
 import { BoardConfig } from './board-config';
 
 import { Sketch } from './sketch/sketch';
@@ -245,15 +245,18 @@ export class WorkspaceCanvas {
   }
 
   buildSketch(): Sketch {
-    const boardsInterface: BoardInterface[] = this.boards.map( (board: Board) => board.prepare());
+    // const boardsInterface: BoardInterface[] = this.boards.map( (board: Board) => board.prepare());
+    // const boardsInterface: Board[] = this.boards
     const linksInterface: LinkInterface[] = this.links.map( ( link: Link) => link.prepare());
-
-    return new Sketch({
-      id: this.sketch.getId(),
-      boards: boardsInterface,
-      links: linksInterface,
-      status: "pending"
-    });
+    this.sketch.setBoards(this.boards.map( (board: Board) => board.prepare()));
+    this.sketch.setLinks(this.links.map( ( link: Link) => link.prepare()));
+    // return new Sketch({
+    //   id: this.sketch.getId(),
+    //   boards: boardsInterface,
+    //   links: linksInterface,
+    //   status: "pending"
+    // });
+    return this.sketch;
   }
 
 }

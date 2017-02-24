@@ -1,11 +1,23 @@
-
-
+<div *ngIf="link">
+  <h2>Link Details</h2>
+  <p>start board: {{link.startBoard.getBoardConfig().getMac()}}</p>
+  <p>end board: {{link.endBoard.getBoardConfig().getMac()}}</p>
+  <div>
+    <p>Link logic:</p>
+    <input [(ngModel)]="link.logic" placeholder="logic" />
+  </div>
+  <button type="button" name="button" (click)="updateLink(link)"  >update</button>
+</div>
 <div *ngIf="board">
-  <h2>{{board.name}} details!</h2>
+  <h2>Board details!</h2>
   <div>
-    <label>type: </label>{{board.type}}</div>
+    <label>type: </label>
+    <input [(ngModel)]="board.maintype" placeholder="type" />
+  </div>
   <div>
-    <label>subtype: </label>{{board.subtype}}</div>
+    <label>subtype: </label>
+    <input [(ngModel)]="board.subtype" placeholder="subtype" />
+  </div>
   <div>
     <label>name: </label>
     <input [(ngModel)]="board.name" placeholder="name" />
@@ -17,4 +29,5 @@
   <div>
     <input type="checkbox" [(ngModel)]="board.button" name="button" [value]="board.button">
   </div>
+  <button type="button" name="button" (click)="updateBoard(board)"  >update</button>
 </div>

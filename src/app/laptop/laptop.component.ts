@@ -9,13 +9,15 @@ import { BrowserDetails } from '../lib/browser-details';
 })
 export class LaptopComponent implements OnInit {
   public events: string[] = [];
-  // private url: string = "ws://localhost:3000/cable";
-  private url: string = 'ws://caplatform.herokuapp.com/cable';
+  private url: string = "ws://localhost:3000/cable";
+  // private url: string = 'ws://caplatform.herokuapp.com/cable';
   private mac: string = BrowserDetails.getDetails();
 
   constructor(private ng2cable: Ng2Cable,
               private broadcaster: Broadcaster) {
 
+    // fix so that the link for details will be the right url whichcan then be parsed by rails
+    this.mac = this.mac.replace(/\./g,'')
     this.events.push(`Registering laptop with mac: ${this.mac}`);
     this.ng2cable.subscribe(this.url, "BadChannel");
     this.ng2cable.cable.subscriptions.create({ channel: 'SketchChannel', mac: this.mac }, {
