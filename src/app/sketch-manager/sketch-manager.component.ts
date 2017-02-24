@@ -70,9 +70,18 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     this.sketchService.updateStatus(this.sketches[id]);
   }
 
+  revertToActive(id: number): void {
+    console.log("before", this.sketches[id])
+    this.sketchService.get(this.sketches[id].getId()).then( (activeSketch) => {
+      this.sketches[id] = activeSketch;
+      if(this.selectedSketch.getId() === this.sketches[id].getId())
+        this.selectedSketch = this.sketches[id];
+      console.log("after", this.sketches[id])
+    })
+  }
+
   onSketchEdit(id){
     this.selectedSketch = this.sketches[id];
-
     console.log(this.selectedSketch)
   }
 
