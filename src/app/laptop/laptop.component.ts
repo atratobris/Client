@@ -17,7 +17,6 @@ export class LaptopComponent implements OnInit {
               private broadcaster: Broadcaster) {
 
     // fix so that the link for details will be the right url whichcan then be parsed by rails
-    this.mac = this.mac.replace(/\./g,'')
     this.events.push(`Registering laptop with mac: ${this.mac}`);
     this.ng2cable.subscribe(this.url, "BadChannel");
     this.ng2cable.cable.subscriptions.create({ channel: 'SketchChannel', mac: this.mac }, {
