@@ -15,7 +15,6 @@ import { AnonymousSubscription } from "rxjs/Subscription";
 
 export class SketchManagerComponent implements OnInit, AfterViewInit {
 
-  public sketchTypes: string[];
   public boards: BoardConfig[];
 
   private sketches :Sketch[];
@@ -30,7 +29,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
       this.sketches = sketches;
     });
     this.refreshBoardData();
-    this.sketchTypes = ["pending", "active", "closed"]
   }
 
   ngAfterViewInit() {
@@ -68,16 +66,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
   stopSketch(id){
     this.sketches[id].changeStatus("closed")
     this.sketchService.updateStatus(this.sketches[id]);
-  }
-
-  revertToActive(id: number): void {
-    console.log("before", this.sketches[id])
-    this.sketchService.get(this.sketches[id].getId()).then( (activeSketch) => {
-      this.sketches[id] = activeSketch;
-      if(this.selectedSketch.getId() === this.sketches[id].getId())
-        this.selectedSketch = this.sketches[id];
-      console.log("after", this.sketches[id])
-    })
   }
 
   onSketchEdit(id){
