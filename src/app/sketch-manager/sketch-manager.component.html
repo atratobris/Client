@@ -1,15 +1,22 @@
 <div class="box-size-proper">
   <div class="row">
-    <div class="col-sm-3 pt-2">
+    <div class="col-sm-2 pt-2">
       <div *ngIf="sketches">
         <div (click)="onSketchEdit(idx)" class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
-          <div class="text_center">
-            id: {{idx+1}}
-            <span *ngIf="sketch === selectedSketch">Editing</span>
+          <div class="row colours">
+            <div class="col-sm-6 status {{sketch.status}}">
+            </div>
+            <div class="col-sm-6 edit" [ngClass]="{'true': sketch === selectedSketch}">
+            </div>
           </div>
-          <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx)" > Activate </button>
-            <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx)" > Stop </button>
+          <div class="info">
+            <div class="text_center">
+              id: {{idx+1}}
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx)" > Activate </button>
+              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx)" > Stop </button>
+            </div>
           </div>
         </div>
         <div class="sketch new-button text-center" (click)="newSketch()">

@@ -1,17 +1,32 @@
 ul
   padding-left: 5px
 .sketch
-  padding: 5px 10px
   border: 1px solid gray
   list-style-type: none
   margin-bottom: 10px
   border-radius: 5px
-  &.active
-    background-color: #81c784
-  &.pending
-    background-color: #e0e0e0
-  &.closed
-    background-color: #e57373
+  position: relative
+  overflow: hidden
+
+  .info
+    padding: 5px 10px
+
+  .colours
+    position: absolute
+    height: 100%
+    width: 100%
+    left: 15px
+    z-index: -1
+
+  .status
+    &.active
+      background-color: #81c784
+    &.closed
+      background-color: #e57373
+  .edit
+    &.true
+      background-color: rgb(121, 134, 203)
+
   &.new-button
     padding: 10px
     cursor: pointer
