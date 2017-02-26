@@ -21,7 +21,6 @@ export class WorkspaceCanvas {
   private width: number;
   private height: number;
   private completePath: Path2D;
-  private drawState: boolean;
 
 
   constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
@@ -33,7 +32,6 @@ export class WorkspaceCanvas {
     this.cursor = null;
     this.width = width;
     this.height = height;
-    this.drawState = true;
   }
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig):boolean {
@@ -138,8 +136,7 @@ export class WorkspaceCanvas {
 
   draw(): void {
     this.redrawCanvas();
-    if(this.drawState)
-      requestAnimationFrame(() => this.draw());
+    requestAnimationFrame(() => this.draw());
   }
 
   updateLinking(x: number, y: number): void {
@@ -188,7 +185,6 @@ export class WorkspaceCanvas {
     }
     this.savedBoard = null;
     this.cursor = null;
-    this.drawState = false;
   }
 
   findBoardAt(x: number, y: number): Board {
