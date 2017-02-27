@@ -5,7 +5,7 @@ Please refer to [ng2-dragula](https://github.com/valor-software/ng2-dragula) for
 
 ## Prerequisites
 ```bash
-npm install -g angular-cli
+npm install -g @angular/cli
 ```
 
 ## Updating angular
