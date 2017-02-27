@@ -1,7 +1,6 @@
 import './rxjs-extensions';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { Ng2Cable, Broadcaster } from 'ng2-cable/js/index';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +32,6 @@ import { LaptopComponent } from './laptop/laptop.component';
   ],
   imports: [
     BrowserModule,
-    DragulaModule,
     FormsModule,
     HttpModule,
     AppRoutingModule
