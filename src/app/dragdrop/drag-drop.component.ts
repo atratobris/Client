@@ -3,7 +3,6 @@ import {
   NgZone, HostListener, Input, EventEmitter, Output, SimpleChange, OnChanges
 } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board/board';
 import { BoardService } from '../board/board.service';
 import { WorkspaceCanvas } from '../workspace-canvas';

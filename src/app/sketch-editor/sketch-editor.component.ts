@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { Board } from '../board/board';
 import { Link, LinkInterface } from '../link/link';
 import { WorkspaceCanvas } from '../workspace-canvas';
