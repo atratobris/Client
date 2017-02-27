@@ -57,7 +57,7 @@ export class SketchService {
   updateLinks(sketch: Sketch, links: LinkInterface[]): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify({"links": links, "status": "pending" }), {headers: this.headers})
+      .put(url, JSON.stringify({"links": links }), {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);

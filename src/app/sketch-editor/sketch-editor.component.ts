@@ -71,7 +71,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
       }
     }
     this.sketchService.updateLinks(this.sketch, links);
+  }
 
+  revertToActive(): void {
+    this.sketchService.get(this.sketch.getId()).then( (activeSketch) => {
+      this.sketch = activeSketch;
+    });
   }
 
   onLinkDeselected(): void {

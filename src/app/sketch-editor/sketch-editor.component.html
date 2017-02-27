@@ -7,6 +7,7 @@
     <button [ngClass]="{'selected': operationMode==='Select' }" type="button" class="btn btn-secondary" (click)="changeMode('Select')"> Select </button>
     <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
     <button [ngClass]="{'selected': operationMode==='Save' }" type="button" class="btn btn-secondary" (click)="changeMode('Save')"> Save </button>
+    <button type="button" class="btn btn-secondary" (click)="revertToActive()" >Revert</button>
   </div>
     <app-drag-drop [sketch]="sketch" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()"></app-drag-drop>
   </div>

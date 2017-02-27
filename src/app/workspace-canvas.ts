@@ -86,7 +86,6 @@ export class WorkspaceCanvas {
   }
 
   redrawCanvas(): void {
-
     this.ctx.clearRect(0, 0, this.width, this.height);
     for (const board of this.boards) {
       board.draw(this.ctx);

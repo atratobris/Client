@@ -14,7 +14,6 @@ export class LaptopComponent implements OnInit, OnDestroy {
   private mac: string = BrowserDetails.getDetails();
 
   constructor(private ng2cable: Ng2Cable) {
-
     this.events.push(`Registering laptop with mac: ${this.mac}`);
     this.ng2cable.setCable(this.url);
   }
