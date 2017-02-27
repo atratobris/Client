@@ -8,12 +8,12 @@ import 'rxjs/add/operator/toPromise';
 
 import { Sketch, SketchInterface } from './sketch';
 
-import { environment } from '../../environments/environment';
+import { ENV } from '../../environments/environment';
 
 @Injectable()
 export class SketchService {
   // private apiUrl = 'http://caplatform.herokuapp.com/api/sketch';
-  private apiUrl = `${environment.apiUrl}/sketch`;
+  private apiUrl = `${ENV.apiUrl}/sketch`;
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }

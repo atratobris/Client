@@ -5,11 +5,11 @@ import 'rxjs/add/operator/toPromise';
 import { BoardConfig, IBoardConfig } from '../board-config';
 import { Board } from './board';
 
-import { environment } from '../../environments/environment';
+import { ENV } from '../../environments/environment';
 
 @Injectable()
 export class BoardService {
-  private apiUrl = `${environment.apiUrl}/board`;
+  private apiUrl = `${ENV.apiUrl}/board`;
   // private apiUrl = 'http://caplatform.herokuapp.com/api/board';
   private headers = new Headers({'Content-Type': 'application/json'});
 

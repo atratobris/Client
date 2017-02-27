@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Ng2Cable } from 'ng2-cable/js/index';
 import { BrowserDetails } from '../lib/browser-details';
 
-import { environment } from '../../environments/environment';
+import { ENV } from '../../environments/environment';
 
 @Component({
   selector: 'app-laptop',
@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class LaptopComponent implements OnInit, OnDestroy {
   public events: string[] = [];
-  private url: string = environment.apiWs;
+  private url: string = ENV.apiWs;
   // private url: string = 'ws://caplatform.herokuapp.com/cable';
   private mac: string = BrowserDetails.getDetails();
 

@@ -5,7 +5,7 @@
 
 const baseURI: string = 'localhost:3000';
 
-export const environment = {
+export const ENV = {
   production: false,
   apiWs: `ws://${baseURI}/cable`,
   apiUrl: `http://${baseURI}/api`
