@@ -49,6 +49,6 @@ export class BrowserDetails {
     const userAgent = window.navigator.userAgent;
     const browser = this.browser(userAgent);
 
-    return `${this.os(userAgent)}|${browser.name}|${browser.version}`;
+    return `${this.os(userAgent)}|${browser.name}|${browser.version.replace(/\./g,':')}`;
   }
 }
