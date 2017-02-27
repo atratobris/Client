@@ -1,4 +1,7 @@
+const baseURI: string = 'caplatform.herokuapp.com';
+
 export const environment = {
-  production: true,
-  apiWs: "ws://caplatform.herokuapp.com/cable"
+  production: false,
+  apiWs: `ws://${baseURI}/cable`,
+  apiUrl: `http://${baseURI}/api`
 };
