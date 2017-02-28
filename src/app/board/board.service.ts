@@ -31,7 +31,7 @@ export class BoardService {
         return Array.from(response.json(), ( board: IBoardConfig, idx: number ) => {
           return new BoardConfig(board);
         });
-      })
+      });
   }
 
   update(board: BoardConfig): Promise<BoardConfig> {

@@ -12,7 +12,7 @@ export class Link {
   private end: Point;
   private startBoard: Board;
   private endBoard: Board;
-  private midpoint: Point
+  private midpoint: Point;
   private logic: string;
   private path: Path2D;
   private distanceTreshold = 10;

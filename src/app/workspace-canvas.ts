@@ -34,7 +34,7 @@ export class WorkspaceCanvas {
     this.height = height;
   }
 
-  drawBoardAt(selectedPoint: Point, b: BoardConfig):boolean {
+  drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
     this.cursor.setBoardConfig(b);
     return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
@@ -54,27 +54,25 @@ export class WorkspaceCanvas {
     return true;
   }
 
-  checkPoint(selectedPoint: Point): boolean{
-    if( this.findBoardAt(selectedPoint.getX(), selectedPoint.getY()) )
-      return true;
-    if( this.checkIfNearLink(selectedPoint))
-      return true;
-    return false;
+  checkPoint(selectedPoint: Point): boolean {
+    return !!(
+      this.findBoardAt(selectedPoint.getX(), selectedPoint.getY()) ||
+      this.checkIfNearLink(selectedPoint)
+    );
   }
 
   removeBoardLinks(board: Board): void {
-    let idx = 0;
-    for(let idx = this.links.length-1; idx >= 0; idx--){
-      let link = this.links[idx]
-      if( link.getEndBoard() === board || link.getStartBoard() === board){
-        this.links.splice(idx, 1 );
+    for (let idx = this.links.length - 1; idx >= 0; idx--) {
+      const link = this.links[idx];
+      if ( link.getEndBoard() === board || link.getStartBoard() === board) {
+        this.links.splice(idx, 1);
       }
     }
   }
 
   removeLinkNextToPoint(selectedPoint: Point): void {
-    let deletedLink = this.checkIfNearLink(selectedPoint);
-    this.links.splice(this.links.indexOf(deletedLink),1);
+    const deletedLink = this.checkIfNearLink(selectedPoint);
+    this.links.splice(this.links.indexOf(deletedLink), 1);
   }
 
   deleteAtPoint(selectedPoint: Point): BoardConfig {
@@ -158,8 +156,10 @@ export class WorkspaceCanvas {
   linkEnd(x: number, y: number): void {
     const selectedBoard: Board =  this.findBoardAt(x, y);
     if (selectedBoard) {
-      this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
-      this.links.push(this.currentLink.exportFinished());
+      if (this.currentLink.getStartBoard() !== selectedBoard) {
+        this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
+        this.links.push(this.currentLink.exportFinished());
+      }
     }
     this.currentLink = null;
   }
@@ -201,8 +201,8 @@ export class WorkspaceCanvas {
 
   checkIfNearLink(point: Point): Link {
     let selectedLink: Link = null;
-    for (const link of this.links){
-      if (link.closeTo(point, this.ctx)){
+    for (const link of this.links) {
+      if (link.closeTo(point, this.ctx)) {
         selectedLink = link;
         break;
       }
