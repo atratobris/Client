@@ -6,7 +6,6 @@ export interface IBoardConfig {
   maintype: string;
   subtype: string;
   name: string;
-  button: boolean;
   status: string;
   last_activity: string;
   colour: string;
@@ -19,7 +18,6 @@ export class BoardConfig {
   private name: string;
   private subtype: string;
   private status: string;
-  public button: boolean;
   public last_activity: string;
   private colour: string;
 
@@ -29,7 +27,6 @@ export class BoardConfig {
     this.maintype = obj && obj.maintype || 'input';
     this.subtype = obj && obj.subtype || 'button';
     this.name = obj && obj.name || `${this.maintype} Component`;
-    this.button = obj && obj.button || false;
     this.status = obj && obj.status || "offline";
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
