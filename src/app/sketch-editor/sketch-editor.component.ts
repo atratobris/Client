@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef,
+  AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
 import { Board } from '../board/board';
 import { Link, LinkInterface } from '../link/link';
 import { WorkspaceCanvas } from '../workspace-canvas';
@@ -13,25 +14,25 @@ import { SketchService } from '../sketch/sketch.service';
   templateUrl: './sketch-editor.component.html',
   styleUrls: ['./sketch-editor.component.sass']
 })
-export class SketchEditorComponent implements OnInit, AfterViewInit {
+export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() sketch: Sketch;
   @Input() boards: BoardConfig[];
-  private operationMode: string;
+  public operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
-  private selectedLink: Link;
-  private selectedBoard: BoardConfig;
-  private newBoard: BoardConfig;
+  public selectedLink: Link;
+  public selectedBoard: BoardConfig;
+  public newBoard: BoardConfig;
 
   constructor(private ngZone: NgZone, private boardService: BoardService, private sketchService: SketchService) {}
 
   ngOnInit() {
-    this.changeMode("Select");
+    this.changeMode('Select');
   }
 
-  ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
-    if (changes["sketch"]) {
+  ngOnChanges(changes: {[peropertyName: string]: SimpleChange}): void {
+    if (changes['sketch']) {
       console.log(this.sketch);
       this.onLinkDeselected();
       this.onBoardDeselected();
@@ -58,15 +59,15 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onLinkSelected(link: Link): void{
+  onLinkSelected(link: Link): void {
     this.linkSelected = true;
     this.selectedLink = link;
   }
 
   onLinkSave(link: LinkInterface): void {
-    let links = this.sketch.getLinks();
-    for(var l of links){
-      if(link["to"] === l["to"] && link["from"] === l["from"]){
+    const links = this.sketch.getLinks();
+    for (const l of links) {
+      if (link['to'] === l['to'] && link['from'] === l['from']) {
         l.logic = link.logic;
         break;
       }
@@ -91,11 +92,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   onActiveBoardSelected(board: BoardConfig): void {
     this.newBoard = board;
-    this.changeMode("Add");
+    this.changeMode('Add');
   }
 
   onFinishedAddingBoard(): void {
     this.newBoard = null;
-    this.changeMode("Select");
+    this.changeMode('Select');
   }
 }

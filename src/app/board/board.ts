@@ -28,7 +28,7 @@ export class Board {
       this.centre = new Point(posXorBoardInterface, posY);
     } else if ( typeof posXorBoardInterface === 'object') {
       this.centre = new Point(posXorBoardInterface.centre);
-      this.boardConfig = new BoardConfig(posXorBoardInterface.boardConfig)
+      this.boardConfig = new BoardConfig(posXorBoardInterface.boardConfig);
     }
     this.path = new Path2D();
 
@@ -116,7 +116,7 @@ export class Board {
   }
 
   containsPoint(ctx: CanvasRenderingContext2D, x: number, y: number): boolean {
-    return ctx.isPointInPath(this.path, x, y)
+    return ctx.isPointInPath(this.path, x, y);
   }
 
   set(x: number, y: number): void {

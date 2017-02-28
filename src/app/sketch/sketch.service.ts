@@ -31,7 +31,7 @@ export class SketchService {
       .get(`${this.apiUrl}.json`)
       .toPromise()
       .then( response => {
-        return Array.from(response.json(), ( x: SketchInterface )=> {
+        return Array.from(response.json(), ( x: SketchInterface ) => {
           return new Sketch(x);
         });
       }).catch( this.handleError );
@@ -42,7 +42,7 @@ export class SketchService {
       .post(`${this.apiUrl}`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})
       .toPromise()
       .then( response => {
-        return new Sketch(response.json())
+        return new Sketch(response.json());
       })
       .catch(this.handleError);
   }
@@ -59,7 +59,7 @@ export class SketchService {
   updateLinks(sketch: Sketch, links: LinkInterface[]): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify({"links": links }), {headers: this.headers})
+      .put(url, JSON.stringify({'links': links }), {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
@@ -68,7 +68,7 @@ export class SketchService {
   updateStatus(sketch: Sketch): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify({"status": sketch.getStatus() }), {headers: this.headers})
+      .put(url, JSON.stringify({'status': sketch.getStatus() }), {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
@@ -79,14 +79,9 @@ export class SketchService {
     return this.http
       .delete(url, {headers: this.headers})
       .toPromise()
-      .then( response => {
-        if(response.status === 204)
-          return true
-        return false
-      })
+      .then( response => response.status === 204 )
       .catch(this.handleError);
   }
-
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);

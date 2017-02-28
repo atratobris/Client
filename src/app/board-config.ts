@@ -27,7 +27,7 @@ export class BoardConfig {
     this.maintype = obj && obj.maintype || 'input';
     this.subtype = obj && obj.subtype || 'button';
     this.name = obj && obj.name || `${this.maintype} Component`;
-    this.status = obj && obj.status || "offline";
+    this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
   }

@@ -23,9 +23,9 @@ export class LaptopComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ng2cable.subscription = this.ng2cable.cable.subscriptions.create({ channel: 'SketchChannel', mac: this.mac }, {
       received: (data) => {
-        const message = data.message
+        const message = data.message;
         this.events.push(`Received channel message with type: ${message.type}`);
-        if (message.type === "link_opener") {
+        if (message.type === 'link_opener') {
           this.events.push(`Going to open ${message.url}`);
           window.open(message.url);
         }

@@ -6,7 +6,7 @@ import { Sketch } from '../sketch/sketch';
 import { SketchService } from '../sketch/sketch.service';
 
 @Component({
-  selector: 'board-details',
+  selector: 'app-board-details',
   templateUrl: './board-details.component.html',
   styleUrls: ['./board-details.component.sass']
 })
@@ -26,7 +26,6 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   updateLink(link): void {
-    console.log("triggering link save")
     this.onLinkSave.emit(link.prepare());
   }
 

@@ -5,7 +5,7 @@ import { Sketch } from '../sketch/sketch';
 import { BoardService } from '../board/board.service';
 import { BoardConfig } from '../board-config';
 import { Observable } from 'rxjs/Rx';
-import { AnonymousSubscription } from "rxjs/Subscription";
+import { AnonymousSubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sketch-manager',
@@ -13,12 +13,12 @@ import { AnonymousSubscription } from "rxjs/Subscription";
   styleUrls: ['./sketch-manager.component.sass']
 })
 
-export class SketchManagerComponent implements OnInit, AfterViewInit {
+export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public boards: BoardConfig[];
+  public sketches: Sketch[];
 
-  private sketches :Sketch[];
-  private selectedSketch: Sketch;
+  selectedSketch: Sketch;
   private editorOn: boolean;
   private timerSubscription: AnonymousSubscription;
 
@@ -35,7 +35,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
 
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
@@ -45,53 +45,52 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     this.boardService.all().then( (boards: BoardConfig[]) => {
       this.boards = boards;
       this.subscribeToData();
-    })
+    });
   }
 
   private subscribeToData(): void {
     // this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshBoardData());
   }
 
-  logSketch(){
-    console.log(this.selectedSketch);
-  }
-
-  activateSketch(id){
+  activateSketch(id: number): void {
     // stop all sketches before activating this one
-    for( let i = 0; i < this.sketches.length; i++ ){
-      if(this.sketches[i].getStatus() === "active") this.stopSketch(i);
+    for ( let i = 0; i < this.sketches.length; i++ ) {
+      if (this.sketches[i].getStatus() === 'active') {
+        this.stopSketch(i);
+      }
     }
-    this.sketches[id].changeStatus("active");
-    this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch)=>{
+    this.sketches[id].changeStatus('active');
+    this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch) => {
       this.sketches[id] = sketch;
     });
   }
 
-  removeSketch(id): void {
+  removeSketch(id: number): void {
     this.sketchService.removeSketch(this.sketches[id]).then( removed => {
-      if(removed) {
-        if(this.sketches[id] === this.selectedSketch)
+      if (removed) {
+        if (this.sketches[id] === this.selectedSketch) {
           delete this.selectedSketch;
+        }
         this.sketches.splice(id, 1);
       }
     });
   }
 
-  stopSketch(id){
-    this.sketches[id].changeStatus("closed")
+  stopSketch(id: number): void {
+    this.sketches[id].changeStatus('closed');
     this.sketchService.updateStatus(this.sketches[id]);
   }
 
-  onSketchEdit(id){
+  onSketchEdit(id: number): void {
     this.selectedSketch = this.sketches[id];
   }
 
-  newSketch(){
+  newSketch(): void {
     // send empty array for boards and links
     this.sketchService.create([], []).then( (sketch) => {
       this.selectedSketch = sketch;
       this.sketches.push(sketch);
-    })
+    });
   }
 
 }

@@ -45,7 +45,7 @@ export class Sketch {
     return this.status;
   }
 
-  changeStatus(status: string){
+  changeStatus(status: string) {
     this.status  = status;
   }
 }

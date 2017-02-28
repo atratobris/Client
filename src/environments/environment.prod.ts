@@ -1,4 +1,4 @@
-const baseURI: string = 'caplatform.herokuapp.com';
+const baseURI = 'caplatform.herokuapp.com';
 
 export const ENV = {
   production: true,
