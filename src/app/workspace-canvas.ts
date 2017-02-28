@@ -240,8 +240,6 @@ export class WorkspaceCanvas {
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
     this.boards = this.sketch.getBoards().map((b: BoardInterface) => {
-      // new Board(b.boardConfig)
-      // debugger
       return new Board(b)
     });
     this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));

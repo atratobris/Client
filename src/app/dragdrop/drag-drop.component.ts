@@ -58,7 +58,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
-    let point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     if (this.operationMode === 'Add' || ( this.operationMode === 'Drag' && this.dragging)) {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
@@ -138,7 +138,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.loadSketch();
   }
 
-  getAvailableBoards():void {
+  getAvailableBoards(): void {
     this.availableBoards = [];
     this.boardService.all().then( (boards: BoardConfig[]) => {
       for (let idx in boards) {

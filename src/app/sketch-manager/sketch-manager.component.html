@@ -6,12 +6,6 @@
           <button class="removeButton" name="button">
             <i class="fa fa-times" (click)="removeSketch(idx)" aria-hidden="true"></i>
           </button>
-          <!-- <div class="row colours">
-            <div class="col-sm-6 status {{sketch.status}}">
-            </div>
-            <div class="col-sm-6 edit" [ngClass]="{'true': sketch === selectedSketch}">
-            </div>
-          </div> -->
           <div class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}}">
             <div class="text_center">
               id: {{idx+1}}
