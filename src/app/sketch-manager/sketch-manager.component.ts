@@ -80,7 +80,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
 
   onSketchEdit(id){
     this.selectedSketch = this.sketches[id];
-    console.log(this.selectedSketch)
   }
 
   newSketch(){
