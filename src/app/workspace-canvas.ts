@@ -118,9 +118,6 @@ export class WorkspaceCanvas {
     if (this.cursor) {
       this.cursor.set(x, y);
     }
-    // else {
-    //   this.cursor = new Board(x, y, 40, 40);
-    // }
   }
 
   resetCursorLocation(): void {

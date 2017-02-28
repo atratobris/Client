@@ -91,10 +91,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   onActiveBoardSelected(board: BoardConfig): void {
     this.newBoard = board;
-    this.operationMode = "Add";
+    this.changeMode("Add");
   }
 
   onFinishedAddingBoard(): void {
     this.newBoard = null;
+    this.changeMode("Select");
   }
 }
