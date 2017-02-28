@@ -16,11 +16,13 @@ import { SketchService } from '../sketch/sketch.service';
 export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   @Input() sketch: Sketch;
+  @Input() boards: BoardConfig[];
   private operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
   private selectedLink: Link;
   private selectedBoard: BoardConfig;
+  private newBoard: BoardConfig;
 
   constructor(private ngZone: NgZone, private boardService: BoardService, private sketchService: SketchService) {}
 
@@ -87,4 +89,13 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
     delete this.selectedBoard;
   }
 
+  onActiveBoardSelected(board: BoardConfig): void {
+    this.newBoard = board;
+    this.changeMode("Add");
+  }
+
+  onFinishedAddingBoard(): void {
+    this.newBoard = null;
+    this.changeMode("Select");
+  }
 }

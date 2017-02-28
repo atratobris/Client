@@ -40,7 +40,6 @@ export class WorkspaceCanvas {
   }
 
   drawAtPoint( x, y): boolean {
-    // this.ctx.clearRect(0, 0, 500, 500);
     const new_board: Board = this.cursor.copy();
     new_board.setCentre(this.cursor.getCentre());
     for (const board of this.boards) {
@@ -50,7 +49,6 @@ export class WorkspaceCanvas {
       }
     }
     delete this.cursor;
-    // new_board.draw(this.ctx);
     new_board.setOffset(0, 0);
     this.boards.push(new_board);
     return true;
@@ -124,8 +122,6 @@ export class WorkspaceCanvas {
   updateCursorLocation(x: number, y: number): void {
     if (this.cursor) {
       this.cursor.set(x, y);
-    } else {
-      this.cursor = new Board(x, y, 40, 40);
     }
   }
 
@@ -204,8 +200,6 @@ export class WorkspaceCanvas {
     return clickedBoard;
   }
 
-
-
   checkIfNearLink(point: Point): Link {
     let selectedLink: Link = null;
     for (const link of this.links){
@@ -243,9 +237,13 @@ export class WorkspaceCanvas {
     return this.selectedLink;
   }
 
+  setCursor(board: Board) {
+    this.cursor = board;
+  }
+
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
-    this.boards = this.sketch.getBoards().map((b: BoardInterface) => new Board(b) );
+    this.boards = this.sketch.getBoards().map((b: BoardInterface) => new Board(b));
     this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));
   }
 

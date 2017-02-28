@@ -25,10 +25,12 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() operationMode: string;
   @Input() sketch: Sketch;
+  @Input() newBoard: BoardConfig;
   @Output() onBoardSelected = new EventEmitter<BoardConfig>();
   @Output() onLinkSelected = new EventEmitter<Link>();
   @Output() onBoardDeselected = new EventEmitter<void>();
   @Output() onLinkDeselected = new EventEmitter<void>();
+  @Output() finishedAddingBoard = new EventEmitter();
   @ViewChild('myCanvas') canvasRef: ElementRef;
   private ctx: CanvasRenderingContext2D;
   private wsc: WorkspaceCanvas;
@@ -46,6 +48,15 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   width = 900;
   height = 600;
 
+  @HostListener('mouseenter', ['$event'])
+  onMouseEnter(event) {
+    event.preventDefault();
+    if (this.newBoard) {
+      const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      this.wsc.setCursor(new Board(point.getX(), point.getY(), 80, 80, this.newBoard));
+    }
+  }
+
   @HostListener('mouseleave', ['$event'])
   onMouseLeave(event) {
     event.preventDefault();
@@ -58,7 +69,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
-    let point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     if (this.operationMode === 'Add' || ( this.operationMode === 'Drag' && this.dragging)) {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
@@ -130,7 +141,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.loadSketch();
   }
 
-  getAvailableBoards():void {
+  getAvailableBoards(): void {
     this.availableBoards = [];
     this.boardService.all().then( (boards: BoardConfig[]) => {
       for (let idx in boards) {
@@ -153,6 +164,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    console.log(changes);
     if (changes['operationMode']) {
       this.deselectBoard();
       if (this.operationMode === 'Save') {
@@ -167,6 +179,10 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         this.loadSketch()
       this.getAvailableBoards();
     }
+
+    if (changes["newBoard"] && this.operationMode === "Add") {
+      this.wsc.setCursor(new Board(-100, -100, 80, 80, this.newBoard));
+    }
   }
 
   refreshRect() {
@@ -177,10 +193,13 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     let selectedPoint: Point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     if (this.operationMode === 'Add') {
       if(this.availableBoards.length > 0){
-        const drawn = this.wsc.drawBoardAt(selectedPoint, this.availableBoards[0]);
-        if(drawn)
+        const drawn = this.wsc.drawBoardAt(selectedPoint, this.newBoard);
+        if(drawn) {
           this.availableBoards.splice(0, 1);
+        }
       }
+      this.finishedAddingBoard.emit();
+      this.wsc.setCursor(null);
       console.log(this.availableBoards);
     } else if (this.operationMode === 'Delete') {
       if(this.wsc.checkPoint(selectedPoint)){
