@@ -179,11 +179,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         this.sketch = this.wsc.buildSketch();
         this.sketchService.update( this.sketch );
       }
-      if (this.operationMode === "Add") {
-        console.log("Adding now");
-        console.log(this.newBoard);
-        this.wsc.setCursor(new Board(-100, -100, 80, 80, this.newBoard));
-      }
     }
     if (changes["sketch"]) {
       this.deselectLink();
@@ -194,7 +189,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     if (changes["newBoard"] && this.operationMode === "Add") {
-      console.log("new board changes");
       this.wsc.setCursor(new Board(-100, -100, 80, 80, this.newBoard));
     }
   }
