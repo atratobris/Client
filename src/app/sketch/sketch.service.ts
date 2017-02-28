@@ -32,7 +32,6 @@ export class SketchService {
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( x: SketchInterface )=> {
-          console.log(x)
           return new Sketch(x);
         });
       }).catch( this.handleError );

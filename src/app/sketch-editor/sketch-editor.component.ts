@@ -32,6 +32,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
     if (changes["sketch"]) {
+      console.log(this.sketch);
       this.onLinkDeselected();
       this.onBoardDeselected();
     }
@@ -64,7 +65,6 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   onLinkSave(link: LinkInterface): void {
     let links = this.sketch.getLinks();
-    console.log(links)
     for(var l of links){
       if(link["to"] === l["to"] && link["from"] === l["from"]){
         l.logic = link.logic;
