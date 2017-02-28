@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewI
 import { SketchService } from '../sketch/sketch.service';
 
 import { Sketch } from '../sketch/sketch';
+import { LinkOption } from '../link/link';
 import { BoardService } from '../board/board.service';
+import { LinkService } from '../link/link.service';
 import { BoardConfig } from '../board-config';
 import { Observable } from 'rxjs/Rx';
 import { AnonymousSubscription } from 'rxjs/Subscription';
@@ -17,16 +19,21 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   public boards: BoardConfig[];
   public sketches: Sketch[];
+  public links: LinkOption[];
 
   selectedSketch: Sketch;
   private editorOn: boolean;
   private timerSubscription: AnonymousSubscription;
 
-  constructor(private ngZone: NgZone, private sketchService: SketchService, private boardService: BoardService) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService, private boardService: BoardService, private linkService: LinkService) {}
 
   ngOnInit() {
     this.sketchService.all().then( (sketches: Sketch[] ) => {
       this.sketches = sketches;
+    });
+    this.linkService.all().then( (links: LinkOption[]) => {
+      console.log(links);
+      this.links = links;
     });
     this.refreshBoardData();
   }

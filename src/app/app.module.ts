@@ -15,6 +15,7 @@ import { BoardDetailsComponent } from './board-details/board-details.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
 
 import { SketchService } from './sketch/sketch.service';
+import { LinkService } from './link/link.service';
 import { BoardService } from './board/board.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
@@ -36,7 +37,7 @@ import { LaptopComponent } from './laptop/laptop.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService, BoardService, Ng2Cable, Broadcaster],
+  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
