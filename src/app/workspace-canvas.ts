@@ -135,7 +135,6 @@ export class WorkspaceCanvas {
       this.savedBoard.setCentre(this.cursor.getCentre());
       this.boards.push(this.savedBoard);
       this.savedBoard = null;
-      console.log(this.links);
     }
     this.cursor = null;
     this.currentLink = null;

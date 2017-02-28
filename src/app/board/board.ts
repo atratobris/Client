@@ -73,6 +73,10 @@ export class Board {
     return this.centre.getX();
   }
 
+  getName(): string {
+    return this.getBoardConfig().getName();
+  }
+
   getPosY(): number {
     return this.centre.getY();
   }
