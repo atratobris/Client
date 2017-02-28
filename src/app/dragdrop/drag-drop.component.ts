@@ -138,14 +138,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.loadSketch();
   }
 
-  getSketch(id: number): void {
-    this.sketchService.get(id).then( (sketch: Sketch) => {
-      this.sketch = sketch;
-      this.loadSketch();
-      this.getAvailableBoards();
-    });
-  }
-
   getAvailableBoards():void {
     this.availableBoards = [];
     this.boardService.all().then( (boards: BoardConfig[]) => {

@@ -20,8 +20,10 @@ export class Board {
   constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig);
   constructor(centre: BoardInterface);
   constructor(posXorBoardInterface: any, posY?: number, width?: number, height?: number, b_config?: BoardConfig) {
+    // debugger
     this.boardConfig = b_config || new BoardConfig();
     this.offset = new Point( 0, 0);
+
     if ( typeof posXorBoardInterface === 'number') {
       this.centre = new Point(posXorBoardInterface, posY);
       this.width = width;
@@ -33,6 +35,7 @@ export class Board {
       this.boardConfig.setMac(posXorBoardInterface.mac);
       this.boardConfig.setId(posXorBoardInterface.id);
       this.boardConfig.setColour();
+      this.boardConfig = new BoardConfig(posXorBoardInterface.boardConfig)
     }
     this.path = new Path2D();
 

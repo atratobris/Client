@@ -239,22 +239,18 @@ export class WorkspaceCanvas {
 
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
-    this.boards = this.sketch.getBoards().map((boardIf: BoardInterface) => new Board(boardIf));
+    this.boards = this.sketch.getBoards().map((b: BoardInterface) => {
+      // new Board(b.boardConfig)
+      // debugger
+      return new Board(b)
+    });
     this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));
   }
 
   buildSketch(): Sketch {
-    // const boardsInterface: BoardInterface[] = this.boards.map( (board: Board) => board.prepare());
-    // const boardsInterface: Board[] = this.boards
     const linksInterface: LinkInterface[] = this.links.map( ( link: Link) => link.prepare());
     this.sketch.setBoards(this.boards.map( (board: Board) => board.prepare()));
     this.sketch.setLinks(this.links.map( ( link: Link) => link.prepare()));
-    // return new Sketch({
-    //   id: this.sketch.getId(),
-    //   boards: boardsInterface,
-    //   links: linksInterface,
-    //   status: "pending"
-    // });
     return this.sketch;
   }
 

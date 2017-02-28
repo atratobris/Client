@@ -32,6 +32,7 @@ export class SketchService {
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( x: SketchInterface )=> {
+          console.log(x)
           return new Sketch(x);
         });
       }).catch( this.handleError );
@@ -71,6 +72,19 @@ export class SketchService {
       .put(url, JSON.stringify({"status": sketch.getStatus() }), {headers: this.headers})
       .toPromise()
       .then(() => sketch)
+      .catch(this.handleError);
+  }
+
+  removeSketch(sketch: Sketch): Promise<boolean> {
+    const url = `${this.apiUrl}/${sketch.getId()}`;
+    return this.http
+      .delete(url, {headers: this.headers})
+      .toPromise()
+      .then( response => {
+        if(response.status === 204)
+          return true
+        return false
+      })
       .catch(this.handleError);
   }
 

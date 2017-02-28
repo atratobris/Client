@@ -57,4 +57,8 @@ export class BoardConfig {
   getColour(): string {
     return this.colour;
   }
+
+  getName(): string {
+    return this.name;
+  }
 }

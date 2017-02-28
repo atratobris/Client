@@ -63,6 +63,16 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
     });
   }
 
+  removeSketch(id): void {
+    this.sketchService.removeSketch(this.sketches[id]).then( removed => {
+      if(removed) {
+        if(this.sketches[id] === this.selectedSketch)
+          delete this.selectedSketch;
+        this.sketches.splice(id, 1);
+      }
+    });
+  }
+
   stopSketch(id){
     this.sketches[id].changeStatus("closed")
     this.sketchService.updateStatus(this.sketches[id]);

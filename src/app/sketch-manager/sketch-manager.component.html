@@ -3,6 +3,9 @@
     <div class="col-sm-2 pt-2">
       <div *ngIf="sketches">
         <div (click)="onSketchEdit(idx)" class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
+          <button class="removeButton" name="button">
+            <i class="fa fa-times" (click)="removeSketch(idx)" aria-hidden="true"></i>
+          </button>
           <div class="row colours">
             <div class="col-sm-6 status {{sketch.status}}">
             </div>
@@ -24,11 +27,13 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-9 pt-2">
-      <app-active-boards [boards]="boards"></app-active-boards>
+    <div class="col-sm-8 pt-2">
       <div *ngIf="selectedSketch">
         <app-sketch-editor [sketch]="selectedSketch" ></app-sketch-editor>
       </div>
+    </div>
+    <div class="col-sm-2 pt-2">
+      <app-active-boards [boards]="boards"></app-active-boards>
     </div>
   </div>
 </div>
