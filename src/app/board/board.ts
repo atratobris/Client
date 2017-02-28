@@ -11,8 +11,8 @@ export interface BoardInterface {
 
 export class Board {
   private centre: Point;
-  private width: number;
-  private height: number;
+  private width: number = 80;
+  private height: number = 40;
   private offset: Point;
   private boardConfig: BoardConfig;
   private path: Path2D;
@@ -26,15 +26,8 @@ export class Board {
 
     if ( typeof posXorBoardInterface === 'number') {
       this.centre = new Point(posXorBoardInterface, posY);
-      this.width = width;
-      this.height = height;
     } else if ( typeof posXorBoardInterface === 'object') {
       this.centre = new Point(posXorBoardInterface.centre);
-      this.width = posXorBoardInterface.width;
-      this.height = posXorBoardInterface.height;
-      this.boardConfig.setMac(posXorBoardInterface.mac);
-      this.boardConfig.setId(posXorBoardInterface.id);
-      this.boardConfig.setColour();
       this.boardConfig = new BoardConfig(posXorBoardInterface.boardConfig)
     }
     this.path = new Path2D();
@@ -52,13 +45,27 @@ export class Board {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    const colour = this.boardConfig.getColour();
     const oldColour = ctx.fillStyle;
-    ctx.fillStyle = colour;
+    ctx.fillStyle = this.boardConfig.getColour();
+
+    ctx.fill(this.drawRectangle());
+    this.drawText(ctx);
+
+    ctx.fillStyle = oldColour;
+  }
+
+  private drawRectangle(): Path2D {
     this.path = new Path2D();
     this.path.rect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);
-    ctx.fill(this.path);
-    ctx.fillStyle = oldColour;
+    return this.path;
+  }
+
+  private drawText(ctx: CanvasRenderingContext2D): void {
+    const textHeight = 15;
+    const leftPadding = 5;
+    ctx.fillStyle = 'black';
+    ctx.font = `${textHeight}px serif`;
+    ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2 + leftPadding, this.getPosY() - this.height / 2 + textHeight);
   }
 
   getWidth(): number {

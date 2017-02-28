@@ -32,7 +32,7 @@ export class BoardConfig {
     this.button = obj && obj.button || false;
     this.status = obj && obj.status || "offline";
     this.last_activity = obj && obj.last_activity;
-    this.colour = obj && obj.colour || Colours.getColour(this.id);
+    this.colour = Colours.getColour(this.id);
   }
   setMac(mac: string): void {
     this.mac = mac;

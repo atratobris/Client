@@ -43,8 +43,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private selectedBoard: BoardConfig;
   private availableBoards: BoardConfig[];
 
-  width = 600;
-  height = 500;
+  width = 900;
+  height = 600;
 
   @HostListener('mouseleave', ['$event'])
   onMouseLeave(event) {
