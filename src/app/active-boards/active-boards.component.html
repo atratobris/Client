@@ -1,4 +1,4 @@
-<div *ngIf="boards" class="">
+<div *ngIf="boards" class="active-boards-container">
   <div *ngFor="let board of boards">
     <div class="board {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
       <p>

@@ -32,7 +32,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
       this.sketches = sketches;
     });
     this.linkService.all().then( (links: LinkOption[]) => {
-      console.log(links);
       this.links = links;
     });
     this.refreshBoardData();

@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnInit, OnChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { BoardConfig } from '../board-config';
 import { BoardService } from '../board/board.service';
-import { Link, LinkInterface } from '../link/link';
+import { Link, LinkInterface, LinkOption } from '../link/link';
 import { Sketch } from '../sketch/sketch';
 import { SketchService } from '../sketch/sketch.service';
 
@@ -15,6 +15,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() board: BoardConfig;
   @Input() link: Link;
   @Input() sketch: Sketch;
+  @Input() linkOptions: LinkOption[];
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
 
   constructor(private boardService: BoardService, private sketchService: SketchService) { }

@@ -4,7 +4,10 @@
   <p>end board: {{link.endBoard.getName()}}</p>
   <div>
     <p>Link logic:</p>
-    <input [(ngModel)]="link.logic" placeholder="logic" />
+    <!-- <input [(ngModel)]="link.logic" placeholder="logic" /> -->
+    <select [(ngModel)]="link.logic" name="Logic Type" class="form-component">
+      <option *ngFor="let option of linkOptions" [attr.value]="option.name">{{option.description}}</option>
+    </select>
   </div>
   <button type="button" name="button" (click)="updateLink(link)"  >update</button>
 </div>
