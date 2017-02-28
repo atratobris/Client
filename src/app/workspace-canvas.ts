@@ -117,9 +117,10 @@ export class WorkspaceCanvas {
   updateCursorLocation(x: number, y: number): void {
     if (this.cursor) {
       this.cursor.set(x, y);
-    } else {
-      this.cursor = new Board(x, y, 40, 40);
     }
+    // else {
+    //   this.cursor = new Board(x, y, 40, 40);
+    // }
   }
 
   resetCursorLocation(): void {
@@ -235,6 +236,10 @@ export class WorkspaceCanvas {
 
   getSelectedLink(): Link {
     return this.selectedLink;
+  }
+
+  setCursor(board: Board) {
+    this.cursor = board;
   }
 
   loadSketch(sketch: Sketch): void {

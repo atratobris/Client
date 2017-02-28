@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BoardConfig } from '../board-config';
 
 @Component({
@@ -7,9 +7,14 @@ import { BoardConfig } from '../board-config';
   styleUrls: ['./active-boards.component.sass']
 })
 export class ActiveBoardsComponent {
-  @Input()
-  boards: BoardConfig[];
+  @Input() boards: BoardConfig[];
+  @Input() selectedBoard: BoardConfig;
+  @Output() boardSelectedEmitter = new EventEmitter();
 
   constructor() { }
+
+  onBoardSelected(board: BoardConfig): void {
+    this.boardSelectedEmitter.emit(board);
+  }
 
 }
