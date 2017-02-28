@@ -1,7 +1,7 @@
 <div class="box-size-proper">
   <div class="row">
     <div class="col-sm-2 pt-2">
-      <div *ngIf="sketches">
+      <div *ngIf="sketches" class="sketchesBar">
         <div (click)="onSketchEdit(idx)" class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
           <button class="removeButton" name="button">
             <i class="fa fa-times" (click)="removeSketch(idx)" aria-hidden="true"></i>

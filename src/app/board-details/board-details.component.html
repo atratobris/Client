@@ -1,7 +1,7 @@
 <div *ngIf="link">
   <h2>Link Details</h2>
-  <p>start board: {{link.startBoard.getBoardConfig().getMac()}}</p>
-  <p>end board: {{link.endBoard.getBoardConfig().getMac()}}</p>
+  <p>start board: {{link.startBoard.getName()}}</p>
+  <p>end board: {{link.endBoard.getName()}}</p>
   <div>
     <p>Link logic:</p>
     <input [(ngModel)]="link.logic" placeholder="logic" />

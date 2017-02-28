@@ -57,7 +57,11 @@ export class SketchManagerComponent implements OnInit, AfterViewInit {
   }
 
   activateSketch(id){
-    this.sketches[id].changeStatus("active")
+    // stop all sketches before activating this one
+    for( let i = 0; i < this.sketches.length; i++ ){
+      if(this.sketches[i].getStatus() === "active") this.stopSketch(i);
+    }
+    this.sketches[id].changeStatus("active");
     this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch)=>{
       this.sketches[id] = sketch;
     });
