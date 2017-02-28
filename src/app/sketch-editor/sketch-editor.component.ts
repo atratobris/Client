@@ -30,6 +30,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit {
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}){
     if (changes["sketch"]) {
+      console.log(this.sketch);
       this.onLinkDeselected();
       this.onBoardDeselected();
     }

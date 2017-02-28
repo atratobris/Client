@@ -74,6 +74,11 @@ export class WorkspaceCanvas {
     }
   }
 
+  removeLinkNextToPoint(selectedPoint: Point): void {
+    let deletedLink = this.checkIfNearLink(selectedPoint);
+    this.links.splice(this.links.indexOf(deletedLink),1);
+  }
+
   deleteAtPoint(selectedPoint: Point): BoardConfig {
     const clickedBoard: Board = this.findBoardAt(selectedPoint.getX(), selectedPoint.getY());
     if ( clickedBoard ) {
@@ -182,8 +187,7 @@ export class WorkspaceCanvas {
 
   dragEnd(x: number, y: number): void {
     if (!this.drawAtPoint(x, y)) {
-      this.cursor.setCentre(this.savedBoard.getCentre());
-      this.boards.push(this.savedBoard);
+      this.resetCursorLocation();
     }
     this.savedBoard = null;
     this.cursor = null;
