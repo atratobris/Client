@@ -65,11 +65,18 @@ export class WorkspaceCanvas {
   }
 
   removeBoardLinks(board: Board): void {
-    for(let idx in this.links){
-      let link = this.links[parseInt(idx)];
-      if( link.getEndBoard() === board || link.getStartBoard())
-        this.links.splice(parseInt(idx), 1 );
+    let idx = 0;
+    for(let idx = this.links.length-1; idx >= 0; idx--){
+      let link = this.links[idx]
+      if( link.getEndBoard() === board || link.getStartBoard() === board){
+        this.links.splice(idx, 1 );
+      }
     }
+  }
+
+  removeLinkNextToPoint(selectedPoint: Point): void {
+    let deletedLink = this.checkIfNearLink(selectedPoint);
+    this.links.splice(this.links.indexOf(deletedLink),1);
   }
 
   deleteAtPoint(selectedPoint: Point): BoardConfig {
@@ -180,8 +187,7 @@ export class WorkspaceCanvas {
 
   dragEnd(x: number, y: number): void {
     if (!this.drawAtPoint(x, y)) {
-      this.cursor.setCentre(this.savedBoard.getCentre());
-      this.boards.push(this.savedBoard);
+      this.resetCursorLocation();
     }
     this.savedBoard = null;
     this.cursor = null;
@@ -239,11 +245,7 @@ export class WorkspaceCanvas {
 
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
-    this.boards = this.sketch.getBoards().map((b: BoardInterface) => {
-      // new Board(b.boardConfig)
-      // debugger
-      return new Board(b)
-    });
+    this.boards = this.sketch.getBoards().map((b: BoardInterface) => new Board(b) );
     this.links = this.sketch.getLinks().map((linkIf: LinkInterface) => new Link(linkIf, this.boards));
   }
 

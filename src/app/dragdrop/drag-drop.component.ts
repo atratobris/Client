@@ -63,11 +63,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
     if ( this.operationMode === 'Drag' && !this.dragging) {
-      if (this.wsc.checkPoint(point)) {
-        this.canSelect = true;
-      } else {
-        this.canSelect = false;
-      }
+      this.canSelect = this.wsc.checkPoint(point);
     }
     if (this.operationMode === 'Link' && this.linking) {
       this.wsc.updateLinking(point.getX(), point.getY());
@@ -102,18 +98,14 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mouseup', ['$event'])
   onMouseup(event: MouseEvent) {
     event.preventDefault();
+    let point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     if (this.operationMode === 'Drag' && this.dragging) {
-      this.wsc.dragEnd(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      this.wsc.dragEnd(point.getX(), point.getY());
       this.dragging = false;
-      // Avoid showing cursor after spill ( automatic reposition )
-      if (this.wsc.findBoardAt(event.clientX - this.rect.left, event.clientY - this.rect.top)) {
-        this.canSelect = true;
-      } else {
-        this.canSelect = false;
-      }
+      this.canSelect = this.wsc.checkPoint(point);
     }
     if (this.operationMode === 'Link' && this.linking) {
-      this.wsc.linkEnd(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      this.wsc.linkEnd(point.getX(), point.getY());
       this.linking = false;
     }
   }
@@ -191,10 +183,15 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
       console.log(this.availableBoards);
     } else if (this.operationMode === 'Delete') {
-      // this.wsc.checkPoint(selectedPoint);
-      let deletedBoard = this.wsc.deleteAtPoint(selectedPoint);
-      if(deletedBoard)
-        this.availableBoards.push(deletedBoard);
+      if(this.wsc.checkPoint(selectedPoint)){
+        if( this.wsc.findBoardAt(selectedPoint.getX(), selectedPoint.getY()) ){
+          let deletedBoard = this.wsc.deleteAtPoint(selectedPoint);
+          if(deletedBoard) this.availableBoards.push(deletedBoard);
+        }
+        else{
+          this.wsc.removeLinkNextToPoint(selectedPoint)
+        }
+      }
     }
   }
 
