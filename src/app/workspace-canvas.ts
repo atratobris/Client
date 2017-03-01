@@ -64,7 +64,9 @@ export class WorkspaceCanvas {
   removeBoardLinks(board: Board): void {
     for (let idx = this.links.length - 1; idx >= 0; idx--) {
       const link = this.links[idx];
-      if ( link.getEndBoard() === board || link.getStartBoard() === board) {
+      if ( link.getEndBoard().getBoardConfig() === board.getBoardConfig() ||
+            link.getStartBoard().getBoardConfig() === board.getBoardConfig()) {
+        console.log(link);
         this.links.splice(idx, 1);
       }
     }
