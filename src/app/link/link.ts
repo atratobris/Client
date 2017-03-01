@@ -1,6 +1,21 @@
 import { Point } from '../point';
 import { Board } from '../board/board';
 
+export interface LinkOptionInterface {
+  name: string,
+  description: string
+}
+
+export class LinkOption {
+  private name: string;
+  private description: string;
+
+  constructor(linkOptionInterface: any) {
+    this.name = linkOptionInterface.name;
+    this.description = linkOptionInterface.description;
+  }
+}
+
 export interface LinkInterface {
   to: string;
   from: string;

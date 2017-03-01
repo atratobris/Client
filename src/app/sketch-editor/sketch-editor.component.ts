@@ -8,6 +8,7 @@ import { BoardConfig } from '../board-config';
 import { BoardService } from '../board/board.service';
 import { Sketch } from '../sketch/sketch';
 import { SketchService } from '../sketch/sketch.service';
+import { LinkOption } from '../link/link';
 
 @Component({
   selector: 'app-sketch-editor',
@@ -18,6 +19,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() sketch: Sketch;
   @Input() boards: BoardConfig[];
+  @Input() links: LinkOption[];
   public operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
