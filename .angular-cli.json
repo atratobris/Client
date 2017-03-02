@@ -58,5 +58,11 @@
       "pipe": true,
       "service": true
     }
-  }
+  },
+  "lint": [{
+      "project": "src/tsconfig.json"
+    }, {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ]
 }

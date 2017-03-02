@@ -25,7 +25,8 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   private editorOn: boolean;
   private timerSubscription: AnonymousSubscription;
 
-  constructor(private ngZone: NgZone, private sketchService: SketchService, private boardService: BoardService, private linkService: LinkService) {}
+  constructor(private ngZone: NgZone, private sketchService: SketchService,
+    private boardService: BoardService, private linkService: LinkService) {}
 
   ngOnInit() {
     this.sketchService.all().then( (sketches: Sketch[] ) => {

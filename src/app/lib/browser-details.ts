@@ -49,6 +49,6 @@ export class BrowserDetails {
   static getDetails(): string {
     const userAgent = window.navigator.userAgent;
     const browser = this.browser(userAgent);
-    return `${this.os(userAgent)}|${browser.name}|${browser.version.replace(/\./g,':')}`;
+    return `${this.os(userAgent)}|${browser.name}|${browser.version.replace(/\./g, ':')}`;
   }
 }

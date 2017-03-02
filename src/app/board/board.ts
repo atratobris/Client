@@ -11,8 +11,8 @@ export interface BoardInterface {
 
 export class Board {
   private centre: Point;
-  private width: number = 80;
-  private height: number = 40;
+  private width = 80;
+  private height = 40;
   private offset: Point;
   private boardConfig: BoardConfig;
   private path: Path2D;

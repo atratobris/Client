@@ -2,8 +2,8 @@ import { Point } from '../point';
 import { Board } from '../board/board';
 
 export interface LinkOptionInterface {
-  name: string,
-  description: string
+  name: string;
+  description: string;
 }
 
 export class LinkOption {

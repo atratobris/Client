@@ -51,7 +51,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mouseenter', ['$event'])
   onMouseEnter(event) {
     event.preventDefault();
-    if (this.newBoard) {
+    if (this.newBoard && this.operationMode === 'Add') {
       const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
       this.wsc.setCursor(new Board(point.getX(), point.getY(), 80, 80, this.newBoard));
     }
@@ -165,7 +165,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    console.log(changes);
     if (changes['operationMode']) {
       this.deselectBoard();
       if (this.operationMode === 'Save') {
@@ -182,7 +181,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       this.getAvailableBoards();
     }
 
-    if (changes['newBoard'] && this.operationMode === 'Add') {
+    if (this.operationMode === 'Add' && changes['newBoard']) {
       this.wsc.setCursor(new Board(-100, -100, 80, 80, this.newBoard));
     }
   }

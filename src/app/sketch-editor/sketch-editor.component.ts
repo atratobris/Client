@@ -35,7 +35,6 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}): void {
     if (changes['sketch']) {
-      console.log(this.sketch);
       this.onLinkDeselected();
       this.onBoardDeselected();
     }
@@ -52,6 +51,9 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
     this.operationMode = operation;
     this.onLinkDeselected();
     this.onBoardDeselected();
+    if (this.operationMode !== 'Add') {
+      this.newBoard = null;
+    }
   }
 
   onBoardSelected(selected_board: BoardConfig): void {
