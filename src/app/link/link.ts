@@ -42,12 +42,14 @@ export class Link {
     if (typeof startXOrLinkInterface === 'number') {
       const startX = startXOrLinkInterface;
       const startY = startYOrBArray;
+      this.setInitPoints(new Point(startX, startY), new Point(endX, endY));
       this.start = new Point(startX, startY);
       this.end = new Point(endX, endY);
       this.midpoint = new Point((startX + endX) / 2, (startY + endY) / 2);
       this.startBoard = startBoard || null;
       this.endBoard = endBoard || null;
       this.logic = 'toggle';
+      this.shouldRenderText = false;
     } else  {
       const linkInterface: LinkInterface = startXOrLinkInterface;
       const bArray: Board[] = startYOrBArray;
@@ -55,8 +57,16 @@ export class Link {
       this.startBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.from)[0] || null;
       this.endBoard = bArray.filter( (board: Board) => board.getMac() === linkInterface.to)[0] || null;
       this.linkToBoard();
+      this.setInitPoints(this.startBoard.getCentre(), this.endBoard.getCentre());
+      this.shouldRenderText = true;
     }
 
+  }
+
+  setInitPoints(start: Point, end: Point): void {
+    this.start = start;
+    this.end = end;
+    this.midpoint = new Point((start.getX() + end.getX()) / 2, (start.getY() + end.getY()) / 2);
   }
 
   computeSlope(): number {
@@ -105,7 +115,6 @@ export class Link {
 
 
   draw(ctx: CanvasRenderingContext2D): void {
-
     this.path = new Path2D();
     this.path.moveTo(this.start.getX(), this.start.getY());
     this.path.lineTo(this.end.getX(), this.end.getY());
@@ -121,6 +130,7 @@ export class Link {
       // angle = angle % ( Math.PI / 2);
       angle = Math.atan(Math.tan(angle)); // Use angle of slope instead
       ctx.rotate(angle);
+      console.log(this.logic);
       ctx.fillText(this.logic, -5, -5);
       ctx.translate(-this.midpoint.getX(), -this.midpoint.getY());
       ctx.restore();
