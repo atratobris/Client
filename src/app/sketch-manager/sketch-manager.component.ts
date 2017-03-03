@@ -20,7 +20,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   public boards: BoardConfig[];
   public sketches: Sketch[];
   public links: LinkOption[];
-  public fieldName = 'Sketch name';
   selectedSketch: Sketch;
   private editorOn: boolean;
   private timerSubscription: AnonymousSubscription;
