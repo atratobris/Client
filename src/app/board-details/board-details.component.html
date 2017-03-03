@@ -27,8 +27,7 @@
     <input [(ngModel)]="board.name" placeholder="name" />
   </span>
   <span>
-    <label>mac: </label>
-    <input [(ngModel)]="board.mac" placeholder="mac" />
+    mac: {{board.mac}}
   </span>
   <button type="button" name="button" (click)="updateBoard(board)"  >update</button>
 </div>

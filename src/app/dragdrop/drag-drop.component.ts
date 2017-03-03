@@ -89,7 +89,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     event.preventDefault();
     const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     this.mouseDown = true;
-    console.log("MouseDown");
     if (this.operationMode === 'Link') {
       this.linking = this.wsc.linkStart(point.getX(), point.getY());
       return;
