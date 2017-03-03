@@ -9,16 +9,16 @@ export class ClickToEditComponent implements OnInit {
   @Input() fieldValue: string;
   @Input() fieldName: string;
   @Output() nameUpdated = new EventEmitter();
-  private editable: boolean;
+  public editable: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    this.editable = this.fieldValue == "" ? true : false;
+    this.editable = this.fieldValue === '' ? true : false;
   }
 
   onClick(event): void {
-    event.preventDefault;
+    event.preventDefault();
     this.editable = true;
   }
 
