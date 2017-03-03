@@ -7,9 +7,8 @@ import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard/sketch', pathMatch: 'full' },
-  { path: 'dashboard', component: SketchEditorComponent },
-  { path: 'dashboard/sketch', component:  SketchManagerComponent },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component:  SketchManagerComponent },
   { path: 'laptop', component: LaptopComponent}
 ];
 

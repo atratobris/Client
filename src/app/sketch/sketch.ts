@@ -4,6 +4,7 @@ import { LinkInterface } from '../link/link';
 export interface SketchInterface {
   id: number;
   status: string;
+  name: string;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
@@ -11,6 +12,7 @@ export interface SketchInterface {
 export class Sketch {
   private id: number;
   private status: string;
+  private name: string;
   private boards: BoardInterface[];
   private links: LinkInterface[];
 
@@ -19,6 +21,7 @@ export class Sketch {
     this.boards = sketch.boards;
     this.links = sketch.links;
     this.status = sketch.status;
+    this.name = sketch.name;
   }
 
   getBoards(): BoardInterface[] {
@@ -43,6 +46,10 @@ export class Sketch {
 
   getStatus(): string {
     return this.status;
+  }
+
+  getName(): string {
+    return this.name;
   }
 
   changeStatus(status: string) {
