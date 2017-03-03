@@ -2,7 +2,12 @@
   <div class="col-sm-6 offset-sm-3">
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let sketch of sketches">
-        {{sketch.id}}. {{sketch.name}}
+        <h3>
+          {{sketch.id}}. {{sketch.name}}
+        </h3>
+        <p class="text-muted">
+          {{sketch.description}}
+        </p>
       </li>
     </ul>
   </div>
