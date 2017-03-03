@@ -1,36 +1,33 @@
 <div *ngIf="link">
-  <h2>Link Details</h2>
-  <p>start board: {{link.startBoard.getName()}}</p>
-  <p>end board: {{link.endBoard.getName()}}</p>
-  <div>
-    <p>Link logic:</p>
+  <span class="h2">Link: </span>
+  <span>{{link.startBoard.getName()}}</span>
+  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+  <span>{{link.endBoard.getName()}}</span>
+  <span>
+    logic:
     <!-- <input [(ngModel)]="link.logic" placeholder="logic" /> -->
     <select [(ngModel)]="link.logic" name="Logic Type" class="form-component">
       <option *ngFor="let option of linkOptions" [attr.value]="option.name">{{option.description}}</option>
     </select>
-  </div>
+  </span>
   <button type="button" name="button" (click)="updateLink(link)"  >update</button>
 </div>
 <div *ngIf="board">
-  <h2>Board details!</h2>
-  <div>
+  <h2>Board: </h2>
+  <span>
     <label>type: </label>
     <input [(ngModel)]="board.maintype" placeholder="type" />
-  </div>
-  <div>
+  </span>
+  <span>
     <label>subtype: </label>
     <input [(ngModel)]="board.subtype" placeholder="subtype" />
-  </div>
-  <div>
+  </span>
+  <span>
     <label>name: </label>
     <input [(ngModel)]="board.name" placeholder="name" />
-  </div>
-  <div>
-    <label>mac: </label>
-    <input [(ngModel)]="board.mac" placeholder="mac" />
-  </div>
-  <div>
-    <input type="checkbox" [(ngModel)]="board.button" name="button" [value]="board.button">
-  </div>
+  </span>
+  <span>
+    mac: {{board.mac}}
+  </span>
   <button type="button" name="button" (click)="updateBoard(board)"  >update</button>
 </div>

@@ -45,6 +45,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private selectedBoard: BoardConfig;
   private availableBoards: BoardConfig[];
 
+  private mouseDown = false;
+  private mouseUp = false;
+
   width = 900;
   height = 600;
 
@@ -70,10 +73,10 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   onMousemove(event: MouseEvent) {
     event.preventDefault();
     const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
-    if (this.operationMode === 'Add' || ( this.operationMode === 'Drag' && this.dragging)) {
+    if (this.operationMode === 'Add' || ( this.mouseDown && this.dragging)) {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
-    if ( this.operationMode === 'Drag' && !this.dragging) {
+    if ( this.mouseDown && !this.dragging) {
       this.canSelect = this.wsc.checkPoint(point);
     }
     if (this.operationMode === 'Link' && this.linking) {
@@ -85,32 +88,46 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   onMousedown(event: MouseEvent) {
     event.preventDefault();
     const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
-    if (this.operationMode === 'Drag') {
-      this.dragging = this.wsc.dragStart(point.getX(), point.getY());
-    }
-    if (this.operationMode === 'Select') {
-      if (this.wsc.selectBoard(point.getX(), point.getY())) {
-        this.selectBoard();
-        this.deselectLink();
-        return;
-      } else if (this.wsc.selectLink(point)) {
-        this.selectLink();
-        this.deselectBoard();
-        return;
-      }
-      this.deselectLink();
-      this.deselectBoard();
-    }
+    this.mouseDown = true;
     if (this.operationMode === 'Link') {
-      this.linking = this.wsc.linkStart(event.clientX - this.rect.left, event.clientY - this.rect.top);
+      this.linking = this.wsc.linkStart(point.getX(), point.getY());
+      return;
+    } else if (this.operationMode === 'Delete') {
+      if (this.wsc.checkPoint(point)) {
+        if ( this.wsc.findBoardAt(point.getX(), point.getY()) ) {
+          const deletedBoard = this.wsc.deleteAtPoint(point);
+          if (deletedBoard) {
+            this.availableBoards.push(deletedBoard);
+          }
+        } else {
+          this.wsc.removeLinkNextToPoint(point);
+        }
+      }
     }
+
+    // selecting
+    if (this.wsc.selectBoard(point.getX(), point.getY())) {
+      this.dragging = this.wsc.dragStart(point.getX(), point.getY());
+      this.selectBoard();
+      this.deselectLink();
+      return;
+    } else if (this.wsc.selectLink(point)) {
+      this.selectLink();
+      this.deselectBoard();
+      return;
+    }
+
+    this.deselectLink();
+    this.deselectBoard();
+
   }
 
   @HostListener('mouseup', ['$event'])
   onMouseup(event: MouseEvent) {
     event.preventDefault();
+    this.mouseUp = false;
     const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
-    if (this.operationMode === 'Drag' && this.dragging) {
+    if (this.dragging) {
       this.wsc.dragEnd(point.getX(), point.getY());
       this.dragging = false;
       this.canSelect = this.wsc.checkPoint(point);
@@ -202,17 +219,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       this.finishedAddingBoard.emit();
       this.wsc.setCursor(null);
       console.log(this.availableBoards);
-    } else if (this.operationMode === 'Delete') {
-      if (this.wsc.checkPoint(selectedPoint)) {
-        if ( this.wsc.findBoardAt(selectedPoint.getX(), selectedPoint.getY()) ) {
-          const deletedBoard = this.wsc.deleteAtPoint(selectedPoint);
-          if (deletedBoard) {
-            this.availableBoards.push(deletedBoard);
-          }
-        } else {
-          this.wsc.removeLinkNextToPoint(selectedPoint);
-        }
-      }
     }
   }
 
