@@ -48,7 +48,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   changeMode(operation: string): void {
-    this.operationMode = operation;
+    if (this.operationMode === operation ) {
+      delete this.operationMode;
+    } else {
+      this.operationMode = operation;
+    }
     this.onLinkDeselected();
     this.onBoardDeselected();
     if (this.operationMode !== 'Add') {
