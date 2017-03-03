@@ -52,6 +52,10 @@ export class Sketch {
     return this.name;
   }
 
+  setName(name: string): void {
+    this.name = name;
+  }
+
   changeStatus(status: string) {
     this.status  = status;
   }

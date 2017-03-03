@@ -19,6 +19,7 @@ import { LinkService } from './link/link.service';
 import { BoardService } from './board/board.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
+import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { LaptopComponent } from './laptop/laptop.component';
     SketchManagerComponent,
     ActiveBoardsComponent,
     LaptopComponent,
+    ClickToEditComponent,
   ],
   imports: [
     BrowserModule,
