@@ -1,5 +1,6 @@
 import { BoardInterface } from '../board/board';
 import { LinkInterface } from '../link/link';
+import { BoardConfig } from '../board-config';
 
 export interface SketchInterface {
   id: number;
@@ -61,5 +62,9 @@ export class Sketch {
 
   changeStatus(status: string) {
     this.status  = status;
+  }
+
+  getBoardConfigs(): BoardConfig[] {
+    return this.boards.map( (board) => board.boardConfig )
   }
 }
