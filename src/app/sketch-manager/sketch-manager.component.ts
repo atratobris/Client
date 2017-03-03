@@ -20,7 +20,6 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   public boards: BoardConfig[];
   public sketches: Sketch[];
   public links: LinkOption[];
-
   selectedSketch: Sketch;
   private editorOn: boolean;
   private timerSubscription: AnonymousSubscription;
@@ -51,12 +50,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   private refreshBoardData(): void {
     this.boardService.all().then( (boards: BoardConfig[]) => {
       this.boards = boards;
-      this.subscribeToData();
     });
-  }
-
-  private subscribeToData(): void {
-    // this.timerSubscription = Observable.timer(1000).first().subscribe(() => this.refreshBoardData());
   }
 
   activateSketch(id: number): void {
@@ -90,6 +84,13 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   onSketchEdit(id: number): void {
     this.selectedSketch = this.sketches[id];
+  }
+
+  onNameUpdated(newName): void {
+    this.selectedSketch.setName(newName);
+    this.sketchService.update(this.selectedSketch).then( (sketch: Sketch) => {
+      this.selectedSketch = sketch;
+    });
   }
 
   newSketch(): void {
