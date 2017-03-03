@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 import { AppComponent } from './app.component';
 import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
@@ -20,6 +20,7 @@ import { BoardService } from './board/board.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
+import { LogsComponent } from './logs/logs.component';
 
 
 @NgModule({
@@ -32,6 +33,8 @@ import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
     ActiveBoardsComponent,
     LaptopComponent,
     ClickToEditComponent,
+    LogsComponent,
+    CapitalizePipe,
   ],
   imports: [
     BrowserModule,

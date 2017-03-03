@@ -5,11 +5,13 @@ import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
 import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
+import { LogsComponent } from './logs/logs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component:  SketchManagerComponent },
-  { path: 'laptop', component: LaptopComponent}
+  { path: 'laptop', component: LaptopComponent },
+  { path: 'logs', component: LogsComponent }
 ];
 
 @NgModule({

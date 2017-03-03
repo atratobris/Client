@@ -12,7 +12,6 @@ import { ENV } from '../../environments/environment';
 export class LaptopComponent implements OnInit, OnDestroy {
   public events: string[] = [];
   private url: string = ENV.apiWs;
-  // private url: string = 'ws://caplatform.herokuapp.com/cable';
   private mac: string = BrowserDetails.getDetails();
 
   constructor(private ng2cable: Ng2Cable) {

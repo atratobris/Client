@@ -1,0 +1,20 @@
+<div *ngIf="logs">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Message</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs" class="log">
+        <th scope="row">{{log.id}}</th>
+        <td class="{{log.log_type}}" >{{log.log_type | capitalize }}</td>
+        <td>{{log.message}}</td>
+        <td>{{log.created_at}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
