@@ -9,6 +9,7 @@ export interface IBoardConfig {
   status: string;
   last_activity: string;
   colour: string;
+  accepted_links: string[];
 }
 
 export class BoardConfig {
@@ -20,8 +21,10 @@ export class BoardConfig {
   private status: string;
   public last_activity: string;
   private colour: string;
+  private accepted_links: string[];
 
   constructor(obj?: IBoardConfig) {
+    console.log(obj)
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.maintype = obj && obj.maintype || 'input';
@@ -30,6 +33,7 @@ export class BoardConfig {
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
+    this.accepted_links = obj && obj.accepted_links || [];
   }
   setMac(mac: string): void {
     this.mac = mac;
@@ -57,5 +61,9 @@ export class BoardConfig {
 
   getName(): string {
     return this.name;
+  }
+
+  getAcceptedLinks(): string[] {
+    return this.accepted_links;
   }
 }

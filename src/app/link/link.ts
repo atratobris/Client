@@ -130,6 +130,7 @@ export class Link {
       // angle = angle % ( Math.PI / 2);
       angle = Math.atan(Math.tan(angle)); // Use angle of slope instead
       ctx.rotate(angle);
+      console.log(this.logic);
       ctx.fillText(this.logic, -5, -5);
       ctx.translate(-this.midpoint.getX(), -this.midpoint.getY());
       ctx.restore();
@@ -222,7 +223,9 @@ export class Link {
   }
 
   copy(): Link {
-    return new Link(this.start.getX(), this.start.getY(), this.end.getX(), this.end.getY(), this.startBoard, this.endBoard);
+    const newlink =  new Link(this.start.getX(), this.start.getY(), this.end.getX(), this.end.getY(), this.startBoard, this.endBoard);
+    newlink.setLogic(this.logic);
+    return newlink;
   }
 
   exportFinished(): Link {
@@ -230,6 +233,10 @@ export class Link {
     finishedLink.linkToBoard();
     finishedLink.showWithLogic();
     return finishedLink;
+  }
+
+  setLogic(logic: string): void {
+    this.logic = logic;
   }
 
   showWithLogic(): void {
