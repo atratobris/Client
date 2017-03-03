@@ -1,3 +1,9 @@
-<p>
-  marketplace works!
-</p>
+<div *ngIf="sketches" class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let sketch of sketches">
+        {{sketch.id}}. {{sketch.name}}
+      </li>
+    </ul>
+  </div>
+</div>
