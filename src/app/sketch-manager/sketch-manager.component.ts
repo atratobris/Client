@@ -50,6 +50,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   private refreshBoardData(): void {
     this.boardService.all().then( (boards: BoardConfig[]) => {
       this.boards = boards;
+      console.log(this.boards);
     });
   }
 
