@@ -36,7 +36,6 @@ export class WorkspaceCanvas {
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
     this.cursor.setBoardConfig(b);
-    console.log(b);
     return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
 
@@ -45,13 +44,12 @@ export class WorkspaceCanvas {
     new_board.setCentre(this.cursor.getCentre());
     for (const board of this.boards) {
       if (board.collides(new_board)) {
-        console.log('Colliding');
         return false;
       }
     }
     delete this.cursor;
     new_board.setOffset(0, 0);
-    this.boards.push(new_board);
+    this.addBoard(new_board);
     return true;
   }
 
@@ -66,8 +64,7 @@ export class WorkspaceCanvas {
     for (let idx = this.links.length - 1; idx >= 0; idx--) {
       const link = this.links[idx];
       if ( link.getEndBoard().getBoardConfig() === board.getBoardConfig() ||
-            link.getStartBoard().getBoardConfig() === board.getBoardConfig()) {
-        console.log(link);
+          link.getStartBoard().getBoardConfig() === board.getBoardConfig()) {
         this.links.splice(idx, 1);
       }
     }
@@ -78,15 +75,24 @@ export class WorkspaceCanvas {
     this.links.splice(this.links.indexOf(deletedLink), 1);
   }
 
+  removeBoard(board: Board): void {
+    const index: number = this.boards.indexOf(board);
+    this.boards.splice(index, 1);
+    this.sketch.changed();
+  }
+
+  addBoard(board: Board): void {
+    this.boards.push(board);
+    this.sketch.changed();
+  }
+
   deleteAtPoint(selectedPoint: Point): BoardConfig {
     const clickedBoard: Board = this.findBoardAt(selectedPoint.getX(), selectedPoint.getY());
     if ( clickedBoard ) {
-      const index: number = this.boards.indexOf(clickedBoard);
-      this.boards.splice(index, 1);
+      this.removeBoard(clickedBoard);
       this.removeBoardLinks(clickedBoard);
       return clickedBoard.getBoardConfig();
     } else {
-      console.log('Nothing to delete');
       return null;
     }
   }
@@ -130,7 +136,7 @@ export class WorkspaceCanvas {
     if (this.savedBoard) {
       this.cursor.deepSetCentre(this.savedBoard.getCentre());
       this.savedBoard.setCentre(this.cursor.getCentre());
-      this.boards.push(this.savedBoard);
+      this.addBoard(this.savedBoard);
       this.savedBoard = null;
     }
     this.cursor = null;
@@ -169,8 +175,7 @@ export class WorkspaceCanvas {
   dragStart(x: number, y: number): boolean {
     const selectedBoard: Board = this.findBoardAt(x, y);
     if ( selectedBoard ) {
-      const index: number = this.boards.indexOf(selectedBoard);
-      this.boards.splice(index, 1);
+      this.removeBoard(selectedBoard);
       this.savedBoard = selectedBoard.copy();
       this.cursor = selectedBoard;
       this.cursor.setOffset(x - selectedBoard.getPosX(), y - selectedBoard.getPosY());
@@ -252,6 +257,7 @@ export class WorkspaceCanvas {
     const linksInterface: LinkInterface[] = this.links.map( ( link: Link) => link.prepare());
     this.sketch.setBoards(this.boards.map( (board: Board) => board.prepare()));
     this.sketch.setLinks(this.links.map( ( link: Link) => link.prepare()));
+    this.sketch.saveChanges();
     return this.sketch;
   }
 

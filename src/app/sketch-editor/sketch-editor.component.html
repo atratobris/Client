@@ -3,10 +3,10 @@
     <div class="btn-group mr-2" role="group" aria-label="First group">
       <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary" (click)="changeMode('Delete')"> Delete </button>
       <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
-      <button [ngClass]="{'selected': operationMode==='Save' }" type="button" class="btn btn-secondary" (click)="changeMode('Save')"> Save </button>
-      <button type="button" class="btn btn-secondary" (click)="revertToActive()" >Revert</button>
+      <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="drag_drop.saveSketch()"> Save </button>
+      <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="revertToActive()" >Revert</button>
     </div>
-    <app-drag-drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
+    <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
     <app-board-details [board]="selectedBoard" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
   </div>
   <div class="col-sm-2 pt-2">

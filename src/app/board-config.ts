@@ -24,7 +24,6 @@ export class BoardConfig {
   private accepted_links: string[];
 
   constructor(obj?: IBoardConfig) {
-    console.log(obj)
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.maintype = obj && obj.maintype || 'input';

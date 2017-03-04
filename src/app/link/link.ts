@@ -130,7 +130,6 @@ export class Link {
       // angle = angle % ( Math.PI / 2);
       angle = Math.atan(Math.tan(angle)); // Use angle of slope instead
       ctx.rotate(angle);
-      console.log(this.logic);
       ctx.fillText(this.logic, -5, -5);
       ctx.translate(-this.midpoint.getX(), -this.midpoint.getY());
       ctx.restore();
