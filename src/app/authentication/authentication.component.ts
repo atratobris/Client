@@ -8,7 +8,7 @@ import { User } from './user';
   styleUrls: ['./authentication.component.sass']
 })
 export class AuthenticationComponent implements OnInit {
-  public login = true;
+  public submitted = false;
   public user: User;
 
   constructor(private authenticationService: AuthenticationService) {
@@ -24,6 +24,7 @@ export class AuthenticationComponent implements OnInit {
 
   submit(): void {
     console.log(this.user);
+    this.submitted = true;
   }
 
 }
