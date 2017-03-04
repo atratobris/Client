@@ -20,11 +20,17 @@ export class AuthenticationService implements CanActivate {
     return false;
   }
 
-  private loggedIn() {
+  loggedIn() {
     if (localStorage.getItem('atrato-user-id')) {
       return true;
     }
     return false;
+  }
+
+  handleLoggedIn() {
+    if (this.loggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   private handleError(error: any): Promise<any> {
