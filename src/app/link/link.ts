@@ -208,17 +208,12 @@ export class Link {
     let ty = slope * (point.getX() + slope * point.getY() - slope * b);
     ty = b + ty / ( Math.pow(slope, 2) + 1);
 
-    // if( (tx <= this.start.getX() && tx>= this.end.getX()) || (tx >= this.start.getX() && tx <= this.end.getX()))
-    //   console.log("x within range")
-
     const distance = Math.sqrt(Math.pow(tx - point.getX(), 2) + Math.pow(ty - point.getY(), 2) );
-    // console.log(distance);
 
     if ( distance < this.distanceTreshold ) {
       return true;
     }
     return false;
-
   }
 
   copy(): Link {

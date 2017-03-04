@@ -36,7 +36,6 @@ export class WorkspaceCanvas {
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
     this.cursor.setBoardConfig(b);
-    console.log(b);
     return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
 
@@ -67,7 +66,6 @@ export class WorkspaceCanvas {
       const link = this.links[idx];
       if ( link.getEndBoard().getBoardConfig() === board.getBoardConfig() ||
             link.getStartBoard().getBoardConfig() === board.getBoardConfig()) {
-        console.log(link);
         this.links.splice(idx, 1);
       }
     }

@@ -218,7 +218,6 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
       this.finishedAddingBoard.emit();
       this.wsc.setCursor(null);
-      console.log(this.availableBoards);
     }
   }
 

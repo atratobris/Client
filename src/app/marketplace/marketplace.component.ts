@@ -16,7 +16,6 @@ export class MarketplaceComponent implements OnInit {
   ngOnInit() {
     this.sketchService.marketplace().then( ( sketches: Sketch[] ) => {
       this.sketches = sketches;
-      console.log(this.sketches[0].getBoardConfigs())
     });
   }
 
