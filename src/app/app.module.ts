@@ -21,6 +21,7 @@ import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
 import { LogsComponent } from './logs/logs.component';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { LogsComponent } from './logs/logs.component';
     ClickToEditComponent,
     LogsComponent,
     CapitalizePipe,
+    MarketplaceComponent,
   ],
   imports: [
     BrowserModule,

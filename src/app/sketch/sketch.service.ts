@@ -37,6 +37,17 @@ export class SketchService {
       }).catch( this.handleError );
   }
 
+  marketplace(): Promise<Sketch[]> {
+    return this.http
+      .get(`${ENV.apiUrl}/marketplace.json`)
+      .toPromise()
+      .then( response => {
+        return Array.from(response.json(), ( x: SketchInterface ) => {
+          return new Sketch(x);
+        });
+      }).catch( this.handleError );
+  }
+
   create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
     return this.http
       .post(`${this.apiUrl}`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})

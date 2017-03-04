@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
 import { SketchService } from '../sketch/sketch.service';
 
 import { Sketch } from '../sketch/sketch';
@@ -6,8 +6,6 @@ import { LinkOption } from '../link/link';
 import { BoardService } from '../board/board.service';
 import { LinkService } from '../link/link.service';
 import { BoardConfig } from '../board-config';
-import { Observable } from 'rxjs/Rx';
-import { AnonymousSubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sketch-manager',
@@ -22,29 +20,24 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   public links: LinkOption[];
   selectedSketch: Sketch;
   private editorOn: boolean;
-  private timerSubscription: AnonymousSubscription;
 
   constructor(private ngZone: NgZone, private sketchService: SketchService,
     private boardService: BoardService, private linkService: LinkService) {}
 
   ngOnInit() {
-    this.sketchService.all().then( (sketches: Sketch[] ) => {
+    this.sketchService.all().then( ( sketches: Sketch[] ) => {
       this.sketches = sketches;
     });
-    this.linkService.all().then( (links: LinkOption[]) => {
+    this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
     });
     this.refreshBoardData();
   }
 
   ngAfterViewInit() {
-
   }
 
-  public ngOnDestroy(): void {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
   }
 
   private refreshBoardData(): void {

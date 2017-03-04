@@ -1,10 +1,12 @@
 import { BoardInterface } from '../board/board';
 import { LinkInterface } from '../link/link';
+import { BoardConfig } from '../board-config';
 
 export interface SketchInterface {
   id: number;
   status: string;
   name: string;
+  description: string;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
@@ -15,6 +17,7 @@ export class Sketch {
   private name: string;
   private boards: BoardInterface[];
   private links: LinkInterface[];
+  description: string;
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
@@ -22,6 +25,7 @@ export class Sketch {
     this.links = sketch.links;
     this.status = sketch.status;
     this.name = sketch.name;
+    this.description = sketch.description;
   }
 
   getBoards(): BoardInterface[] {
@@ -58,5 +62,9 @@ export class Sketch {
 
   changeStatus(status: string) {
     this.status  = status;
+  }
+
+  getBoardConfigs(): BoardConfig[] {
+    return this.boards.map( (board) => board.boardConfig )
   }
 }
