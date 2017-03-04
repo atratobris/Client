@@ -21,10 +21,7 @@ export class AuthenticationService implements CanActivate {
   }
 
   loggedIn() {
-    if (localStorage.getItem('atrato-user-id')) {
-      return true;
-    }
-    return false;
+    return !!localStorage.getItem('atrato-user-id');
   }
 
   handleLoggedIn() {
