@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams} from '@angular/http';
 
 import { Board } from '../board/board';
 import { Link, LinkInterface } from '../link/link';
@@ -27,8 +27,10 @@ export class SketchService {
   }
 
   all(): Promise<Sketch[]> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('user_id', localStorage.getItem('atrato-user-id'));
     return this.http
-      .get(`${this.apiUrl}.json`)
+      .get(`${this.apiUrl}.json`, {search: params})
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( x: SketchInterface ) => {
@@ -50,7 +52,8 @@ export class SketchService {
 
   create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
     return this.http
-      .post(`${this.apiUrl}`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})
+      .post(`${this.apiUrl}.json`,
+        JSON.stringify({boards: newBoards, links: newLinks, user_id: localStorage.getItem('atrato-user-id')}), {headers: this.headers})
       .toPromise()
       .then( response => {
         return new Sketch(response.json());
@@ -61,7 +64,7 @@ export class SketchService {
   update(sketch: Sketch): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify(sketch), {headers: this.headers})
+      .put(url, {sketch, 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
@@ -70,7 +73,7 @@ export class SketchService {
   updateLinks(sketch: Sketch, links: LinkInterface[]): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify({'links': links }), {headers: this.headers})
+      .put(url, {'links': links, 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
@@ -79,16 +82,18 @@ export class SketchService {
   updateStatus(sketch: Sketch): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
-      .put(url, JSON.stringify({'status': sketch.getStatus() }), {headers: this.headers})
+      .put(url, {'status': sketch.getStatus(), 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
   }
 
   removeSketch(sketch: Sketch): Promise<boolean> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('user_id', localStorage.getItem('atrato-user-id'));
     const url = `${this.apiUrl}/${sketch.getId()}`;
     return this.http
-      .delete(url, {headers: this.headers})
+      .delete(url, {search: params})
       .toPromise()
       .then( response => response.status === 204 )
       .catch(this.handleError);
