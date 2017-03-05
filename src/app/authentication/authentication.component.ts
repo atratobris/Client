@@ -23,7 +23,7 @@ export class AuthenticationComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.user);
+    this.authenticationService.logIn(this.user);
     this.submitted = true;
   }
 
