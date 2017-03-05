@@ -28,7 +28,8 @@ export class AuthenticationService implements CanActivate {
       .toPromise()
       .then( response => {
         localStorage.setItem('atrato-user-id', response.json().id);
-      });
+        this.router.navigate(['/dashboard']);
+      }).catch( this.handleError);
   }
 
 
