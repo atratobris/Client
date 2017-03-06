@@ -18,3 +18,11 @@
     </ul>
   </div>
 </div>
+
+<div *ngIf="sketches && sketches.length == 0" class="row">
+  <div class="col-sm-6 offset-sm-3">
+    <p class="text-muted text-center">
+      There are no sketches for sale at the moment..
+    </p>
+  </div>
+</div>
