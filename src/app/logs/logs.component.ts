@@ -10,7 +10,7 @@ import { ENV } from '../../environments/environment';
 })
 export class LogsComponent implements OnInit, OnDestroy {
   private url: string = ENV.apiWs;
-  public logs: Log[];
+  public logs: Log[] = [];
 
   constructor(private ng2cable: Ng2Cable) {
     this.ng2cable.setCable(this.url);
@@ -19,7 +19,7 @@ export class LogsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ng2cable.subscription = this.ng2cable.cable.subscriptions.create({ channel: 'LogChannel' }, {
       received: (data) => {
-        this.logs = data.message.map((log: any) => new Log(log) );
+        data.message.map((log: any) => this.logs.unshift(new Log(log)) );
       }
     });
   }
