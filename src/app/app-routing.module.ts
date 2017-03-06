@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
@@ -7,13 +7,17 @@ import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+
+import { AuthenticationService } from './authentication/authentication.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component:  SketchManagerComponent },
+  { path: '', redirectTo: '/authentication', pathMatch: 'full' },
+  { path: 'authentication', component: AuthenticationComponent },
+  { path: 'dashboard', component:  SketchManagerComponent, canActivate: [AuthenticationService] },
   { path: 'laptop', component: LaptopComponent },
   { path: 'logs', component: LogsComponent },
-  { path: 'marketplace', component: MarketplaceComponent }
+  { path: 'marketplace', component: MarketplaceComponent, canActivate: [AuthenticationService] }
 ];
 
 @NgModule({
