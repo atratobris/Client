@@ -72,8 +72,9 @@ export class Sketch {
 
   saveChanges(): void {
     this.saved = true;
-    
+  }
+
   getBoardConfigs(): BoardConfig[] {
-    return this.boards.map( (board) => board.boardConfig )
+    return this.boards.map( (board) => board.boardConfig );
   }
 }
