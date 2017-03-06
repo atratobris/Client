@@ -12,8 +12,8 @@
     <li class="nav-item">
       <a routerLink="/marketplace" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Marketplace</a>
     </li>
-    <li class="nav-item" *ngIf="loggedIn()">
-      <a>Welcome {{userName()}}</a>
+    <li class="nav-item auth" *ngIf="loggedIn()">
+      <a class="username">Welcome {{userName()}}</a>
     </li>
     <li class="nav-item" *ngIf="loggedIn()">
       <a (click)="logout()">Log out</a>
