@@ -92,7 +92,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.operationMode === 'Link') {
       this.linking = this.wsc.linkStart(point.getX(), point.getY());
       return;
-    } else if (this.operationMode === 'Delete') {
+    }
+    if (this.operationMode === 'Delete') {
       if (this.wsc.checkPoint(point)) {
         if ( this.wsc.findBoardAt(point.getX(), point.getY()) ) {
           const deletedBoard = this.wsc.deleteAtPoint(point);
@@ -105,13 +106,13 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
 
-    // selecting
     if (this.wsc.selectBoard(point.getX(), point.getY())) {
       this.dragging = this.wsc.dragStart(point.getX(), point.getY());
       this.selectBoard();
       this.deselectLink();
       return;
-    } else if (this.wsc.selectLink(point)) {
+    }
+    if (this.wsc.selectLink(point)) {
       this.selectLink();
       this.deselectBoard();
       return;
@@ -181,13 +182,14 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.ngZone.runOutsideAngular(() => this.wsc.draw());
   }
 
+  saveSketch(): void {
+    this.sketch = this.wsc.buildSketch();
+    this.sketchService.update( this.sketch );
+  }
+
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (changes['operationMode']) {
       this.deselectBoard();
-      if (this.operationMode === 'Save') {
-        this.sketch = this.wsc.buildSketch();
-        this.sketchService.update( this.sketch );
-      }
     }
     if (changes['sketch']) {
       this.deselectLink();

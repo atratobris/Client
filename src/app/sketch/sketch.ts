@@ -17,6 +17,7 @@ export class Sketch {
   private name: string;
   private boards: BoardInterface[];
   private links: LinkInterface[];
+  private saved: boolean;
   description: string;
 
   constructor(sketch: SketchInterface) {
@@ -25,6 +26,7 @@ export class Sketch {
     this.links = sketch.links;
     this.status = sketch.status;
     this.name = sketch.name;
+    this.saved = true;
     this.description = sketch.description;
   }
 
@@ -64,6 +66,13 @@ export class Sketch {
     this.status  = status;
   }
 
+  changed(): void {
+    this.saved = false;
+  }
+
+  saveChanges(): void {
+    this.saved = true;
+    
   getBoardConfigs(): BoardConfig[] {
     return this.boards.map( (board) => board.boardConfig )
   }
