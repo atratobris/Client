@@ -10,7 +10,7 @@
       <option *ngFor="let option of linkOptions" [attr.value]="option.name">{{option.description}}</option>
     </select>
   </span>
-  <button type="button" name="button" (click)="updateLink(link)"  >update</button>
+  <button type="button" name="button" (click)="updateLink(link)" class="btn btn-success">update</button>
 </div>
 <div *ngIf="board">
   <h2>Board: </h2>
@@ -29,5 +29,5 @@
   <span>
     mac: {{board.mac}}
   </span>
-  <button type="button" name="button" (click)="updateBoard(board)"  >update</button>
+  <button type="button" name="button" (click)="updateBoard(board)" class="btn btn-success">update</button>
 </div>

@@ -11,8 +11,12 @@
               <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx)" > Activate </button>
-              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx)" > Stop </button>
+              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx)">
+                Activate
+              </button>
+              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx)">
+                Stop
+              </button>
             </div>
           </div>
         </div>
@@ -23,7 +27,7 @@
     </div>
     <div class="col-sm-10 pt-2">
       <div *ngIf="selectedSketch">
-        <app-sketch-editor [sketch]="selectedSketch" [boards]="boards" [links]="links" ></app-sketch-editor>
+        <app-sketch-editor [sketch]="selectedSketch" [boards]="boards" [links]="links"></app-sketch-editor>
       </div>
     </div>
   </div>

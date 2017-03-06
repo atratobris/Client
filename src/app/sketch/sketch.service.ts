@@ -37,9 +37,20 @@ export class SketchService {
       }).catch( this.handleError );
   }
 
+  marketplace(): Promise<Sketch[]> {
+    return this.http
+      .get(`${ENV.apiUrl}/marketplace.json`)
+      .toPromise()
+      .then( response => {
+        return Array.from(response.json(), ( x: SketchInterface ) => {
+          return new Sketch(x);
+        });
+      }).catch( this.handleError );
+  }
+
   create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
     return this.http
-      .post(`${this.apiUrl}`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})
+      .post(`${this.apiUrl}.json`, JSON.stringify({boards: newBoards, links: newLinks}), {headers: this.headers})
       .toPromise()
       .then( response => {
         return new Sketch(response.json());
@@ -75,7 +86,7 @@ export class SketchService {
   }
 
   removeSketch(sketch: Sketch): Promise<boolean> {
-    const url = `${this.apiUrl}/${sketch.getId()}`;
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
       .delete(url, {headers: this.headers})
       .toPromise()

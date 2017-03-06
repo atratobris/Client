@@ -38,7 +38,6 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
       this.onLinkDeselected();
       this.onBoardDeselected();
     }
-    console.log(this.sketch);
   }
 
   ngAfterViewInit() {
