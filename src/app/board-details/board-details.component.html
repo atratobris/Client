@@ -7,10 +7,10 @@
     logic:
     <!-- <input [(ngModel)]="link.logic" placeholder="logic" /> -->
     <select [(ngModel)]="link.logic" name="Logic Type" class="form-component">
-      <option *ngFor="let option of linkOptions" [attr.value]="option.name">{{option.description}}</option>
+      <option *ngFor="let option of link.getEndBoard().getBoardConfig().getAcceptedLinks()" [attr.value]="option.name">{{option.description}}</option>
     </select>
   </span>
-  <button type="button" name="button" (click)="updateLink(link)"  >update</button>
+  <button type="button" name="button" (click)="updateLink(link)" class="btn btn-success">update</button>
 </div>
 <div *ngIf="board">
   <h2>Board: </h2>
@@ -19,8 +19,8 @@
     <input [(ngModel)]="board.maintype" placeholder="type" />
   </span>
   <span>
-    <label>subtype: </label>
-    <input [(ngModel)]="board.subtype" placeholder="subtype" />
+    <label>type: </label>
+    <input [(ngModel)]="board.type" placeholder="type" />
   </span>
   <span>
     <label>name: </label>
@@ -29,5 +29,5 @@
   <span>
     mac: {{board.mac}}
   </span>
-  <button type="button" name="button" (click)="updateBoard(board)"  >update</button>
+  <button type="button" name="button" (click)="updateBoard(board)" class="btn btn-success">update</button>
 </div>

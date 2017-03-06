@@ -36,7 +36,6 @@ export class WorkspaceCanvas {
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
     this.cursor.setBoardConfig(b);
-    console.log(b);
     return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
 
@@ -67,7 +66,6 @@ export class WorkspaceCanvas {
       const link = this.links[idx];
       if ( link.getEndBoard().getBoardConfig() === board.getBoardConfig() ||
             link.getStartBoard().getBoardConfig() === board.getBoardConfig()) {
-        console.log(link);
         this.links.splice(idx, 1);
       }
     }
@@ -160,7 +158,7 @@ export class WorkspaceCanvas {
     const selectedBoard: Board =  this.findBoardAt(x, y);
     if (selectedBoard && this.currentLink.getStartBoard() !== selectedBoard) {
         this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
-        this.currentLink.setLogic(selectedBoard.getBoardConfig().getAcceptedLinks()[0]);
+        this.currentLink.setLogic(selectedBoard.getBoardConfig().getAcceptedLinks()[0].getName());
         this.links.push(this.currentLink.exportFinished());
     }
     this.currentLink = null;

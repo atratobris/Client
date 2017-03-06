@@ -14,6 +14,10 @@ export class LinkOption {
     this.name = linkOptionInterface.name;
     this.description = linkOptionInterface.description;
   }
+
+  getName(): string {
+    return this.name;
+  }
 }
 
 export interface LinkInterface {
@@ -130,7 +134,6 @@ export class Link {
       // angle = angle % ( Math.PI / 2);
       angle = Math.atan(Math.tan(angle)); // Use angle of slope instead
       ctx.rotate(angle);
-      console.log(this.logic);
       ctx.fillText(this.logic, -5, -5);
       ctx.translate(-this.midpoint.getX(), -this.midpoint.getY());
       ctx.restore();
@@ -209,17 +212,12 @@ export class Link {
     let ty = slope * (point.getX() + slope * point.getY() - slope * b);
     ty = b + ty / ( Math.pow(slope, 2) + 1);
 
-    // if( (tx <= this.start.getX() && tx>= this.end.getX()) || (tx >= this.start.getX() && tx <= this.end.getX()))
-    //   console.log("x within range")
-
     const distance = Math.sqrt(Math.pow(tx - point.getX(), 2) + Math.pow(ty - point.getY(), 2) );
-    // console.log(distance);
 
     if ( distance < this.distanceTreshold ) {
       return true;
     }
     return false;
-
   }
 
   copy(): Link {
