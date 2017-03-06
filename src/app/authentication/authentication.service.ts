@@ -10,6 +10,8 @@ import { ENV } from '../../environments/environment';
 export class AuthenticationService implements CanActivate {
   private apiUrl = `${ENV.apiUrl}/sessions`;
   private headers = new Headers({'Content-Type': 'application/json'});
+  private idKey = 'atrato-user-id';
+  private nameKey = 'atrato-user-name';
 
   constructor(private http: Http, private router: Router) { }
 
@@ -22,24 +24,46 @@ export class AuthenticationService implements CanActivate {
   }
 
   logIn(user: User): Promise<void> {
-    console.log(user);
     return this.http
       .post(`${this.apiUrl}.json`, JSON.stringify(user),  {headers: this.headers})
       .toPromise()
       .then( response => {
-        localStorage.setItem('atrato-user-id', response.json().id);
+        const jsonResponse = response.json();
+        this.setCurrentUserId(jsonResponse.id);
+        this.setUserName(jsonResponse.name);
         this.handleLoggedIn();
       }).catch( this.handleError);
   }
 
   loggedIn() {
-    return !!localStorage.getItem('atrato-user-id');
+    return !!this.getCurrentUserId();
   }
 
   handleLoggedIn() {
     if (this.loggedIn()) {
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  getCurrentUserId(): string {
+    return localStorage.getItem(this.idKey);
+  }
+
+  setCurrentUserId(value: string): void {
+    localStorage.setItem(this.idKey, value);
+  }
+
+  getUserName(): string {
+    return localStorage.getItem(this.nameKey);
+  }
+
+  setUserName(value: string): void {
+    localStorage.setItem(this.nameKey, value);
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.idKey);
+    this.router.navigate(['/authentication']);
   }
 
   private handleError(error: any): Promise<any> {
