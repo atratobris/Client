@@ -91,7 +91,7 @@ export class SketchService {
   removeSketch(sketch: Sketch): Promise<boolean> {
     const params: URLSearchParams = new URLSearchParams();
     params.set('user_id', localStorage.getItem('atrato-user-id'));
-    const url = `${this.apiUrl}/${sketch.getId()}`;
+    const url = `${this.apiUrl}/${sketch.getId()}.json`;
     return this.http
       .delete(url, {search: params})
       .toPromise()
