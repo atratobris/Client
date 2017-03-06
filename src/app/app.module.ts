@@ -15,12 +15,15 @@ import { BoardDetailsComponent } from './board-details/board-details.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
 
 import { SketchService } from './sketch/sketch.service';
+import { AuthenticationService } from './authentication/authentication.service';
 import { LinkService } from './link/link.service';
 import { BoardService } from './board/board.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
 import { LogsComponent } from './logs/logs.component';
+import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 
 @NgModule({
@@ -35,6 +38,8 @@ import { LogsComponent } from './logs/logs.component';
     ClickToEditComponent,
     LogsComponent,
     CapitalizePipe,
+    MarketplaceComponent,
+    AuthenticationComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,7 @@ import { LogsComponent } from './logs/logs.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService],
+  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
