@@ -63,8 +63,12 @@ export class SketchService {
 
   update(sketch: Sketch): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
+    let obj = { 'user_id': localStorage.getItem('atrato-user-id') };
+    for (let i in sketch) {
+      obj[i] = sketch[i]
+    }
     return this.http
-      .put(url, {sketch, 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
+      .put(url, obj, {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);
