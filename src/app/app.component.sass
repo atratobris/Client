@@ -3,6 +3,10 @@
 
 .navigation
   margin-bottom: 1rem
+  a
+    cursor: pointer
+  .auth
+    margin-left: 45%
   .nav-item a
     display: block
     padding: .5em 1em
@@ -13,3 +17,11 @@
       color: #464a4c
       background-color: #fff
       border-color: #ddd #ddd #fff
+    &.username
+      color: gray
+      font-size: 16px
+      cursor: default
+
+  a:not([href]):not([tabindex])
+    color: #0275d8
+    text-decoration: none

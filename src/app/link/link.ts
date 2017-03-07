@@ -14,6 +14,10 @@ export class LinkOption {
     this.name = linkOptionInterface.name;
     this.description = linkOptionInterface.description;
   }
+
+  getName(): string {
+    return this.name;
+  }
 }
 
 export interface LinkInterface {
