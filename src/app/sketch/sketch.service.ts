@@ -19,8 +19,10 @@ export class SketchService {
   constructor(private http: Http) { }
 
   get(id: number): Promise<Sketch> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('user_id', localStorage.getItem('atrato-user-id'));
     return this.http
-      .get(`${this.apiUrl}/${id}.json`)
+      .get(`${this.apiUrl}/${id}.json`, {search: params})
       .toPromise()
       .then( response => new Sketch(response.json()) )
       .catch( this.handleError );
