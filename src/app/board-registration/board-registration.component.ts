@@ -9,13 +9,15 @@ import { BoardService } from '../board/board.service';
 })
 export class BoardRegistrationComponent implements OnInit {
 
+  public code: string;
+
   constructor(private boardService: BoardService) { }
 
   ngOnInit() {
   }
 
-  registerBoard(code: string): void {
-    this.boardService.request_register(code);
+  registerBoard(): void {
+    this.boardService.request_register(this.code);
   }
 
 }

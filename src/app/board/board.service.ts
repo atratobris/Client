@@ -47,7 +47,7 @@ export class BoardService {
     const params: URLSearchParams = new URLSearchParams();
     params.set('code', code);
     return this.http
-      .get(`${this.apiUrl}/register.json`, {search: params})
+      .post(`${this.apiUrl}/register.json`, JSON.stringify({partial_mac: code}), {headers: this.headers})
       .toPromise()
       .then((response) => {
         console.log( Array.from(response.json(), (board) => board));
