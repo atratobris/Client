@@ -27,6 +27,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit() {
     this.sketchService.all().then( ( sketches: Sketch[] ) => {
       this.sketches = sketches;
+      this.setDefaultSelectedSketch();
     });
     this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
@@ -92,6 +93,18 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
       this.selectedSketch = sketch;
       this.sketches.push(sketch);
     });
+  }
+
+  private setDefaultSelectedSketch(): void {
+    for (let sketch of this.sketches) {
+      if (sketch.getStatus() == "active") {
+        this.selectedSketch = sketch;
+        break;
+      }
+    }
+    if (!this.selectedSketch) {
+      this.selectedSketch = this.sketches[0];
+    }
   }
 
 }
