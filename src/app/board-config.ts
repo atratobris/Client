@@ -28,14 +28,14 @@ export class BoardConfig {
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.maintype = obj && obj.maintype || 'input';
-    this.type = obj && obj.type || 'button';
+    this.type = obj && obj.type || 'Input';
     this.name = obj && obj.name || `${this.maintype} Component`;
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
-    this.accepted_links = []
-    if(obj) {
-      for(const key in obj.accepted_links) {
+    this.accepted_links = [];
+    if (obj) {
+      for (const key in obj.accepted_links) {
         this.accepted_links.push(new LinkOption({ "name": key, "description": obj.accepted_links[key] }))
       }
     }

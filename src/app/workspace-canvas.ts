@@ -168,6 +168,7 @@ export class WorkspaceCanvas {
         this.currentLink.setEnd(selectedBoard.getPosX(), selectedBoard.getPosY(), selectedBoard);
         this.currentLink.setLogic(selectedBoard.getBoardConfig().getAcceptedLinks()[0].getName());
         this.links.push(this.currentLink.exportFinished());
+        this.sketch.changed();
     }
     this.currentLink = null;
   }
