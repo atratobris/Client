@@ -1,5 +1,10 @@
-<span>
-  <label>Last 4 digits of MAC: </label>
-  <input [(ngModel)]="code" placeholder="XXXX" />
-</span>
-<button type="button" name="button" (click)="registerBoard(code)" class="btn btn-success">Submit</button>
+<div class="row">
+  <div class="col-sm-4 offset-sm-4 register-form">
+    <span>
+      <label>Last 4 digits of MAC: </label> <br>
+      <input [(ngModel)]="code" placeholder="XXXX" />
+    </span>
+    <br>
+    <button type="button" name="button" (click)="registerBoard(code)" class="btn btn-success">Submit</button>
+  </div>
+</div>
