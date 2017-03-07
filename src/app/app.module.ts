@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { DasherizePipe } from './pipes/dasherize.pipe';
 
 import { AppComponent } from './app.component';
 import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
@@ -39,6 +40,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     ClickToEditComponent,
     LogsComponent,
     CapitalizePipe,
+    DasherizePipe,
     MarketplaceComponent,
     BoardRegistrationComponent,
     AuthenticationComponent,
