@@ -65,6 +65,6 @@ export class Sketch {
   }
 
   getBoardConfigs(): BoardConfig[] {
-    return this.boards.map( (board) => board.boardConfig )
+    return this.boards.map( (board) => board.boardConfig );
   }
 }

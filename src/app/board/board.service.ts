@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import { BoardConfig, IBoardConfig } from '../board-config';
@@ -40,6 +40,18 @@ export class BoardService {
       .put(url, JSON.stringify(board), {headers: this.headers})
       .toPromise()
       .then(() => board)
+      .catch(this.handleError);
+  }
+
+  request_register(code: string): Promise<void> {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('code', code);
+    return this.http
+      .get(`${this.apiUrl}/register.json`, {search: params})
+      .toPromise()
+      .then((response) => {
+        console.log( Array.from(response.json(), (board) => board));
+      })
       .catch(this.handleError);
   }
 

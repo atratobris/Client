@@ -7,13 +7,15 @@ import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
+import { BoardRegistrationComponent } from './board-registration/board-registration.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component:  SketchManagerComponent },
   { path: 'laptop', component: LaptopComponent },
   { path: 'logs', component: LogsComponent },
-  { path: 'marketplace', component: MarketplaceComponent }
+  { path: 'marketplace', component: MarketplaceComponent },
+  { path: 'registerboard', component: BoardRegistrationComponent }
 ];
 
 @NgModule({
