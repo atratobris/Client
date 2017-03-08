@@ -16,6 +16,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() link: Link;
   @Input() sketch: Sketch;
   @Input() linkOptions: LinkOption[];
+  @Output() onBoardSave = new EventEmitter<BoardConfig>();
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
 
   constructor(private boardService: BoardService, private sketchService: SketchService) { }
@@ -30,8 +31,10 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
     this.onLinkSave.emit(link.prepare());
   }
 
+
+
   updateBoard(board: BoardConfig): void {
-    this.boardService.update(board);
+    this.onBoardSave.emit(board);
   }
 
 }

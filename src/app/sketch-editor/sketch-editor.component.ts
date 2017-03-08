@@ -91,6 +91,15 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
     this.sketchService.updateLinks(this.sketch, links);
   }
 
+  onBoardSave(b: BoardConfig): void {
+    console.log(b);
+    this.boardService.update(b);
+    const sketch_boards = this.sketch.getBoardConfigs();
+    for (const board of this.boards) {
+      board.setName(b.getName());
+    }
+  }
+
   revertToActive(): void {
     this.sketchService.get(this.sketch.getId()).then( (activeSketch) => {
       this.sketch = activeSketch;
