@@ -78,6 +78,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
   onLinkSelected(link: Link): void {
     this.linkSelected = true;
     this.selectedLink = link;
+    delete this.operationMode;
   }
 
   onLinkSave(link: LinkInterface): void {
