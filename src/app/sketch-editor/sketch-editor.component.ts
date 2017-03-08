@@ -92,11 +92,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onBoardSave(b: BoardConfig): void {
-    console.log(b);
     this.boardService.update(b);
-    const sketch_boards = this.sketch.getBoardConfigs();
     for (const board of this.boards) {
-      board.setName(b.getName());
+      if (board.getMac() === b.getMac()) {
+        board.setName(b.getName());
+      }
     }
   }
 
