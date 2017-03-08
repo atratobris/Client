@@ -15,7 +15,7 @@ export interface IBoardConfig {
 
 export class BoardConfig {
   private id: number;
-  private mac: string;
+  public mac: string;
   private maintype: string;
   private name: string;
   private type: string;
