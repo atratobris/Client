@@ -75,6 +75,10 @@ export class Sketch {
     this.status  = status;
   }
 
+  isSaved(): boolean {
+    return this.saved;
+  }
+
   changed(): void {
     this.saved = false;
   }
