@@ -69,4 +69,10 @@ export class MarketplaceComponent implements OnInit {
     return false
   }
 
+  buySketch(sketch: Sketch): void {
+    this.sketchService
+      .purchase(sketch, this.authenticationService.getCurrentUserId())
+      .then( (sketch) => this.authenticationService.redirectToRoot({id: sketch.getId()}) );
+  }
+
 }

@@ -50,6 +50,15 @@ export class SketchService {
       }).catch( this.handleError );
   }
 
+  purchase(sketch: Sketch, user_id: number): Promise<Sketch> {
+    const object = {user_id: user_id, sketch_id: sketch.getId()};
+    return this.http
+      .post(`${ENV.apiUrl}/marketplace/purchase.json`, object, { headers: this.headers })
+      .toPromise()
+      .then( (response) => new Sketch(response.json()))
+      .catch( this.handleError );
+  }
+
   create(newBoards: Board[], newLinks: Link[]): Promise<Sketch> {
     return this.http
       .post(`${this.apiUrl}.json`,

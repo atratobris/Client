@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, NavigationExtras } from '@angular/router';
 import { User } from './user';
 import 'rxjs/add/operator/toPromise';
 
@@ -41,6 +41,17 @@ export class AuthenticationService implements CanActivate {
 
   handleLoggedIn() {
     if (this.loggedIn()) {
+      this.redirectToRoot();
+    }
+  }
+
+  redirectToRoot(params?: any) {
+    if (params) {
+      let navigationExtras: NavigationExtras = {
+        queryParams: params,
+      };
+      this.router.navigate(['/dashboard'], navigationExtras);
+    } else {
       this.router.navigate(['/dashboard']);
     }
   }
