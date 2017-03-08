@@ -107,9 +107,4 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
     this.newBoard = null;
     this.changeMode('Select');
   }
-
-  listOnMarketplace(): void {
-    this.sketch.listed = true;
-    this.sketchService.update(this.sketch).then( (sketch) => this.sketch = sketch );
-  }
 }

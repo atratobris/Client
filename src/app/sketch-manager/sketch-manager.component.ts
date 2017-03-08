@@ -107,4 +107,14 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
+  publishToMarket(id: number): void {
+    this.sketches[id].listed = true;
+    this.sketchService.update(this.sketches[id]).then( (sketch) => this.sketches[id] = sketch );
+  }
+
+  removeFromMarket(id: number): void {
+    this.sketches[id].listed = false;
+    this.sketchService.update(this.sketches[id]).then( (sketch) => this.sketches[id] = sketch );
+  }
+
 }

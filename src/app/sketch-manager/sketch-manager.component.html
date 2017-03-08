@@ -2,9 +2,15 @@
   <div class="row">
     <div class="col-sm-2 pt-2">
       <div *ngIf="sketches" class="sketchesBar">
-        <div  class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
+        <div  class="text-center sketch {{sketch.status}}" *ngFor="let sketch of sketches; let idx = index">
           <button class="removeButton" name="button">
             <i class="fa fa-times" (click)="removeSketch(idx)" aria-hidden="true"></i>
+          </button>
+          <button class="marketplace-button remove-from-market" *ngIf="sketch.listed" (click)="removeFromMarket(idx)">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+          </button>
+          <button class="marketplace-button publish-to-market" *ngIf="!sketch.listed" (click)="publishToMarket(idx)">
+            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
           </button>
           <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}}">
             <div class="text_center">

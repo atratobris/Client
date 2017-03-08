@@ -1,8 +1,6 @@
 <div class="row">
   <div *ngIf="sketch" class="col-sm-10">
     <div class="btn-group commands-wrapper" role="group" aria-label="First group">
-      <span *ngIf="sketch.listed">Listed $$</span>
-      <button type="button" *ngIf="!sketch.listed" (click)="listOnMarketplace()">List on marketplace</button>
       <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary" (click)="changeMode('Delete')"> Delete </button>
       <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
       <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="drag_drop.saveSketch()"> Save </button>
