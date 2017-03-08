@@ -3,7 +3,7 @@ ul
 
 .sketch
   list-style-type: none
-  margin-bottom: 10px
+  margin-bottom: 2rem
   border-radius: 5px
   position: relative
 
@@ -32,6 +32,23 @@ ul
     right: -10px
     top: -10px
     cursor: pointer
+
+  .marketplace-button
+    border-radius: 7px
+    border: 0px
+    position: absolute
+    right: -10px
+    bottom: -10px
+    cursor: pointer
+    &.publish-to-market
+      background-color: #2196f3
+    &.remove-from-market
+      background-color: #ff9800
+
+    .fa-cloud-upload
+      padding: 5px
+    .fa-usd
+      padding: 5px 10px
 
 .box-size-proper
   -webkit-box-sizing: border-box

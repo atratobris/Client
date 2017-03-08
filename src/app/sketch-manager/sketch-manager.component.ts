@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SketchService } from '../sketch/sketch.service';
 
 import { Sketch } from '../sketch/sketch';
@@ -15,14 +16,14 @@ import { BoardConfig } from '../board-config';
 
 export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public boards: BoardConfig[];
   public sketches: Sketch[];
   public links: LinkOption[];
   selectedSketch: Sketch;
   private editorOn: boolean;
 
   constructor(private ngZone: NgZone, private sketchService: SketchService,
-    private boardService: BoardService, private linkService: LinkService) {}
+    private boardService: BoardService, private linkService: LinkService,
+    private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.sketchService.all().then( ( sketches: Sketch[] ) => {
@@ -32,19 +33,12 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
     });
-    this.refreshBoardData();
   }
 
   ngAfterViewInit() {
   }
 
   ngOnDestroy(): void {
-  }
-
-  private refreshBoardData(): void {
-    this.boardService.all().then( (boards: BoardConfig[]) => {
-      this.boards = boards;
-    });
   }
 
   activateSketch(id: number): void {
@@ -77,6 +71,10 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onSketchEdit(id: number): void {
+    if (!this.selectedSketch.isSaved()) {
+      alert('Save or Revert changes to sketch');
+      return;
+    }
     this.selectedSketch = this.sketches[id];
   }
 
@@ -96,15 +94,38 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private setDefaultSelectedSketch(): void {
+    this.activatedRoute.queryParams.subscribe( (params) => {
+      const id = parseInt(params["id"], 10);
+      for (const sketch of this.sketches) {
+        if (sketch.getId() === id) {
+          this.selectedSketch = sketch;
+          this.selectedSketch.newPurchase = true;
+          break;
+        }
+      }
+      if (!this.selectedSketch) {
+        this.selectedSketch = this.defaultSketch();
+      }
+    });
+  }
+
+  private defaultSketch(): Sketch {
     for (let sketch of this.sketches) {
       if (sketch.getStatus() == "active") {
-        this.selectedSketch = sketch;
-        break;
+        return sketch;
       }
     }
-    if (!this.selectedSketch) {
-      this.selectedSketch = this.sketches[0];
-    }
+    return this.sketches[0];
+  }
+
+  publishToMarket(id: number): void {
+    this.sketches[id].listed = true;
+    this.sketchService.update(this.sketches[id]).then( (sketch) => this.sketches[id] = sketch );
+  }
+
+  removeFromMarket(id: number): void {
+    this.sketches[id].listed = false;
+    this.sketchService.update(this.sketches[id]).then( (sketch) => this.sketches[id] = sketch );
   }
 
 }

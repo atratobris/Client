@@ -7,6 +7,9 @@ export interface SketchInterface {
   status: string;
   name: string;
   description: string;
+  listed: boolean;
+  user: string;
+  user_id: number;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
@@ -18,7 +21,11 @@ export class Sketch {
   private boards: BoardInterface[];
   private links: LinkInterface[];
   private saved: boolean;
+  listed: boolean;
   description: string;
+  user: string;
+  user_id: number;
+  newPurchase: boolean;
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
@@ -28,6 +35,10 @@ export class Sketch {
     this.name = sketch.name;
     this.saved = true;
     this.description = sketch.description;
+    this.listed = sketch.listed;
+    this.user = sketch.user;
+    this.user_id = sketch.user_id;
+    this.newPurchase = false;
   }
 
   getBoards(): BoardInterface[] {
@@ -66,6 +77,10 @@ export class Sketch {
     this.status  = status;
   }
 
+  isSaved(): boolean {
+    return this.saved;
+  }
+
   changed(): void {
     this.saved = false;
   }
@@ -76,5 +91,9 @@ export class Sketch {
 
   getBoardConfigs(): BoardConfig[] {
     return this.boards.map( (board) => board.boardConfig );
+  }
+
+  getUserId(): number {
+    return this.user_id;
   }
 }

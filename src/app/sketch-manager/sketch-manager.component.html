@@ -2,9 +2,15 @@
   <div class="row">
     <div class="col-sm-2 pt-2">
       <div *ngIf="sketches" class="sketchesBar">
-        <div  class="text-center sketch {{sketch.status}}"  *ngFor="let sketch of sketches; let idx = index">
+        <div  class="text-center sketch {{sketch.status}}" *ngFor="let sketch of sketches; let idx = index">
           <button class="removeButton" name="button">
             <i class="fa fa-times" (click)="removeSketch(idx)" aria-hidden="true"></i>
+          </button>
+          <button class="marketplace-button remove-from-market" *ngIf="sketch.listed" (click)="removeFromMarket(idx)">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+          </button>
+          <button class="marketplace-button publish-to-market" *ngIf="!sketch.listed" (click)="publishToMarket(idx)">
+            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
           </button>
           <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}}">
             <div class="text_center">
@@ -18,6 +24,7 @@
                 Stop
               </button>
             </div>
+            <p *ngIf="sketch.newPurchase">New Purchase!!</p>
           </div>
         </div>
         <div class="sketch new-button text-center" (click)="newSketch()">
@@ -27,7 +34,7 @@
     </div>
     <div class="col-sm-10 pt-2">
       <div *ngIf="selectedSketch">
-        <app-sketch-editor [sketch]="selectedSketch" [boards]="boards" [links]="links"></app-sketch-editor>
+        <app-sketch-editor [sketch]="selectedSketch" [links]="links"></app-sketch-editor>
       </div>
     </div>
   </div>

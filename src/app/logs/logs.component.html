@@ -11,7 +11,7 @@
     <tbody>
       <tr *ngFor="let log of logs" class="log">
         <th scope="row">{{log.id}}</th>
-        <td class="{{log.log_type}}" >{{log.log_type | capitalize }}</td>
+        <td class="{{log.log_type | dasherize }}" >{{log.log_type | capitalize }}</td>
         <td>{{log.message}}</td>
         <td>{{log.created_at}}</td>
       </tr>

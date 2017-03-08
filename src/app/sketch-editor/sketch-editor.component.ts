@@ -18,11 +18,12 @@ import { LinkOption } from '../link/link';
 export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() sketch: Sketch;
-  @Input() boards: BoardConfig[];
   @Input() links: LinkOption[];
-  public operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
+
+  public boards: BoardConfig[];
+  public operationMode: string;
   public selectedLink: Link;
   public selectedBoard: BoardConfig;
   public newBoard: BoardConfig;
@@ -31,6 +32,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.changeMode('Select');
+    this.refreshBoardData();
   }
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}): void {
@@ -42,6 +44,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
   }
+
+  private refreshBoardData(): void {
+    this.boardService.all().then( (boards: BoardConfig[]) => {
+      this.boards = boards;
+    });
+   }
 
   clicked(event): void {
     this.sketch.setBoards([]);
@@ -70,6 +78,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
   onLinkSelected(link: Link): void {
     this.linkSelected = true;
     this.selectedLink = link;
+    delete this.operationMode;
   }
 
   onLinkSave(link: LinkInterface): void {
@@ -81,6 +90,15 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     this.sketchService.updateLinks(this.sketch, links);
+  }
+
+  onBoardSave(b: BoardConfig): void {
+    this.boardService.update(b);
+    for (const board of this.boards) {
+      if (board.getMac() === b.getMac()) {
+        board.setName(b.getName());
+      }
+    }
   }
 
   revertToActive(): void {
