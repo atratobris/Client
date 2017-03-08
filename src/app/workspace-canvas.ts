@@ -162,7 +162,7 @@ export class WorkspaceCanvas {
     }
   }
 
-  linkEnd(x: number, y: number): void {
+  linkEnd(x: number, y: number): boolean {
     const selectedBoard: Board =  this.findBoardAt(x, y);
     if (selectedBoard && this.currentLink.getStartBoard() !== selectedBoard) {
       const acceptedLinks = selectedBoard.getBoardConfig().getAcceptedLinks();
@@ -171,9 +171,13 @@ export class WorkspaceCanvas {
         this.currentLink.setLogic(acceptedLinks[0].getName());
         this.links.push(this.currentLink.exportFinished());
         this.sketch.changed();
+        [this.selectedLink] = this.links.slice(-1);
+        this.currentLink = null;
+        return true;
       }
     }
     this.currentLink = null;
+    return false;
   }
 
   dragStart(x: number, y: number): boolean {
