@@ -45,8 +45,8 @@ export class AuthenticationService implements CanActivate {
     }
   }
 
-  getCurrentUserId(): string {
-    return localStorage.getItem(this.idKey);
+  getCurrentUserId(): number {
+    return parseInt(localStorage.getItem(this.idKey), 10);
   }
 
   setCurrentUserId(value: string): void {

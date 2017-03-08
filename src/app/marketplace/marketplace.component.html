@@ -1,19 +1,32 @@
-<div *ngIf="sketches" class="row">
+<div *ngIf="sketches && boards" class="row">
   <div class="col-sm-6 offset-sm-3">
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let sketch of sketches">
-        <h3>
-          {{sketch.id}}. {{sketch.name}}
-        </h3>
-        <p class="text-muted">
-          {{sketch.description}}
-        </p>
-        <p>
-          <b>Hardware</b>
-          <span *ngFor="let board of sketch.getBoardConfigs()">
-            {{board.name}}
-          </span>
-        </p>
+      <li class="list-group-item row" *ngFor="let sketch of sketches">
+        <div class="col-10">
+          <h3>
+            {{sketch.id}}. {{sketch.name}}
+          </h3>
+          <p class="text-muted">
+            {{sketch.description}}
+          </p>
+          <p>
+            <b>Hardware</b>
+            <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.mac)}}">
+              {{board.name}}
+            </span>
+          </p>
+          <p class="text-right">
+            Created by: {{sketch.user}}
+          </p>
+        </div>
+        <div class="col-2">
+          <div *ngIf="canBuySketch(sketch)">
+            <button>Buy</button>
+          </div>
+          <div *ngIf="!canBuySketch(sketch)">
+            
+          </div>
+        </div>
       </li>
     </ul>
   </div>
