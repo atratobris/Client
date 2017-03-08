@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SketchService } from '../sketch/sketch.service';
 
 import { Sketch } from '../sketch/sketch';
@@ -21,7 +22,8 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   private editorOn: boolean;
 
   constructor(private ngZone: NgZone, private sketchService: SketchService,
-    private boardService: BoardService, private linkService: LinkService) {}
+    private boardService: BoardService, private linkService: LinkService,
+    private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.sketchService.all().then( ( sketches: Sketch[] ) => {
@@ -92,15 +94,28 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private setDefaultSelectedSketch(): void {
+    this.activatedRoute.queryParams.subscribe( (params) => {
+      const id = parseInt(params["id"], 10);
+      for (const sketch of this.sketches) {
+        if (sketch.getId() === id) {
+          this.selectedSketch = sketch;
+          this.selectedSketch.newPurchase = true;
+          break;
+        }
+      }
+      if (!this.selectedSketch) {
+        this.selectedSketch = this.defaultSketch();
+      }
+    });
+  }
+
+  private defaultSketch(): Sketch {
     for (let sketch of this.sketches) {
       if (sketch.getStatus() == "active") {
-        this.selectedSketch = sketch;
-        break;
+        return sketch;
       }
     }
-    if (!this.selectedSketch) {
-      this.selectedSketch = this.sketches[0];
-    }
+    return this.sketches[0];
   }
 
   publishToMarket(id: number): void {

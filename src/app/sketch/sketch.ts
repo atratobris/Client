@@ -25,6 +25,7 @@ export class Sketch {
   description: string;
   user: string;
   user_id: number;
+  newPurchase: boolean;
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
@@ -37,6 +38,7 @@ export class Sketch {
     this.listed = sketch.listed;
     this.user = sketch.user;
     this.user_id = sketch.user_id;
+    this.newPurchase = false;
   }
 
   getBoards(): BoardInterface[] {
