@@ -7,6 +7,7 @@ export interface SketchInterface {
   status: string;
   name: string;
   description: string;
+  listed: boolean;
   boards: BoardInterface[];
   links: LinkInterface[];
 }
@@ -18,6 +19,7 @@ export class Sketch {
   private boards: BoardInterface[];
   private links: LinkInterface[];
   private saved: boolean;
+  listed: boolean;
   description: string;
 
   constructor(sketch: SketchInterface) {
@@ -28,6 +30,7 @@ export class Sketch {
     this.name = sketch.name;
     this.saved = true;
     this.description = sketch.description;
+    this.listed = sketch.listed;
   }
 
   getBoards(): BoardInterface[] {
