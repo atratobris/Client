@@ -10,7 +10,7 @@
             {{sketch.description}}
           </p>
           <p>
-            <b>Hardware</b>
+            <b>Required Hardware</b>
             <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.mac)}}">
               {{board.name}}
             </span>
@@ -18,14 +18,15 @@
           <p class="text-right">
             Created by: {{sketch.user}}
           </p>
+          <p class="text-muted" *ngIf="!ownAllBoards(sketch)">
+            You don't own the following required hardware: {{missingBoards(sketch)}}
+          </p>
+          <p class="text-muted" *ngIf="mySketch(sketch)">
+            You already own this sketch
+          </p>
         </div>
         <div class="col-2">
-          <div *ngIf="canBuySketch(sketch)">
-            <button>Buy</button>
-          </div>
-          <div *ngIf="!canBuySketch(sketch)">
-            
-          </div>
+            <button disabled="{{canBuySketch(sketch) ? '' : true}}" class="btn btn-info">Buy</button>
         </div>
       </li>
     </ul>

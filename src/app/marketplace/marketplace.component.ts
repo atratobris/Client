@@ -35,11 +35,38 @@ export class MarketplaceComponent implements OnInit {
   }
 
   canBuySketch(sketch: Sketch): boolean {
-    let sketchMacs = sketch.getBoardConfigs().map( (config) => config.mac );
-    if (sketch.getUserId() === this.authenticationService.getCurrentUserId()) {
-      return false;
+    if (!this.mySketch(sketch) && this.ownAllBoards(sketch)) {
+      return true;
+    }
+    return false;
+  }
+
+  ownAllBoards(sketch: Sketch): boolean {
+    const sketchMacs = sketch.getBoardConfigs().map( (config) => config.mac );
+    for (const mac of sketchMacs) {
+      if (!this.boardMacs.includes(mac)) {
+        return false;
+      }
     }
     return true;
+  }
+
+  missingBoards(sketch: Sketch): string {
+    let missing: string[] = [];
+    const sketchMacs = sketch.getBoardConfigs().map( (config) => config.mac );
+    for (const mac of sketchMacs) {
+      if (!this.boardMacs.includes(mac)) {
+        missing.push(mac);
+      }
+    }
+    return missing.join(", ");
+  }
+
+  mySketch(sketch: Sketch): boolean {
+    if (sketch.getUserId() === this.authenticationService.getCurrentUserId()) {
+      return true;
+    }
+    return false
   }
 
 }
