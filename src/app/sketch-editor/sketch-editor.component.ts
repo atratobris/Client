@@ -18,11 +18,12 @@ import { LinkOption } from '../link/link';
 export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() sketch: Sketch;
-  @Input() boards: BoardConfig[];
   @Input() links: LinkOption[];
-  public operationMode: string;
   private boardSelected = false;
   private linkSelected = false;
+
+  public boards: BoardConfig[];
+  public operationMode: string;
   public selectedLink: Link;
   public selectedBoard: BoardConfig;
   public newBoard: BoardConfig;
@@ -31,6 +32,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.changeMode('Select');
+    this.refreshBoardData();
   }
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}): void {
@@ -42,6 +44,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
   }
+
+  private refreshBoardData(): void {
+    this.boardService.all().then( (boards: BoardConfig[]) => {
+      this.boards = boards;
+    });
+   }
 
   clicked(event): void {
     this.sketch.setBoards([]);

@@ -15,7 +15,6 @@ import { BoardConfig } from '../board-config';
 
 export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public boards: BoardConfig[];
   public sketches: Sketch[];
   public links: LinkOption[];
   selectedSketch: Sketch;
@@ -32,19 +31,12 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
     });
-    this.refreshBoardData();
   }
 
   ngAfterViewInit() {
   }
 
   ngOnDestroy(): void {
-  }
-
-  private refreshBoardData(): void {
-    this.boardService.all().then( (boards: BoardConfig[]) => {
-      this.boards = boards;
-    });
   }
 
   activateSketch(id: number): void {
