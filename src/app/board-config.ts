@@ -68,6 +68,10 @@ export class BoardConfig {
     return this.name;
   }
 
+  setName(name: string): void {
+    this.name = name;
+  }
+
   getAcceptedLinks(): LinkOption[] {
     return this.accepted_links;
   }

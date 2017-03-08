@@ -8,7 +8,7 @@
       <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description" placeholder="Sketch description (for marketplace)">
     </div>
     <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
-    <app-board-details [board]="selectedBoard" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
+    <app-board-details [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
   </div>
   <div class="col-sm-2 pt-2">
     <app-active-boards [boards]="boards" [selectedBoard]="newBoard" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
