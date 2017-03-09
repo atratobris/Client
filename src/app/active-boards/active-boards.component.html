@@ -3,7 +3,7 @@
     <div class="board {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
       <p>
         <span class="name">{{board.name}}</span>
-        <i *ngIf="configuration.unregistrable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i>
+        <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i>
       </p>
       <p>
         <span [class]="board.status">{{board.status}}</span>

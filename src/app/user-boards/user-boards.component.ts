@@ -15,7 +15,7 @@ export class UserBoardsComponent implements OnInit {
   public boards: BoardConfig[];
   private active_board_config: {[key: string]: any} = {
     'class': 'col-6 col-sm-3 col-md-2',
-    'unregistrable': true,
+    'unregisterable': true,
   };
 
   constructor(private boardService: BoardService) { }
