@@ -11,7 +11,7 @@
           </p>
           <p>
             <b>Required Hardware</b>
-            <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.mac)}}">
+            <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.type)}}">
               {{board.name}}
             </span>
           </p>

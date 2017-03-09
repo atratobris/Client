@@ -14,7 +14,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class MarketplaceComponent implements OnInit {
   public sketches: Sketch[];
   public boards: BoardConfig[];
-  public boardMacs: string[];
+  public boardTypes: string[];
 
   constructor(private sketchService: SketchService, private boardService: BoardService,
     private authenticationService: AuthenticationService) {}
@@ -23,12 +23,12 @@ export class MarketplaceComponent implements OnInit {
     this.sketchService.marketplace().then( ( sketches: Sketch[] ) => this.sketches = sketches );
     this.boardService.all().then( ( boards: BoardConfig[] ) => {
       this.boards = boards;
-      this.boardMacs = this.boards.map((board) => board.getMac());
+      this.boardTypes = this.boards.map((board) => board.getType());
     });
   }
 
-  hardwareClass(mac: string): string {
-    if (this.boardMacs.includes(mac)) {
+  hardwareClass(type: string): string {
+    if (this.boardTypes.includes(type)) {
       return "owned";
     }
     return "not-owned";
@@ -42,9 +42,9 @@ export class MarketplaceComponent implements OnInit {
   }
 
   ownAllBoards(sketch: Sketch): boolean {
-    const sketchMacs = sketch.getBoardConfigs().map( (config) => config.mac );
-    for (const mac of sketchMacs) {
-      if (!this.boardMacs.includes(mac)) {
+    const sketchTypes = sketch.getBoardConfigs().map( (config) => config.type );
+    for (const type of sketchTypes) {
+      if (!this.boardTypes.includes(type)) {
         return false;
       }
     }
@@ -53,10 +53,10 @@ export class MarketplaceComponent implements OnInit {
 
   missingBoards(sketch: Sketch): string {
     let missing: string[] = [];
-    const sketchMacs = sketch.getBoardConfigs().map( (config) => config.mac );
-    for (const mac of sketchMacs) {
-      if (!this.boardMacs.includes(mac)) {
-        missing.push(mac);
+    const sketchTypes = sketch.getBoardConfigs().map( (config) => config.type );
+    for (const type of sketchTypes) {
+      if (!this.boardTypes.includes(type)) {
+        missing.push(type);
       }
     }
     return missing.join(", ");

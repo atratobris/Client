@@ -24,8 +24,10 @@ export class BoardService {
   }
 
   all(): Promise<BoardConfig[]> {
+    const search: URLSearchParams = new URLSearchParams();
+    search.set('user_id', localStorage.getItem('atrato-user-id'));
     return this.http
-      .get(`${this.apiUrl}.json`)
+      .get(`${this.apiUrl}.json`, {search})
       .toPromise()
       .then( response => {
         return Array.from(response.json(), ( board: IBoardConfig, idx: number ) => {
