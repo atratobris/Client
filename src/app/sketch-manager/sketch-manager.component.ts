@@ -95,7 +95,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private setDefaultSelectedSketch(): void {
     this.activatedRoute.queryParams.subscribe( (params) => {
-      const id = parseInt(params["id"], 10);
+      const id = parseInt(params['id'], 10);
       for (const sketch of this.sketches) {
         if (sketch.getId() === id) {
           this.selectedSketch = sketch;
@@ -110,8 +110,8 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private defaultSketch(): Sketch {
-    for (let sketch of this.sketches) {
-      if (sketch.getStatus() == "active") {
+    for (const sketch of this.sketches) {
+      if (sketch.getStatus() === 'active') {
         return sketch;
       }
     }

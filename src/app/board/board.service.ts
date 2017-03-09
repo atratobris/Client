@@ -46,13 +46,21 @@ export class BoardService {
   }
 
   request_register(code: string): Promise<void> {
-    const params: URLSearchParams = new URLSearchParams();
-    params.set('code', code);
     return this.http
       .post(`${this.apiUrl}/register.json`, JSON.stringify({partial_mac: code}), {headers: this.headers})
       .toPromise()
       .then((response) => {
         console.log( Array.from(response.json(), (board) => board));
+      })
+      .catch(this.handleError);
+  }
+
+  deregister(board: BoardConfig): Promise<void> {
+    return this.http
+      .post(`${this.apiUrl}/deregister.json`, JSON.stringify(board), {headers: this.headers})
+      .toPromise()
+      .then((response) => {
+        console.log('Success');
       })
       .catch(this.handleError);
   }

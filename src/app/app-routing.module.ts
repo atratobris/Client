@@ -7,7 +7,7 @@ import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
-import { BoardRegistrationComponent } from './board-registration/board-registration.component';
+import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 
 import { AuthenticationService } from './authentication/authentication.service';
@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'dashboard', component:  SketchManagerComponent, canActivate: [AuthenticationService] },
   { path: 'laptop', component: LaptopComponent },
   { path: 'logs', component: LogsComponent },
-  { path: 'registerboard', component: BoardRegistrationComponent },
+  { path: 'myboards', component: UserBoardsComponent },
   { path: 'marketplace', component: MarketplaceComponent, canActivate: [AuthenticationService] }
 ];
 
