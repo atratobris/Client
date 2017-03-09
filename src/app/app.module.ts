@@ -24,7 +24,7 @@ import { LaptopComponent } from './laptop/laptop.component';
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
-import { BoardRegistrationComponent } from './board-registration/board-registration.component';
+import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 
 
@@ -42,7 +42,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     CapitalizePipe,
     DasherizePipe,
     MarketplaceComponent,
-    BoardRegistrationComponent,
+    UserBoardsComponent,
     AuthenticationComponent,
   ],
   imports: [

@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board/board.service';
 
 @Component({
-  selector: 'app-board-registration',
-  templateUrl: './board-registration.component.html',
-  styleUrls: ['./board-registration.component.sass']
+  selector: 'app-user-boards',
+  templateUrl: './user-boards.component.html',
+  styleUrls: ['./user-boards.component.sass']
 })
-export class BoardRegistrationComponent implements OnInit {
+export class UserBoardsComponent implements OnInit {
 
   public code: string;
 
