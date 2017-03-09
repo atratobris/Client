@@ -32,8 +32,11 @@ export class BoardConfig {
     this.colour = Colours.getColour(this.id);
     this.accepted_links = [];
     if (obj) {
-      for (let key = 0; key < obj.accepted_links.length; key++) {
-        this.accepted_links.push(new LinkOption({ 'name': key, 'description': obj.accepted_links[key] }));
+      // for (let key = 0; key < obj.accepted_links.length; key++) {
+      for ( const key in obj.accepted_links ) {
+        if (obj.accepted_links.hasOwnProperty(key)) {
+          this.accepted_links.push(new LinkOption({ 'name': key, 'description': obj.accepted_links[key] }));
+        }
       }
     }
   }
