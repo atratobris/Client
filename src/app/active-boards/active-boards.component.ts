@@ -27,8 +27,8 @@ export class ActiveBoardsComponent implements OnInit {
 
   ngOnInit(): void {
     Object.assign(this.configuration, this.config);
-
   }
+
   onBoardSelected(board: BoardConfig): void {
     this.boardSelectedEmitter.emit(board);
   }
