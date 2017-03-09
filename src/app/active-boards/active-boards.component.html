@@ -1,4 +1,4 @@
-<div *ngIf="boards" class="active-boards-container row row-eq-height">
+<div *ngIf="boards" class="active-boards-container row">
   <div *ngFor="let board of boards" class="{{configuration.class}}">
     <div class="board {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
       <p>
