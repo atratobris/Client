@@ -12,7 +12,7 @@
           <p>
             <b>Required Hardware</b>
             <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.type)}}">
-              {{board.name}}
+              {{board.type}}
             </span>
           </p>
           <p class="text-right">
