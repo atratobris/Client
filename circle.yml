@@ -1,3 +1,12 @@
 machine:
   node:
     version: 7.4.0
+
+dependencies:
+  pre:
+    - ng version
+test:
+  override:
+    - ng lint
+    - ng test
+
