@@ -12,7 +12,7 @@
           <button class="marketplace-button publish-to-market" *ngIf="!sketch.listed" (click)="publishToMarket(idx)">
             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
           </button>
-          <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}}">
+          <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}} {{sketch.newPurchase ? 'new-purchase' : ''}}">
             <div class="text_center">
               <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
             </div>
@@ -24,7 +24,7 @@
                 Stop
               </button>
             </div>
-            <p *ngIf="sketch.newPurchase">New Purchase!!</p>
+            <p *ngIf="sketch.newPurchase" class="new-purchase-info">Just Purchased</p>
           </div>
         </div>
         <div class="sketch new-button text-center" (click)="newSketch()">
