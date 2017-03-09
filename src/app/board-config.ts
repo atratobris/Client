@@ -16,7 +16,7 @@ export class BoardConfig {
   private id: number;
   public mac: string;
   private name: string;
-  private type: string;
+  public type: string;
   private status: string;
   public last_activity: string;
   private colour: string;
@@ -71,5 +71,9 @@ export class BoardConfig {
 
   getAcceptedLinks(): LinkOption[] {
     return this.accepted_links;
+  }
+
+  getType(): string {
+    return this.type;
   }
 }
