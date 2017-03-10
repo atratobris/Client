@@ -12,7 +12,7 @@ import { ENV } from '../../environments/environment';
 export class LaptopComponent implements OnInit, OnDestroy {
   public events: string[] = [];
   private url: string = ENV.apiWs;
-  private mac: string = BrowserDetails.getDetails();
+  private mac: string = `${localStorage.getItem('atrato-user-id')}|${BrowserDetails.getDetails()}`;
 
   constructor(private ng2cable: Ng2Cable) {
     this.events.push(`Registering laptop with mac: ${this.mac}`);
