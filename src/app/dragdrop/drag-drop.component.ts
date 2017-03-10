@@ -154,9 +154,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   @HostListener('window:keydown', ['$event'])
   onKeyUp(event) {
-    event.stopPropagation();
-    event.preventDefault();
     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+      event.stopPropagation();
+      event.preventDefault();
       this.saveSketch();
     }
   }
