@@ -71,7 +71,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onSketchEdit(id: number): void {
-    if (!this.selectedSketch.isSaved()) {
+    if (this.selectedSketch && !this.selectedSketch.isSaved()) {
       alert('Save changes to sketch');
       return;
     }
