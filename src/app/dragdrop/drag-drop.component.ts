@@ -152,6 +152,15 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     this.refreshRect();
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyUp(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+      this.saveSketch();
+    }
+  }
+
   constructor(private ngZone: NgZone, private sketchService: SketchService,
                                       private route: ActivatedRoute,
                                       private boardService: BoardService ) {}
