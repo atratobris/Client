@@ -4,7 +4,7 @@
       <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary" (click)="changeMode('Delete')"> Delete </button>
       <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-secondary" (click)="changeMode('Link')"> Link </button>
       <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="drag_drop.saveSketch()"> Save </button>
-      <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="revertToActive()" >Revert</button>
+      <!-- <button *ngIf="!sketch.saved" type="button" class="btn btn-secondary" (click)="revertToActive()" >Revert</button> -->
       <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description" placeholder="Sketch description (for marketplace)">
     </div>
     <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
