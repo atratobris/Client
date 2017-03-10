@@ -33,9 +33,16 @@ export class BoardConfig {
     this.accepted_links = [];
     if (obj) {
       // for (let key = 0; key < obj.accepted_links.length; key++) {
-      for ( const key in obj.accepted_links ) {
-        if (obj.accepted_links.hasOwnProperty(key)) {
-          this.accepted_links.push(new LinkOption({ 'name': key, 'description': obj.accepted_links[key] }));
+      console.log(obj.accepted_links);
+      if (0 in obj.accepted_links){
+        for (let i=0; i<obj.accepted_links.length; i++) {
+          this.accepted_links.push(obj.accepted_links[i]);
+        }
+      } else {
+        for ( const key in obj.accepted_links ) {
+          if (obj.accepted_links.hasOwnProperty(key)) {
+            this.accepted_links.push(new LinkOption({ 'name': key, 'description': obj.accepted_links[key] }));
+          }
         }
       }
     }
