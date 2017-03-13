@@ -7,6 +7,7 @@ import { Link, LinkInterface } from '../link/link';
 import 'rxjs/add/operator/toPromise';
 
 import { Sketch, SketchInterface } from './sketch';
+import { BoardInterface } from '../board/board';
 
 import { ENV } from '../../environments/environment';
 
@@ -35,8 +36,13 @@ export class SketchService {
       .get(`${this.apiUrl}.json`, {search: params})
       .toPromise()
       .then( response => {
-        return Array.from(response.json(), ( x: SketchInterface ) => {
-          return new Sketch(x);
+        // console.log(boards);
+        return Array.from(response.json(), ( sketch: SketchInterface ) => {
+          const boards = Array.from(sketch.boards, ( b: BoardInterface) => {
+            console.log(new Board(b));
+            return new Board(b);
+          });
+          return new Sketch(sketch);
         });
       }).catch( this.handleError );
   }
