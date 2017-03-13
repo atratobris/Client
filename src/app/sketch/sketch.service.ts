@@ -36,12 +36,7 @@ export class SketchService {
       .get(`${this.apiUrl}.json`, {search: params})
       .toPromise()
       .then( response => {
-        // console.log(boards);
         return Array.from(response.json(), ( sketch: SketchInterface ) => {
-          const boards = Array.from(sketch.boards, ( b: BoardInterface) => {
-            console.log(new Board(b));
-            return new Board(b);
-          });
           return new Sketch(sketch);
         });
       }).catch( this.handleError );
