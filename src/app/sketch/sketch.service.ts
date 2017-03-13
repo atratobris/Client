@@ -75,10 +75,9 @@ export class SketchService {
 
   update(sketch: Sketch): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
-    let obj = { 'user_id': localStorage.getItem('atrato-user-id') };
-    for (let i in sketch) {
-      obj[i] = sketch[i]
-    }
+    const obj = sketch.prepare();
+    const user_id = {user_id: localStorage.getItem('atrato-user-id')};
+    Object.assign(obj, user_id);
     return this.http
       .put(url, obj, {headers: this.headers})
       .toPromise()
@@ -86,10 +85,11 @@ export class SketchService {
       .catch(this.handleError);
   }
 
-  updateLinks(sketch: Sketch, links: LinkInterface[]): Promise<Sketch> {
+  updateLinks(sketch: Sketch, links: Link[]): Promise<Sketch> {
     const url = `${this.apiUrl}/${sketch.getId()}.json`;
+    const linksInterface = Array.from( links, (l: Link) => l.prepare() );
     return this.http
-      .put(url, {'links': links, 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
+      .put(url, {'links': linksInterface, 'user_id': localStorage.getItem('atrato-user-id') }, {headers: this.headers})
       .toPromise()
       .then(() => sketch)
       .catch(this.handleError);

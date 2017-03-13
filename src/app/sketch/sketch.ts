@@ -1,5 +1,5 @@
 import { BoardInterface, Board } from '../board/board';
-import { LinkInterface } from '../link/link';
+import { LinkInterface, Link } from '../link/link';
 import { BoardConfig } from '../board-config';
 
 export interface SketchInterface {
@@ -19,7 +19,7 @@ export class Sketch {
   private status: string;
   private name: string;
   private boards: Board[];
-  private links: LinkInterface[];
+  private links: Link[];
   private saved: boolean;
   listed: boolean;
   description: string;
@@ -29,10 +29,12 @@ export class Sketch {
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
-    this.boards =  Array.from( sketch.boards, ( b: BoardInterface) => {
+    this.boards =  Array.from( sketch.boards, ( b: BoardInterface ) => {
       return new Board(b);
     });
-    this.links = sketch.links;
+    this.links = Array.from( sketch.links, ( l: LinkInterface ) => {
+      return new Link(l, this.boards);
+    });
     this.status = sketch.status;
     this.name = sketch.name;
     this.saved = true;
@@ -43,11 +45,25 @@ export class Sketch {
     this.newPurchase = false;
   }
 
+  prepare(): SketchInterface {
+    return {
+      id: this.id,
+      status: this.status,
+      name: this.name,
+      boards: Array.from(this.boards, (b: Board) => b.prepare() ),
+      links: Array.from(this.links, (l: Link) => l.prepare() ),
+      listed: this.listed,
+      user: this.user,
+      user_id: this.user_id,
+      description: this.description
+    }
+  }
+
   getBoards(): Board[] {
     return this.boards;
   }
 
-  getLinks(): LinkInterface[] {
+  getLinks(): Link[] {
     return this.links;
   }
 
@@ -55,7 +71,7 @@ export class Sketch {
     this.boards = boards;
   }
 
-  setLinks(links: LinkInterface[]): void {
+  setLinks(links: Link[]): void {
     this.links = links;
   }
 

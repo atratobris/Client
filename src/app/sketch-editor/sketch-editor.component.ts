@@ -1,3 +1,4 @@
+
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef,
   AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges } from '@angular/core';
 import { Board } from '../board/board';
@@ -85,7 +86,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
     const links = this.sketch.getLinks();
     for (const l of links) {
       if (link['to'] === l['to'] && link['from'] === l['from']) {
-        l.logic = link.logic;
+        l.setLogic( link.logic );
         break;
       }
     }
