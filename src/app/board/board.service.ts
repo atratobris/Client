@@ -31,7 +31,7 @@ export class BoardService {
     return this.http
       .get(`${this.apiUrl}.json`, {search})
       .toPromise()
-      .then( response => response.json().map(board: IBoardConfig) => new BoardConfig(board) )
+      .then( response => response.json().map((board: IBoardConfig) => new BoardConfig(board)) )
       .catch(this.handleError);
   }
 
