@@ -19,6 +19,7 @@ import { SketchService } from './sketch/sketch.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { LinkService } from './link/link.service';
 import { BoardService } from './board/board.service';
+import { CodeService } from './link/code.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
@@ -51,7 +52,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService],
+  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService, CodeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
