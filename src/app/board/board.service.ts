@@ -31,16 +31,12 @@ export class BoardService {
     return this.http
       .get(`${this.apiUrl}.json`, {search})
       .toPromise()
-      .then( response => {
-        return Array.from(response.json(), ( board: IBoardConfig, idx: number ) => {
-          return new BoardConfig(board);
-        });
-      });
+      .then( response => response.json().map(board: IBoardConfig) => new BoardConfig(board) )
+      .catch(this.handleError);
   }
 
   update(board: BoardConfig): Promise<BoardConfig> {
     const url = `${this.apiUrl}/${board.getMac()}`;
-
     return this.http
       .put(url, this.board_params(board), {headers: this.headers})
       .toPromise()
