@@ -2,7 +2,7 @@
   <div *ngFor="let board of boards" class="{{configuration.class}}">
     <div class="board {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
       <p>
-        <span class="name">{{board.name}}</span>
+        <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit>
         <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i>
       </p>
       <p>

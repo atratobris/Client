@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { BoardConfig } from '../board-config';
+import { BoardService } from '../board/board.service';
 
 @Component({
   selector: 'app-active-boards',
@@ -12,6 +13,8 @@ export class ActiveBoardsComponent implements OnInit {
   @Input() config: {[key: string]: any};
   @Output() boardSelectedEmitter = new EventEmitter();
   @Output() boardDeregisterEmitter = new EventEmitter();
+  @Output() onBoardSave = new EventEmitter<BoardConfig>();
+
 
   private default_config = {
     'class': 'col-12',
@@ -20,13 +23,18 @@ export class ActiveBoardsComponent implements OnInit {
 
   public configuration: {[key: string]: any};
 
-  constructor() {
+  constructor(private boardService: BoardService) {
     this.configuration = {};
     Object.assign(this.configuration, this.default_config);
   }
 
   ngOnInit(): void {
     Object.assign(this.configuration, this.config);
+  }
+
+  onNameUpdated(newName, board: BoardConfig): void {
+    board.setName(newName);
+    this.onBoardSave.emit(board);
   }
 
   onBoardSelected(board: BoardConfig): void {

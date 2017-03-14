@@ -100,6 +100,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges {
         board.setName(b.getName());
       }
     }
+    for(const board of this.sketch.getBoardConfigs()) {
+      if (board.getMac() === b.getMac()) {
+        board.setName(b.getName());
+      }
+    }
   }
 
   revertToActive(): void {
