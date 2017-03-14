@@ -56,7 +56,7 @@ export class Sketch {
       user: this.user,
       user_id: this.user_id,
       description: this.description
-    }
+    };
   }
 
   getBoards(): Board[] {
