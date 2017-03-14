@@ -35,22 +35,16 @@ export class SketchService {
     return this.http
       .get(`${this.apiUrl}.json`, {search: params})
       .toPromise()
-      .then( response => {
-        return Array.from(response.json(), ( sketch: SketchInterface ) => {
-          return new Sketch(sketch);
-        });
-      }).catch( this.handleError );
+      .then( response => response.json().map((s: SketchInterface) => new Sketch(s)))
+      .catch( this.handleError );
   }
 
   marketplace(): Promise<Sketch[]> {
     return this.http
       .get(`${ENV.apiUrl}/marketplace.json`)
       .toPromise()
-      .then( response => {
-        return Array.from(response.json(), ( x: SketchInterface ) => {
-          return new Sketch(x);
-        });
-      }).catch( this.handleError );
+      .then( response => response.json().map((s: SketchInterface) => new Sketch(s)) )
+      .catch( this.handleError );
   }
 
   purchase(sketch: Sketch, user_id: number): Promise<Sketch> {
@@ -67,9 +61,7 @@ export class SketchService {
       .post(`${this.apiUrl}.json`,
         JSON.stringify({boards: newBoards, links: newLinks, user_id: localStorage.getItem('atrato-user-id')}), {headers: this.headers})
       .toPromise()
-      .then( response => {
-        return new Sketch(response.json());
-      })
+      .then( response => new Sketch(response.json()) )
       .catch(this.handleError);
   }
 

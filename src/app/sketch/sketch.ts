@@ -29,12 +29,8 @@ export class Sketch {
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
-    this.boards =  Array.from( sketch.boards, ( b: BoardInterface ) => {
-      return new Board(b);
-    });
-    this.links = Array.from( sketch.links, ( l: LinkInterface ) => {
-      return new Link(l, this.boards);
-    });
+    this.boards = sketch.boards.map((b: BoardInterface) => new Board(b));
+    this.links = sketch.links.map((l: LinkInterface) => new Link(l, this.boards));
     this.status = sketch.status;
     this.name = sketch.name;
     this.saved = true;
