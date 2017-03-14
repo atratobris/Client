@@ -80,6 +80,21 @@ export class Board {
     return this.centre.getX();
   }
 
+  shake(): void {
+    const initialWidth = this.width;
+    const initialHeight = this.height;
+    const shaking = setInterval( () => {
+      this.width += 5;
+      this.height += 5;
+      if (this.width > initialWidth * 1.5 || this.height > initialHeight * 2) {
+        clearInterval(shaking);
+        this.width = initialWidth;
+        this.height = initialHeight;
+      }
+    }, 10);
+  }
+
+
   getName(): string {
     return this.getBoardConfig().getName();
   }
