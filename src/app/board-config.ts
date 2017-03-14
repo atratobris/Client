@@ -21,6 +21,7 @@ export class BoardConfig {
   public last_activity: string;
   private colour: string;
   private accepted_links: LinkOption[];
+  private animated: boolean = false;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -33,8 +34,8 @@ export class BoardConfig {
     this.accepted_links = [];
     if (obj) {
       // for (let key = 0; key < obj.accepted_links.length; key++) {
-      if (0 in obj.accepted_links){
-        for (let i=0; i<obj.accepted_links.length; i++) {
+      if (0 in obj.accepted_links) {
+        for (let i = 0; i < obj.accepted_links.length; i++) {
           this.accepted_links.push(obj.accepted_links[i]);
         }
       } else {
@@ -52,6 +53,12 @@ export class BoardConfig {
 
   getMac(): string {
     return this.mac;
+  }
+
+  animate(): void {
+    this.animated = true;
+    console.log('animating', this.animated);
+    setTimeout(() => this.animated = false, 1000);
   }
 
   setId(id: number): void {

@@ -64,9 +64,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   private activateBoard(mac: string) {
     const b = this.sketch.getBoards().find((board) => board.getMac() === mac );
-    if (!!b) {
-      b.shake();
-    }
+    if (!!b) { b.shake(); }
+
+    const bc = this.boards.find((board) => board.getMac() === mac);
+    if (!!bc) { bc.animate(); }
+
   }
 
   private refreshBoardData(): void {

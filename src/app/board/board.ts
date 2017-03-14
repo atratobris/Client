@@ -81,6 +81,7 @@ export class Board {
   }
 
   shake(): void {
+    // this.boardConfig.animate();
     const initialWidth = this.width;
     const initialHeight = this.height;
     const shaking = setInterval( () => {
