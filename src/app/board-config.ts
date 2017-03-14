@@ -32,8 +32,6 @@ export class BoardConfig {
     this.colour = Colours.getColour(this.id);
     this.accepted_links = [];
     if (obj) {
-      // for (let key = 0; key < obj.accepted_links.length; key++) {
-      console.log(obj.accepted_links);
       if (0 in obj.accepted_links){
         for (let i=0; i<obj.accepted_links.length; i++) {
           this.accepted_links.push(obj.accepted_links[i]);
