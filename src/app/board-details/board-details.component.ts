@@ -31,7 +31,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
     if (this.link) {
       console.log(this.linkTypes(this.link));
       this.codeService.all("Led", this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
-        console.log(codeSnippets);
+        this.codeSnippets = codeSnippets;
       })
     }
   }
@@ -42,6 +42,15 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
 
   updateBoard(board: BoardConfig): void {
     this.onBoardSave.emit(board);
+  }
+
+  renderCodeSnippet(): string {
+    for (const code of this.codeSnippets) {
+      if (code.getName() == this.link.getLogic()) {
+        return code.getCode();
+      }
+    }
+    return "";
   }
 
   private linkTypes(link: Link): string[] {

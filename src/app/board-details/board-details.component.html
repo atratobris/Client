@@ -8,6 +8,9 @@
       <option *ngFor="let option of link.getEndBoard().getBoardConfig().getAcceptedLinks()" [attr.value]="option.name">{{option.description}}</option>
     </select>
   </span>
+  <pre *ngIf="codeSnippets">
+  {{renderCodeSnippet()}}
+  </pre>
   <button type="button" name="button" (click)="updateLink(link)" class="btn btn-success">update</button>
 </div>
 <div *ngIf="board" class="details">

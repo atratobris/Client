@@ -117,6 +117,9 @@ export class Link {
     return this.endBoard;
   }
 
+  getLogic(): string {
+    return this.logic;
+  }
 
   draw(ctx: CanvasRenderingContext2D): void {
     this.path = new Path2D();
