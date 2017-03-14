@@ -25,11 +25,6 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (changes['link']) {
-      console.log(this.link);
-      if (!!this.link)
-        console.log(this.link.getEndBoard().getBoardConfig().getAcceptedLinks());
-    }
   }
 
   updateLink(link): void {

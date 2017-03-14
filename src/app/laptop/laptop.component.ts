@@ -20,7 +20,7 @@ export class LaptopComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.ng2cable.subscription = this.ng2cable.cable.subscriptions.create({ channel: 'SketchChannel', mac: this.mac, type: "Screen" }, {
+    this.ng2cable.subscription = this.ng2cable.cable.subscriptions.create({ channel: 'SketchChannel', mac: this.mac, type: 'Screen' }, {
       received: (data) => {
         const message = data.message;
         this.events.push(`Received channel message with type: ${message.type}`);
