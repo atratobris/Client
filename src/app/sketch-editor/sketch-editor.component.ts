@@ -125,6 +125,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
       }
     }
     this.sketchService.updateLinks(this.sketch, links);
+    this.onLinkDeselected();
   }
 
   onBoardSave(b: BoardConfig): void {
