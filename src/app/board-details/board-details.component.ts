@@ -4,6 +4,8 @@ import { BoardService } from '../board/board.service';
 import { Link, LinkInterface, LinkOption } from '../link/link';
 import { Sketch } from '../sketch/sketch';
 import { SketchService } from '../sketch/sketch.service';
+import { CodeService } from '../link/code.service';
+import { Code } from '../link/code';
 
 @Component({
   selector: 'app-board-details',
@@ -18,13 +20,19 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Input() linkOptions: LinkOption[];
   @Output() onBoardSave = new EventEmitter<BoardConfig>();
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
+  codeSnippets: Code[];
 
-  constructor() { }
+  constructor(private codeService: CodeService) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    if (this.link) {
+      this.codeService.all("Led", this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
+        this.codeSnippets = codeSnippets;
+      })
+    }
   }
 
   updateLink(link): void {
@@ -33,6 +41,23 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
 
   updateBoard(board: BoardConfig): void {
     this.onBoardSave.emit(board);
+  }
+
+  renderCodeSnippet(): string {
+    for (const code of this.codeSnippets) {
+      if (code.getName() == this.link.getLogic()) {
+        return code.getCode();
+      }
+    }
+    return "";
+  }
+
+  private linkTypes(link: Link): string[] {
+    return link
+      .getEndBoard()
+      .getBoardConfig()
+      .getAcceptedLinks()
+      .map((link) => link.getName());
   }
 
 }
