@@ -7,7 +7,7 @@ export class Code {
   private code: string;
   private name: string;
 
-  constructor(codeInterface: any) {
+  constructor(codeInterface: CodeInterface) {
     this.code = codeInterface.code;
     this.name = codeInterface.name;
   }
