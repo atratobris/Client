@@ -20,7 +20,7 @@ export class CodeService {
     return this.http
       .get(`${this.apiUrl}.json`, {search})
       .toPromise()
-      .then( (response) => Array.from(response.json(), (code: CodeInterface) => new Code(code) ))
+      .then( (response) => response.json().map((code: CodeInterface) => new Code(code) ) )
       .catch( this.handleError );
   }
 
