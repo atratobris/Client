@@ -31,6 +31,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() onBoardDeselected = new EventEmitter<void>();
   @Output() onLinkDeselected = new EventEmitter<void>();
   @Output() finishedAddingBoard = new EventEmitter();
+  @Output() finishedDeletingBoard = new EventEmitter();
   @ViewChild('myCanvas') canvasRef: ElementRef;
   dragging = false;
   canSelect = false;
@@ -99,6 +100,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
           const deletedBoard = this.wsc.deleteAtPoint(point);
           if (deletedBoard) {
             this.availableBoards.push(deletedBoard);
+            this.finishedDeletingBoard.emit();
           }
         } else {
           this.wsc.removeLinkNextToPoint(point);
