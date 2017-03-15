@@ -1,5 +1,5 @@
-import { BoardInterface } from '../board/board';
-import { LinkInterface } from '../link/link';
+import { BoardInterface, Board } from '../board/board';
+import { LinkInterface, Link } from '../link/link';
 import { BoardConfig } from '../board-config';
 
 export interface SketchInterface {
@@ -18,8 +18,8 @@ export class Sketch {
   private id: number;
   private status: string;
   private name: string;
-  private boards: BoardInterface[];
-  private links: LinkInterface[];
+  private boards: Board[];
+  private links: Link[];
   private saved: boolean;
   listed: boolean;
   description: string;
@@ -29,8 +29,8 @@ export class Sketch {
 
   constructor(sketch: SketchInterface) {
     this.id = sketch.id;
-    this.boards = sketch.boards;
-    this.links = sketch.links;
+    this.boards = sketch.boards.map((b: BoardInterface) => new Board(b));
+    this.links = sketch.links.map((l: LinkInterface) => new Link(l, this.boards));
     this.status = sketch.status;
     this.name = sketch.name;
     this.saved = true;
@@ -41,19 +41,33 @@ export class Sketch {
     this.newPurchase = false;
   }
 
-  getBoards(): BoardInterface[] {
+  prepare(): SketchInterface {
+    return {
+      id: this.id,
+      status: this.status,
+      name: this.name,
+      boards: Array.from(this.boards, (b: Board) => b.prepare() ),
+      links: Array.from(this.links, (l: Link) => l.prepare() ),
+      listed: this.listed,
+      user: this.user,
+      user_id: this.user_id,
+      description: this.description
+    };
+  }
+
+  getBoards(): Board[] {
     return this.boards;
   }
 
-  getLinks(): LinkInterface[] {
+  getLinks(): Link[] {
     return this.links;
   }
 
-  setBoards(boards: BoardInterface[]): void {
+  setBoards(boards: Board[]): void {
     this.boards = boards;
   }
 
-  setLinks(links: LinkInterface[]): void {
+  setLinks(links: Link[]): void {
     this.links = links;
   }
 
@@ -90,7 +104,7 @@ export class Sketch {
   }
 
   getBoardConfigs(): BoardConfig[] {
-    return this.boards.map( (board) => board.boardConfig );
+    return this.boards.map( (board) => board.getBoardConfig() );
   }
 
   getUserId(): number {
