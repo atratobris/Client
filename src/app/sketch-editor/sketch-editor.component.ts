@@ -56,10 +56,19 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     if (changes['sketch']) {
       this.onLinkDeselected();
       this.onBoardDeselected();
+      this.markUsedBoards();
     }
   }
 
   ngAfterViewInit() {
+  }
+
+  markUsedBoards(): void {
+    if (!!this.boards && !!this.sketch) {
+      for (const b of this.boards){
+        b.used( b.inBoards(this.sketch.getBoards()) );
+      }
+    }
   }
 
   private activateBoard(mac: string) {
@@ -68,12 +77,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
     const bc = this.boards.find((board) => board.getMac() === mac);
     if (!!bc) { bc.animate(); }
-
   }
 
   private refreshBoardData(): void {
     this.boardService.all().then( (boards: BoardConfig[]) => {
       this.boards = boards;
+      this.markUsedBoards();
     });
    }
 
@@ -155,5 +164,10 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   onFinishedAddingBoard(): void {
     this.newBoard = null;
     this.changeMode('Select');
+    this.markUsedBoards();
+  }
+
+  onFinishedDeletingBoard(): void {
+    this.markUsedBoards();
   }
 }

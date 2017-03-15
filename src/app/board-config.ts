@@ -1,4 +1,5 @@
 import { Colours } from './lib/colours';
+import { Board } from './board/board';
 import { LinkOption } from './link/link';
 
 export interface IBoardConfig {
@@ -22,6 +23,7 @@ export class BoardConfig {
   private colour: string;
   private accepted_links: LinkOption[];
   private animated: boolean = false;
+  private is_used: boolean = false;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -55,9 +57,21 @@ export class BoardConfig {
     return this.mac;
   }
 
+  in_use(): boolean {
+    return this.is_used;
+  }
+
+  used( is_used: boolean ): void {
+    this.is_used = is_used;
+  }
+
+  inBoards(boards: Board[]): boolean {
+    const b = boards.find((board) => board.getMac() === this.mac );
+    return !!b;
+  }
+
   animate(): void {
     this.animated = true;
-    console.log('animating', this.animated);
     setTimeout(() => this.animated = false, 1000);
   }
 

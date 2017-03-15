@@ -15,7 +15,6 @@ export class ActiveBoardsComponent implements OnInit {
   @Output() boardDeregisterEmitter = new EventEmitter();
   @Output() onBoardSave = new EventEmitter<BoardConfig>();
 
-
   private default_config = {
     'class': 'col-12',
     'unregisterable': false
@@ -38,7 +37,9 @@ export class ActiveBoardsComponent implements OnInit {
   }
 
   onBoardSelected(board: BoardConfig): void {
-    this.boardSelectedEmitter.emit(board);
+    if (!board.in_use()) {
+      this.boardSelectedEmitter.emit(board);
+    }
   }
 
   onDeregisterBoard(board: BoardConfig): void {

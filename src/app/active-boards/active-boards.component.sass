@@ -8,6 +8,8 @@
   margin: 0 5px 25px 0
   &.selected
     border: 4px solid black
+  &.used
+    opacity: 0.5
 .text-right
   text-align: right
 .offline
@@ -24,6 +26,7 @@ p
   font-size: 13px
 
 
+
 // board animation
 .board
   &.animate
@@ -31,6 +34,8 @@ p
     transform: translate3d(0, 0, 0)
     backface-visibility: hidden
     perspective: 1000px
+    &.used
+      animation: none
 
 @keyframes shake
   10%, 90%
