@@ -1,6 +1,11 @@
 <div class="box-size-proper">
-  <div class="row">
-    <div class="col-sm-2 pt-2">
+  <div class="row justify-content-md-center">
+    <!-- <div class="col-sm-12 pt-2">
+      <div *ngIf="selectedSketch">
+        <app-sketch-editor [sketch]="selectedSketch" [links]="links"></app-sketch-editor>
+      </div>
+    </div> -->
+    <div class="col-sm-6 pt-2">
       <div *ngIf="sketches" class="sketchesBar">
         <div  class="text-center sketch {{sketch.status}}" *ngFor="let sketch of sketches; let idx = index">
           <button class="removeButton" name="button">
@@ -32,10 +37,6 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-10 pt-2">
-      <div *ngIf="selectedSketch">
-        <app-sketch-editor [sketch]="selectedSketch" [links]="links"></app-sketch-editor>
-      </div>
-    </div>
+
   </div>
 </div>

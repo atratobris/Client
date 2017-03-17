@@ -1,11 +1,11 @@
 <div *ngIf="boards" class="active-boards-container row">
   <div *ngFor="let board of boards" class="{{configuration.class}}">
     <div class="board {{board.is_used ? 'used' : ''}} {{board.animated ? 'animate' : ''}} {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
-      <p>
+      <p class="text-center">
         <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit>
         <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i>
       </p>
-      <p>
+      <p class="text-center">
         <span [class]="board.status">{{board.status}}</span>
       </p>
       <p class="text-center mac">{{board.mac}}</p>

@@ -1,12 +1,8 @@
 import { Component, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 import { SketchService } from '../sketch/sketch.service';
-
 import { Sketch } from '../sketch/sketch';
-import { LinkOption } from '../link/link';
-import { BoardService } from '../board/board.service';
-import { LinkService } from '../link/link.service';
-import { BoardConfig } from '../board-config';
+
 
 @Component({
   selector: 'app-sketch-manager',
@@ -17,21 +13,15 @@ import { BoardConfig } from '../board-config';
 export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public sketches: Sketch[];
-  public links: LinkOption[];
   selectedSketch: Sketch;
   private editorOn: boolean;
 
   constructor(private ngZone: NgZone, private sketchService: SketchService,
-    private boardService: BoardService, private linkService: LinkService,
-    private activatedRoute: ActivatedRoute) {}
-
+    private activatedRoute: ActivatedRoute, private router: Router) {}
   ngOnInit() {
     this.sketchService.all().then( ( sketches: Sketch[] ) => {
       this.sketches = sketches;
       this.setDefaultSelectedSketch();
-    });
-    this.linkService.all().then( ( links: LinkOption[] ) => {
-      this.links = links;
     });
   }
 
@@ -75,6 +65,10 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
       alert('Save changes to sketch');
       return;
     }
+    const navigationExtras: NavigationExtras = {
+      queryParams: { sketch_id: this.sketches[id].getId() },
+    };
+    this.router.navigate(['/dashboard'], navigationExtras);
     this.selectedSketch = this.sketches[id];
   }
 

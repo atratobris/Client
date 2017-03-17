@@ -15,11 +15,12 @@ import { AuthenticationService } from './authentication/authentication.service';
 const routes: Routes = [
   { path: '', redirectTo: '/authentication', pathMatch: 'full' },
   { path: 'authentication', component: AuthenticationComponent },
-  { path: 'dashboard', component:  SketchManagerComponent, canActivate: [AuthenticationService] },
+  { path: 'dashboard', component:  SketchEditorComponent, canActivate: [AuthenticationService] },
   { path: 'laptop', component: LaptopComponent },
   { path: 'logs', component: LogsComponent },
   { path: 'myboards', component: UserBoardsComponent },
-  { path: 'marketplace', component: MarketplaceComponent, canActivate: [AuthenticationService] }
+  { path: 'marketplace', component: MarketplaceComponent, canActivate: [AuthenticationService] },
+  { path: 'sketches', component: SketchManagerComponent, canActivate: [AuthenticationService] }
 ];
 
 @NgModule({

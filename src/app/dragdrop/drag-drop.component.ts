@@ -49,7 +49,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private mouseDown = false;
   private mouseUp = false;
 
-  width = 900;
+  width = 990;
   height = 600;
 
   @HostListener('mouseenter', ['$event'])

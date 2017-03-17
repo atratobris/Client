@@ -47,7 +47,7 @@ export class AuthenticationService implements CanActivate {
 
   redirectToRoot(params?: any) {
     if (params) {
-      let navigationExtras: NavigationExtras = {
+      const navigationExtras: NavigationExtras = {
         queryParams: params,
       };
       this.router.navigate(['/dashboard'], navigationExtras);
