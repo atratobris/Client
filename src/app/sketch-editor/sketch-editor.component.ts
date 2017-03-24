@@ -1,10 +1,11 @@
-
 import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef,
   AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges, OnDestroy } from '@angular/core';
 import { Board } from '../board/board';
 import { Link, LinkInterface } from '../link/link';
+import { LinkService } from '../link/link.service';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BoardConfig } from '../board-config';
 import { BoardService } from '../board/board.service';
 import { Sketch } from '../sketch/sketch';
@@ -20,12 +21,12 @@ import { ENV } from '../../environments/environment';
 })
 export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-  @Input() sketch: Sketch;
-  @Input() links: LinkOption[];
   private boardSelected = false;
   private linkSelected = false;
   private url: string = ENV.apiWs;
 
+  public links: LinkOption[];
+  public sketch: Sketch;
   public boards: BoardConfig[];
   public operationMode: string;
   public selectedLink: Link;
@@ -33,11 +34,16 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   public newBoard: BoardConfig;
 
   constructor(private ng2cable: Ng2Cable, private ngZone: NgZone,
-            private boardService: BoardService, private sketchService: SketchService) {
+            private boardService: BoardService, private sketchService: SketchService,
+            private linkService: LinkService, private activatedRoute: ActivatedRoute) {
     this.ng2cable.setCable(this.url);
   }
 
   ngOnInit() {
+    this.setSketch();
+    this.linkService.all().then( ( links: LinkOption[] ) => {
+      this.links = links;
+    });
     this.changeMode('Select');
     this.refreshBoardData();
     this.ng2cable.subscription = this.ng2cable.cable.subscriptions
@@ -45,6 +51,16 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
         received: (data) => {
           this.activateBoard(data.message.mac);
         }
+    });
+  }
+
+  setSketch(): void {
+    this.activatedRoute.queryParams.subscribe( (params) => {
+      const id = parseInt(params['sketch_id'], 10);
+      this.sketchService.get(id).then( (activeSketch) => {
+        this.sketch = activeSketch;
+        this.markUsedBoards();
+      });
     });
   }
 
@@ -69,6 +85,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
         b.used( b.inBoards(this.sketch.getBoards()) );
       }
     }
+  }
+
+  onNameUpdated(newName): void {
+    this.sketch.setName(newName);
+    this.sketchService.update(this.sketch);
   }
 
   private activateBoard(mac: string) {
@@ -143,8 +164,10 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   revertToActive(): void {
+    this.changeMode('Select');
     this.sketchService.get(this.sketch.getId()).then( (activeSketch) => {
       this.sketch = activeSketch;
+      this.markUsedBoards();
     });
   }
 
