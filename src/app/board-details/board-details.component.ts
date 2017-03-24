@@ -45,7 +45,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
 
   renderCodeSnippet(): string {
     for (const code of this.codeSnippets) {
-      if (code.getName() == this.link.getLogic()) {
+      if (code.getName() === this.link.getLogic()) {
         return code.getCode();
       }
     }
