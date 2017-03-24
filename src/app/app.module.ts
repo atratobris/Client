@@ -22,6 +22,9 @@ import { BoardService } from './board/board.service';
 import { CodeService } from './link/code.service';
 import { ActiveBoardsComponent } from './active-boards/active-boards.component';
 import { LaptopComponent } from './laptop/laptop.component';
+import { LaptopInputComponent } from './laptop/laptop-input/laptop-input.component';
+import { LaptopOutputComponent } from './laptop/laptop-output/laptop-output.component';
+
 import { ClickToEditComponent } from './click-to-edit/click-to-edit.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
@@ -38,6 +41,8 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     SketchManagerComponent,
     ActiveBoardsComponent,
     LaptopComponent,
+    LaptopInputComponent,
+    LaptopOutputComponent,
     ClickToEditComponent,
     LogsComponent,
     CapitalizePipe,

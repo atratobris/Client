@@ -7,3 +7,14 @@
     </ul>
   </div>
 </div>
+<div class="text-center">
+  <button type="button" name="button" class="btn btn-success" (click)="activateOutput()">Output</button>
+  <button type="button" name="button" class="btn btn-info" (click)="activateInput()">Input </button>
+</div>
+<div  *ngIf="input" class="">
+  <app-laptop-input></app-laptop-input>
+</div>
+
+<div *ngIf="output">
+  <app-laptop-output></app-laptop-output>
+</div>
