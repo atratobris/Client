@@ -13,7 +13,7 @@ export class LaptopInputComponent implements OnInit, OnDestroy {
   public events: string[] = [];
   private url: string = ENV.apiWs;
   private deviceType: string = 'Input';
-  private mac: string = `${localStorage.getItem('atrato-user-id')}|${BrowserDetails.getDetails()}${this.deviceType}`;
+  private mac: string = `${localStorage.getItem('atrato-user-id')}|${BrowserDetails.getDetails()}|${this.deviceType}`;
 
   constructor(private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
     this.events.push(`Registering laptop with mac: ${this.mac}`);
