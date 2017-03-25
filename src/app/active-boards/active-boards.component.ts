@@ -37,6 +37,7 @@ export class ActiveBoardsComponent implements OnInit {
   }
 
   onBoardSelected(board: BoardConfig): void {
+    console.log("clicked on board");
     if (!board.in_use()) {
       this.boardSelectedEmitter.emit(board);
     }
