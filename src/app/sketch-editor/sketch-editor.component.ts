@@ -128,6 +128,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
       this.selectedBoard = board;
       this.boardSelected = true;
+      console.log(selected_board);
     });
   }
 
@@ -183,6 +184,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   onActiveBoardSelected(board: BoardConfig): void {
     this.newBoard = board;
     this.changeMode('Add');
+    this.onBoardSelected(board);
   }
 
   onFinishedAddingBoard(): void {
