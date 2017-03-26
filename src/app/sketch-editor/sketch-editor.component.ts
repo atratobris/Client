@@ -70,6 +70,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   ngOnChanges(changes: {[peropertyName: string]: SimpleChange}): void {
     if (changes['sketch']) {
+      console.log(changes['sketch']);
       this.onLinkDeselected();
       this.onBoardDeselected();
       this.markUsedBoards();
@@ -195,5 +196,14 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   onFinishedDeletingBoard(): void {
     this.markUsedBoards();
+  }
+
+  onSketchChanged(): void {
+    if (this.sketch.isSaved()) return;
+    this.sketchService.update(this.sketch).then(
+      (sketch: Sketch) => {
+        console.log(sketch);
+      }
+    );
   }
 }

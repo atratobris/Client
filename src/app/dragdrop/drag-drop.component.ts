@@ -26,11 +26,12 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() operationMode: string;
   @Input() sketch: Sketch;
   @Input() newBoard: BoardConfig;
-  @Output() onBoardSelected = new EventEmitter<BoardConfig>();
-  @Output() onLinkSelected = new EventEmitter<Link>();
-  @Output() onBoardDeselected = new EventEmitter<void>();
-  @Output() onLinkDeselected = new EventEmitter<void>();
-  @Output() finishedAddingBoard = new EventEmitter();
+  @Output() sketchChanged         = new EventEmitter();
+  @Output() onLinkSelected        = new EventEmitter<Link>();
+  @Output() onBoardSelected       = new EventEmitter<BoardConfig>();
+  @Output() onLinkDeselected      = new EventEmitter<void>();
+  @Output() onBoardDeselected     = new EventEmitter<void>();
+  @Output() finishedAddingBoard   = new EventEmitter();
   @Output() finishedDeletingBoard = new EventEmitter();
   @ViewChild('myCanvas') canvasRef: ElementRef;
   dragging = false;
@@ -169,7 +170,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(): void {
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
-    this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
+    this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height, this.sketchChanged);
     this.loadSketch();
   }
 

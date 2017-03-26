@@ -20,7 +20,7 @@
         <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-primary full" (click)="changeMode('Link')"> Link </button>
       </div>
     </div>
-    <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
+    <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)" (sketchChanged)="onSketchChanged()"></app-drag-drop>
     <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description" placeholder="Sketch description (for marketplace)">
   </div>
   <app-board-details [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
