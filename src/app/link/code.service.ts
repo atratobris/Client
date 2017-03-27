@@ -24,6 +24,16 @@ export class CodeService {
       .catch( this.handleError );
   }
 
+  sketchCode(sketchId: number): Promise<Code> {
+    const search: URLSearchParams = new URLSearchParams();
+    search.set('sketch_id', sketchId.toString());
+    return this.http
+      .get(`${this.apiUrl}/sketch.json`, {search})
+      .toPromise()
+      .then( (response) => new Code(response.json()) )
+      .catch( this.handleError );
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

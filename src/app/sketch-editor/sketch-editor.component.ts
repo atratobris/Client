@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation, OnInit, ViewChild, ElementRef,
   AfterViewInit, NgZone, HostListener, Input, SimpleChange, OnChanges, OnDestroy } from '@angular/core';
 import { Board } from '../board/board';
 import { Link, LinkInterface } from '../link/link';
+import { Code } from '../link/code';
 import { LinkService } from '../link/link.service';
+import { CodeService } from '../link/code.service';
 import { WorkspaceCanvas } from '../workspace-canvas';
 import { BoardDetailsComponent } from '../board-details/board-details.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -34,8 +36,9 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   public newBoard: BoardConfig;
 
   constructor(private ng2cable: Ng2Cable, private ngZone: NgZone,
-            private boardService: BoardService, private sketchService: SketchService,
-            private linkService: LinkService, private activatedRoute: ActivatedRoute) {
+      private boardService: BoardService, private sketchService: SketchService,
+      private linkService: LinkService, private activatedRoute: ActivatedRoute,
+      private codeService: CodeService) {
     this.ng2cable.setCable(this.url);
   }
 
@@ -202,7 +205,9 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     if (this.sketch.isSaved()) return;
     this.sketchService.update(this.sketch).then(
       (sketch: Sketch) => {
-        console.log(sketch);
+        this.codeService.sketchCode(sketch.getId()).then( (code: Code) => {
+          console.log(code);
+        });
       }
     );
   }
