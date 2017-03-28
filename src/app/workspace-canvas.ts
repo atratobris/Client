@@ -2,6 +2,7 @@ import { Board, BoardInterface } from './board/board';
 import { Point } from './point';
 import { Link, LinkInterface } from './link/link';
 import { BoardConfig } from './board-config';
+import { EventEmitter } from '@angular/core';
 
 import { Sketch } from './sketch/sketch';
 
@@ -21,9 +22,10 @@ export class WorkspaceCanvas {
   private width: number;
   private height: number;
   private completePath: Path2D;
+  private sketchEmitter: EventEmitter<any>;
 
 
-  constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
+  constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number, sketchEmitter: EventEmitter<any>) {
     this.ctx = ctx;
     this.rect = rect;
     this.boards = [];
@@ -32,6 +34,7 @@ export class WorkspaceCanvas {
     this.cursor = null;
     this.width = width;
     this.height = height;
+    this.sketchEmitter = sketchEmitter;
   }
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
@@ -79,11 +82,13 @@ export class WorkspaceCanvas {
     const index: number = this.boards.indexOf(board);
     this.boards.splice(index, 1);
     this.sketch.changed();
+    this.sketchEmitter.emit();
   }
 
   addBoard(board: Board): void {
     this.boards.push(board);
     this.sketch.changed();
+    this.sketchEmitter.emit();
   }
 
   deleteAtPoint(selectedPoint: Point): BoardConfig {
@@ -171,6 +176,7 @@ export class WorkspaceCanvas {
         this.currentLink.setLogic(acceptedLinks[0].getName());
         this.links.push(this.currentLink.exportFinished());
         this.sketch.changed();
+        this.sketchEmitter.emit();
         [this.selectedLink] = this.links.slice(-1);
         this.currentLink = null;
         return true;
