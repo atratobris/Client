@@ -31,6 +31,8 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 
+import { CodeSnippetComponent } from './code-snippet/code-snippet.component';
+
 
 @NgModule({
   declarations: [
@@ -50,12 +52,13 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     MarketplaceComponent,
     UserBoardsComponent,
     AuthenticationComponent,
+    CodeSnippetComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService, CodeService],
   bootstrap: [AppComponent]

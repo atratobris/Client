@@ -24,6 +24,7 @@ export interface LinkInterface {
   to: string;
   from: string;
   logic: string;
+  parameters: {[key: string]: any};
 }
 
 export class Link {
@@ -36,6 +37,7 @@ export class Link {
   private path: Path2D;
   private distanceTreshold = 10;
   private shouldRenderText = false;
+  parameters: {[key: string]: any};
 
 
   constructor(startX: number, startY: number, endX: number, endY: number, startBoard?: Board, endBoard?: Board);
@@ -54,6 +56,7 @@ export class Link {
       this.endBoard = endBoard || null;
       this.logic = 'toggle';
       this.shouldRenderText = false;
+      this.parameters = {};
     } else  {
       const linkInterface: LinkInterface = startXOrLinkInterface;
       const bArray: Board[] = startYOrBArray;
@@ -63,6 +66,7 @@ export class Link {
       this.linkToBoard();
       this.setInitPoints(this.startBoard.getCentre(), this.endBoard.getCentre());
       this.shouldRenderText = true;
+      this.parameters = linkInterface.parameters || {};
     }
 
   }
@@ -81,7 +85,8 @@ export class Link {
     return {
       to: this.endBoard.getMac(),
       from: this.startBoard.getMac(),
-      logic: this.logic
+      logic: this.logic,
+      parameters: this.parameters
     } as LinkInterface;
   }
 
@@ -234,6 +239,10 @@ export class Link {
     finishedLink.linkToBoard();
     finishedLink.showWithLogic();
     return finishedLink;
+  }
+
+  resetParameters(): void {
+    this.parameters = null;
   }
 
   setLogic(logic: string): void {

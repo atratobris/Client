@@ -1,0 +1,7 @@
+<pre>  def {{fn_name}}(<span *ngFor="let key of keys(); let isLast=last">{{key}}=<input [(ngModel)]="params[key]" class="code-parameter" (change)="onInputChanged($event, key)">{{isLast ? '': ', '}}</span>)   
+{{code_body}}</pre>
+<ul>
+  <li *ngFor="let key of keys()">
+    {{key}}: {{params[key]}}
+  </li>
+</ul>

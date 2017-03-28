@@ -21,6 +21,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Output() onBoardSave = new EventEmitter<BoardConfig>();
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
   codeSnippets: Code[];
+  code: string;
 
   constructor(private codeService: CodeService) { }
 
@@ -29,9 +30,10 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (this.link) {
-      this.codeService.all("Led", this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
+      this.codeService.all('Led', this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
         this.codeSnippets = codeSnippets;
-      })
+        this.code = this.renderCodeSnippet();
+      });
     }
   }
 
@@ -46,10 +48,25 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   renderCodeSnippet(): string {
     for (const code of this.codeSnippets) {
       if (code.getName() === this.link.getLogic()) {
-        return code.getCode();
+        const raw_code = code.getCode();
+        const code_header = raw_code.match(/def [A-Z_]+(.+)/gi)[0];
+        const params = code_header.match(/[^(\]]+(?=\))/g)[0].split(',').map(
+          (key_value: string) => {
+            const kv = key_value.trim().split('=');
+            return {
+              key: kv[0],
+              value: kv[1]
+            };
+          }
+        );
+        return raw_code;
       }
     }
-    return "";
+    return '';
+  }
+
+  onLinkTypeChange(event) {
+    this.link.resetParameters();
   }
 
   private linkTypes(link: Link): string[] {
@@ -57,7 +74,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       .getEndBoard()
       .getBoardConfig()
       .getAcceptedLinks()
-      .map((link) => link.getName());
+      .map((l: LinkOption) => l.getName());
   }
 
 }
