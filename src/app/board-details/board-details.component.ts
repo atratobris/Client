@@ -52,6 +52,9 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
     return "";
   }
 
+  trigger(): void {
+  }
+
   private linkTypes(link: Link): string[] {
     return link
       .getEndBoard()

@@ -24,6 +24,7 @@ export class BoardConfig {
   private accepted_links: LinkOption[];
   private animated: boolean = false;
   private is_used: boolean = false;
+  private category: string;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -47,7 +48,10 @@ export class BoardConfig {
         }
       }
     }
+    this.setCategory();
   }
+
+
   setMac(mac: string): void {
     this.mac = mac;
   }
@@ -104,5 +108,18 @@ export class BoardConfig {
 
   getType(): string {
     return this.type;
+  }
+
+  getCategory(): string {
+    return this.category;
+  }
+
+  private setCategory(): void {
+    if (this.type === 'Andboard' ) {
+      this.category = 'virtual';
+    } else {
+      this.category = 'real';
+    }
+    console.log(this.category);
   }
 }

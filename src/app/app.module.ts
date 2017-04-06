@@ -31,6 +31,8 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 
+import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     MarketplaceComponent,
     UserBoardsComponent,
     AuthenticationComponent,
+    VirtualBoardsPipe,
+    RealBoardsPipe
   ],
   imports: [
     BrowserModule,
