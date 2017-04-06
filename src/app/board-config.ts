@@ -25,6 +25,7 @@ export class BoardConfig {
   private animated: boolean = false;
   private is_used: boolean = false;
   private category: string;
+  private used_count: number = 0;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -51,6 +52,29 @@ export class BoardConfig {
     this.setCategory();
   }
 
+  newBoard(configs: BoardConfig[]): BoardConfig {
+    if (this.category === 'real') {
+      return this;
+    }
+    if( this.category === 'virtual') {
+      const boards = configs.filter( c => c.getType() === this.type );
+      let index = 0;
+      while ( index < boards.length ) {
+        const mac = `${this.type}${index}`;
+        if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) {
+          break;
+        }
+        index++;
+      }
+      return this.nextBoard(index);
+    }
+  }
+
+  nextBoard(index: number): BoardConfig {
+    this.mac = `${this.type}${index}`;
+    this.name = `${this.type}${index}`;
+    return this.copy();
+  }
 
   setMac(mac: string): void {
     this.mac = mac;
@@ -71,6 +95,14 @@ export class BoardConfig {
   inBoards(boards: Board[]): boolean {
     const b = boards.find((board) => board.getMac() === this.mac );
     return !!b;
+  }
+
+  setCount( count: number): void {
+    this.used_count = count;
+  }
+
+  getCount(): number {
+    return this.used_count;
   }
 
   animate(): void {
@@ -104,6 +136,24 @@ export class BoardConfig {
 
   getAcceptedLinks(): LinkOption[] {
     return this.accepted_links;
+  }
+
+  copy(): BoardConfig {
+    return new BoardConfig(this.prepare())
+  }
+
+  prepare(): IBoardConfig {
+    return {
+      id: null,
+      mac: this.mac,
+      type: this.type,
+      name: this.name,
+      status: this.status,
+      last_activity: this.last_activity,
+      colour: this.colour,
+      accepted_links: this.accepted_links,
+      category: this.category
+    } as IBoardConfig;
   }
 
   getType(): string {

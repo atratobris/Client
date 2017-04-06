@@ -84,6 +84,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
       for (const b of this.boards.filter( board => board.getCategory() === 'real')){
         b.used( b.inBoards(this.sketch.getBoards()) );
       }
+      for (const b of this.boards.filter( board => board.getCategory() === 'virtual')){
+        const count = this.sketch.getBoards().filter( board => board.getType() === b.getType() ).length;
+        b.setCount( count );
+        console.log(b.getType(), b.getCount());
+      }
     }
   }
 
@@ -125,11 +130,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onBoardSelected(selected_board: BoardConfig): void {
-    this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
-      this.selectedBoard = board;
-      this.boardSelected = true;
-      console.log(selected_board);
-    });
+    // this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
+    this.selectedBoard = selected_board;
+    this.boardSelected = true;
+    console.log(selected_board);
+    // });
   }
 
   onLinkSelected(link: Link): void {
@@ -182,7 +187,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onActiveBoardSelected(board: BoardConfig): void {
-    this.newBoard = board;
+    this.newBoard = board.newBoard(this.sketch.getBoardConfigs());
     this.changeMode('Add');
     this.onBoardSelected(board);
   }

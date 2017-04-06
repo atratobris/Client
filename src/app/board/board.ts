@@ -167,4 +167,8 @@ export class Board {
     return this.boardConfig.getMac();
   }
 
+  getType(): string {
+    return this.boardConfig.getType();
+  }
+
 }
