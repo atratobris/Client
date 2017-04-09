@@ -11,6 +11,7 @@ export interface IBoardConfig {
   last_activity: string;
   colour: string;
   accepted_links: LinkOption[];
+  metadata: any;
 }
 
 export class BoardConfig {
@@ -24,6 +25,7 @@ export class BoardConfig {
   private accepted_links: LinkOption[];
   private animated: boolean = false;
   private is_used: boolean = false;
+  private metadata: any;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -34,6 +36,7 @@ export class BoardConfig {
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
     this.accepted_links = [];
+    this.metadata = obj && obj.metadata || {};
     if (obj) {
       if (0 in obj.accepted_links) {
         for (let i = 0; i < obj.accepted_links.length; i++) {
@@ -54,6 +57,10 @@ export class BoardConfig {
 
   getMac(): string {
     return this.mac;
+  }
+
+  getMetadata(): any {
+    return  this.metadata;
   }
 
   in_use(): boolean {

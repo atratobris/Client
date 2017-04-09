@@ -21,6 +21,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Output() onBoardSave = new EventEmitter<BoardConfig>();
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
   codeSnippets: Code[];
+  metadata: any[];
 
   constructor(private codeService: CodeService) { }
 
@@ -32,6 +33,9 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       this.codeService.all("Led", this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
         this.codeSnippets = codeSnippets;
       })
+    }
+    if (this.board) {
+      this.metadata = Object.keys(this.board.getMetadata());
     }
   }
 
@@ -57,7 +61,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       .getEndBoard()
       .getBoardConfig()
       .getAcceptedLinks()
-      .map((link) => link.getName());
+      .map((l) => l.getName());
   }
 
 }
