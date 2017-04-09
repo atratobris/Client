@@ -14,17 +14,17 @@
   <button type="button" name="button" (click)="updateLink(link)" class="btn btn-success">update</button>
 </div>
 <div *ngIf="board" class="details">
-  <h2>Board</h2>
-  <span>
-    <label>Type</label>
+  <h2 class="text-center mb-0">Board </h2>
+  <div class="text-center">
+    ({{board.mac}})
+  </div>
+  <p>
+    <label class="mb-0">Type:</label>
     <input [(ngModel)]="board.type" placeholder="type" class="form-control" />
-  </span>
-  <span>
-    <label>Name</label>
+  </p>
+  <p>
+    <label class="mb-0">Name:</label>
     <input [(ngModel)]="board.name" placeholder="name" class="form-control" />
-  </span>
-  <span>
-    {{board.mac}}
-  </span>
-  <button type="button" name="button" (click)="updateBoard(board)" class="btn btn-success">update</button>
+  </p>
+  <button type="button" name="button" (click)="updateBoard(board)" class="btn full btn-success">update</button>
 </div>

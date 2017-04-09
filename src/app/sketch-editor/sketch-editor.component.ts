@@ -35,7 +35,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   constructor(private ng2cable: Ng2Cable, private ngZone: NgZone,
             private boardService: BoardService, private sketchService: SketchService,
-            private linkService: LinkService, private activatedRoute: ActivatedRoute) {
+            private linkService: LinkService, private activatedRoute: ActivatedRoute,
+            private router: Router) {
     this.ng2cable.setCable(this.url);
   }
 
@@ -90,6 +91,10 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   onNameUpdated(newName): void {
     this.sketch.setName(newName);
     this.sketchService.update(this.sketch);
+  }
+
+  navigateToSketches(): void {
+    this.router.navigate(['/sketches']);
   }
 
   private activateBoard(mac: string) {

@@ -1,8 +1,12 @@
 <div *ngIf="sketch" class="row">
-  <div class="col-sm-12">
-    <div class="text-center mb-3 mt-3 h1">
+  <div class="col-sm-3">
+    <button type="button" name="button" class="btn btn-success" (click)="navigateToSketches()">BACK</button>
+  </div>
+  <div class="col-sm-3 text-center mb-3 mt-3 h1">
       <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
-    </div>
+  </div>
+  <div class="col-sm-6">
+
   </div>
   <div class="col-sm-2 pt-2">
     <app-active-boards [boards]="boards" [selectedBoard]="newBoard" (onBoardSave)="onBoardSave($event)" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
