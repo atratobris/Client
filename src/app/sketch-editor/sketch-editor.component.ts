@@ -65,6 +65,16 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     });
   }
 
+  activateSketch(id: number): void {
+    this.sketch.changeStatus('active');
+    this.sketchService.updateStatus(this.sketch);
+  }
+
+  stopSketch(id: number): void {
+    this.sketch.changeStatus('closed');
+    this.sketchService.updateStatus(this.sketch);
+  }
+
   ngOnDestroy() {
     this.ng2cable.unsubscribe();
   }

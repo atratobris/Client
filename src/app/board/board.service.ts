@@ -73,6 +73,7 @@ export class BoardService {
   private board_params(board): {[key: string]: any} {
     const params = {};
     Object.assign(params, board);
+    console.log(params);
     const user_id = {user_id: localStorage.getItem('atrato-user-id')};
     Object.assign(params, user_id);
     return params;
