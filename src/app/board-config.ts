@@ -31,9 +31,9 @@ export class BoardConfig {
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
-    this.type = obj && obj.type || 'RealBoard';
-    this.subtype = obj && obj.subtype || 'Input'
-    this.name = obj && obj.name || `${this.subtype}`;
+    this.type = obj && obj.type || 'Input';
+    this.subtype = obj && obj.subtype || 'RealBoard'
+    this.name = obj && obj.name || `${this.type}`;
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
@@ -54,14 +54,14 @@ export class BoardConfig {
   }
 
   newBoard(configs: BoardConfig[]): BoardConfig {
-    if (this.type === 'RealBoard') {
+    if (this.subtype === 'RealBoard') {
       return this;
     }
-    if (this.type === 'VirtualBoard') {
-      const boards = configs.filter( c => c.getSubType() === this.subtype );
+    if (this.subtype === 'VirtualBoard') {
+      const boards = configs.filter( c => c.getType() === this.type );
       let index = 0;
       while ( index < boards.length ) {
-        const mac = `${this.subtype}${index}`;
+        const mac = `${this.type}${index}`;
         if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) {
           break;
         }
@@ -76,8 +76,8 @@ export class BoardConfig {
   }
 
   nextBoard(index: number): BoardConfig {
-    this.mac = `${this.subtype}${index}`;
-    this.name = `${this.subtype}`;
+    this.mac = `${this.type}${index}`;
+    this.name = `${this.type}`;
     return this.copy();
   }
 

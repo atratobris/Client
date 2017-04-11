@@ -25,10 +25,10 @@ export class BoardService {
       .catch(this.handleError);
   }
 
-  all(type: string): Promise<BoardConfig[]> {
+  all(subtype: string): Promise<BoardConfig[]> {
     const search: URLSearchParams = new URLSearchParams();
     search.set('user_id', localStorage.getItem('atrato-user-id'));
-    search.set('type', type);
+    search.set('subtype', subtype);
     return this.http
       .get(`${this.apiUrl}.json`, {search})
       .toPromise()
