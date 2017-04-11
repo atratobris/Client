@@ -81,11 +81,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   markUsedBoards(): void {
     if (!!this.boards && !!this.sketch) {
-      for (const b of this.boards.filter( board => board.getCategory() === 'real')){
+      for (const b of this.boards.filter( board => board.getType() === 'RealBoard')){
         b.used( b.inBoards(this.sketch.getBoards()) );
       }
-      for (const b of this.boards.filter( board => board.getCategory() === 'virtual')){
-        const count = this.sketch.getBoards().filter( board => board.getType() === b.getType() ).length;
+      for (const b of this.boards.filter( board => board.getType() === 'VirtualBoard')){
+        const count = this.sketch.getBoards().filter( board => board.getSubType() === b.getSubType() ).length;
         b.setCount( count );
         console.log(b.getType(), b.getCount());
       }
@@ -106,9 +106,15 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   private refreshBoardData(): void {
-    this.boardService.all().then( (boards: BoardConfig[]) => {
+    this.boardService.all('RealBoard').then( (boards: BoardConfig[]) => {
       this.boards = boards;
       this.markUsedBoards();
+      this.boardService.all('VirtualBoard').then( (bs: BoardConfig[]) => {
+        if (!!this.boards) {
+          console.log(bs);
+          this.boards = bs.concat(this.boards);
+        }
+      })
     });
    }
 
@@ -130,11 +136,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onBoardSelected(selected_board: BoardConfig): void {
-    // this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
     this.selectedBoard = selected_board;
     this.boardSelected = true;
-    console.log(selected_board);
-    // });
   }
 
   onLinkSelected(link: Link): void {

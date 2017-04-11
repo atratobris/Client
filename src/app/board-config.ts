@@ -11,6 +11,7 @@ export interface IBoardConfig {
   last_activity: string;
   colour: string;
   accepted_links: LinkOption[];
+  subtype: string;
 }
 
 export class BoardConfig {
@@ -24,14 +25,15 @@ export class BoardConfig {
   private accepted_links: LinkOption[];
   private animated: boolean = false;
   private is_used: boolean = false;
-  private category: string;
   private used_count: number = 0;
+  private subtype: string;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
-    this.type = obj && obj.type || 'Input';
-    this.name = obj && obj.name || `${this.type} Component`;
+    this.type = obj && obj.type || 'RealBoard';
+    this.subtype = obj && obj.subtype || 'Input'
+    this.name = obj && obj.name || `${this.subtype}`;
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
@@ -49,18 +51,17 @@ export class BoardConfig {
         }
       }
     }
-    this.setCategory();
   }
 
   newBoard(configs: BoardConfig[]): BoardConfig {
-    if (this.category === 'real') {
+    if (this.type === 'RealBoard') {
       return this;
     }
-    if( this.category === 'virtual') {
-      const boards = configs.filter( c => c.getType() === this.type );
+    if (this.type === 'VirtualBoard') {
+      const boards = configs.filter( c => c.getSubType() === this.subtype );
       let index = 0;
       while ( index < boards.length ) {
-        const mac = `${this.type}${index}`;
+        const mac = `${this.subtype}${index}`;
         if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) {
           break;
         }
@@ -70,9 +71,13 @@ export class BoardConfig {
     }
   }
 
+  getSubType(): string {
+    return this.subtype;
+  }
+
   nextBoard(index: number): BoardConfig {
-    this.mac = `${this.type}${index}`;
-    this.name = `${this.type}${index}`;
+    this.mac = `${this.subtype}${index}`;
+    this.name = `${this.subtype}`;
     return this.copy();
   }
 
@@ -149,10 +154,10 @@ export class BoardConfig {
       type: this.type,
       name: this.name,
       status: this.status,
+      subtype: this.subtype,
       last_activity: this.last_activity,
       colour: this.colour,
       accepted_links: this.accepted_links,
-      category: this.category
     } as IBoardConfig;
   }
 
@@ -160,16 +165,4 @@ export class BoardConfig {
     return this.type;
   }
 
-  getCategory(): string {
-    return this.category;
-  }
-
-  private setCategory(): void {
-    if (this.type === 'Andboard' ) {
-      this.category = 'virtual';
-    } else {
-      this.category = 'real';
-    }
-    console.log(this.category);
-  }
 }
