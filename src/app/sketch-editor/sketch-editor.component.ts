@@ -32,6 +32,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   public selectedLink: Link;
   public selectedBoard: BoardConfig;
   public newBoard: BoardConfig;
+  public displayRealBoards: boolean;
 
   constructor(private ng2cable: Ng2Cable, private ngZone: NgZone,
             private boardService: BoardService, private sketchService: SketchService,
@@ -40,6 +41,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   ngOnInit() {
+    this.displayRealBoards = true;
     this.setSketch();
     this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
@@ -52,6 +54,13 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
           this.activateBoard(data.message.mac);
         }
     });
+  }
+
+  showRealBoards(): void {
+    this.displayRealBoards = true;
+  }
+  showVirtualBoards(): void {
+    this.displayRealBoards = false;
   }
 
   setSketch(): void {

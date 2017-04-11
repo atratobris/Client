@@ -6,7 +6,20 @@
   </div>
   <div class="col-sm-2 pt-2">
     <div *ngIf="boards">
-      <app-active-boards [boards]="boards | realBoards" [selectedBoard]="newBoard" (onBoardSave)="onBoardSave($event)" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active' : displayRealBoards }" (click)="showRealBoards()">Real</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active' : !displayRealBoards }" (click)="showVirtualBoards()">Virtual</a>
+        </li>
+      </ul>
+      <div *ngIf="displayRealBoards">
+        <app-active-boards [boards]="boards | realBoards" [selectedBoard]="newBoard" (onBoardSave)="onBoardSave($event)" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
+      </div>
+      <div *ngIf="!displayRealBoards">
+        <app-active-boards [boards]="(boards | virtualBoards)" [selectedBoard]="newBoard" (onBoardSave)="onBoardSave($event)" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
+      </div>
     </div>
   </div>
   <div class="col-sm-7">
@@ -24,11 +37,6 @@
     </div>
     <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
     <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description" placeholder="Sketch description (for marketplace)">
-  </div>
-  <div class="col-sm-2 pt-2">
-    <div *ngIf="boards">
-      <app-active-boards [boards]="(boards | virtualBoards)" [selectedBoard]="newBoard" (onBoardSave)="onBoardSave($event)" (boardSelectedEmitter)="onActiveBoardSelected($event)"></app-active-boards>
-    </div>
   </div>
   <app-board-details [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
 </div>
