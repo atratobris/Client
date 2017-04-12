@@ -32,7 +32,7 @@ export class BoardConfig {
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.type = obj && obj.type || 'Input';
-    this.subtype = obj && obj.subtype || 'RealBoard'
+    this.subtype = obj && obj.subtype || 'RealBoard';
     this.name = obj && obj.name || `${this.type}`;
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
@@ -54,17 +54,13 @@ export class BoardConfig {
   }
 
   newBoard(configs: BoardConfig[]): BoardConfig {
-    if (this.subtype === 'RealBoard') {
-      return this;
-    }
+    if (this.subtype === 'RealBoard') { return this; }
     if (this.subtype === 'VirtualBoard') {
       const boards = configs.filter( c => c.getType() === this.type );
       let index = 0;
       while ( index < boards.length ) {
         const mac = `${this.type}${index}`;
-        if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) {
-          break;
-        }
+        if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) { break; }
         index++;
       }
       return this.nextBoard(index);
@@ -144,7 +140,7 @@ export class BoardConfig {
   }
 
   copy(): BoardConfig {
-    return new BoardConfig(this.prepare())
+    return new BoardConfig(this.prepare());
   }
 
   prepare(): IBoardConfig {

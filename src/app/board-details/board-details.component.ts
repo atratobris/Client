@@ -49,7 +49,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
         return code.getCode();
       }
     }
-    return "";
+    return '';
   }
 
   trigger(): void {
@@ -60,7 +60,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
       .getEndBoard()
       .getBoardConfig()
       .getAcceptedLinks()
-      .map((link) => link.getName());
+      .map((l) => l.getName());
   }
 
 }
