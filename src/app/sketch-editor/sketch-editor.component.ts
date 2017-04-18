@@ -103,7 +103,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     if (!!this.boards && !!this.sketch) {
       const realBoards = this.boards.filter( board => board.getSubType() === 'RealBoard');
       const virtualBoards = this.boards.filter( board => board.getSubType() === 'VirtualBoard');
-      for (const b of reaBoards){
+      for (const b of realBoards){
         b.used( b.inBoards(this.sketch.getBoards()) );
       }
       for (const b of virtualBoards){
