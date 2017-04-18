@@ -4,6 +4,14 @@
   </div>
   <div class="col-sm-3 text-center mb-3 mt-3 h1">
       <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
+      <div class="btn-group mr-2 status-button" role="group" aria-label="First group">
+        <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary closed" (click)="activateSketch(idx)">
+          Activate
+        </button>
+        <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary active" (click)="stopSketch(idx)">
+          Stop
+        </button>
+      </div>
   </div>
   <div class="col-sm-6">
 

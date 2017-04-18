@@ -13,5 +13,21 @@
   .description
     margin-left: 1rem
 
+.status-button
+  text-align: center
+  border: 4px solid white
+  border-radius: 10px
+  .btn
+    color: white
+    font-weight: bold
+    padding: 15px 45px
+    &.closed
+      background-color: #81c784
+      &.selected
+        border: 4px solid #1b5e20
+    &.active
+      background-color: #e57373
+      &.selected
+        border: 4px solid #b71c1c
 app-click-to-edit
   display: inline-block

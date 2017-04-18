@@ -26,5 +26,9 @@
     <label class="mb-0">Name:</label>
     <input [(ngModel)]="board.name" placeholder="name" class="form-control" />
   </p>
+  <div *ngFor="let field of metadata" class="mb-1">
+    <label class="mb-0">{{field}}:</label>
+    <input [(ngModel)]="board.metadata[field]" class="form-control" >
+  </div>
   <button type="button" name="button" (click)="updateBoard(board)" class="btn full btn-success">update</button>
 </div>
