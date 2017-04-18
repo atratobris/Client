@@ -30,6 +30,7 @@ import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { HomeComponent } from './home/home.component';
 
 import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
 
@@ -54,6 +55,7 @@ import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
     AuthenticationComponent,
     VirtualBoardsPipe,
     RealBoardsPipe
+    HomeComponent
   ],
   imports: [
     BrowserModule,

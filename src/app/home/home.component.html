@@ -1,0 +1,26 @@
+<div class="home-container">
+  <div class="row">
+      <div class="col-md-6">
+        <ul class="list-group pages">
+          <li class="">
+            <button class="btn btn-outline-primary btn-lg btn-block"routerLink="/sketches" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sketches</button>
+          </li>
+          <li class="">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/laptop" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Laptop</button>
+          </li>
+          <li class="">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/logs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sketch Logs</button>
+          </li>
+          <li class="">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/marketplace" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Marketplace</button>
+          </li>
+          <li class="">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/myboards" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My Boards</button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <app-sketch-manager></app-sketch-manager>
+      </div>
+  </div>
+</div>

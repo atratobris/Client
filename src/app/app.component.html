@@ -1,22 +1,7 @@
 <div class="container-fluid">
   <ul class="nav nav-tabs navigation">
-    <li class="nav-item">
-      <a routerLink="/sketches" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sketches</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="/laptop" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Laptop</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="/logs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sketch Logs</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="/marketplace" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Marketplace</a>
-    </li>
-    <li class="nav-item">
-      <a routerLink="/myboards" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My Boards</a>
-    </li>
-    <li class="nav-item auth" *ngIf="loggedIn()">
-      <a class="username">Welcome {{userName()}}</a>
+    <li class="nav-item" *ngIf="loggedIn()">
+      <a class="username" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Welcome {{userName()}}</a>
     </li>
     <li class="nav-item" *ngIf="loggedIn()">
       <a (click)="logout()">Log out</a>

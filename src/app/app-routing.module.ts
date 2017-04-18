@@ -9,11 +9,12 @@ import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
-
+import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './authentication/authentication.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/authentication', pathMatch: 'full' },
+  { path: 'home' , component: HomeComponent, canActivate: [AuthenticationService] },
   { path: 'authentication', component: AuthenticationComponent },
   { path: 'dashboard', component:  SketchEditorComponent, canActivate: [AuthenticationService] },
   { path: 'laptop', component: LaptopComponent },
