@@ -32,6 +32,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   public selectedLink: Link;
   public selectedBoard: BoardConfig;
   public newBoard: BoardConfig;
+  public displayRealBoards: boolean;
 
   constructor(private ng2cable: Ng2Cable, private ngZone: NgZone,
             private boardService: BoardService, private sketchService: SketchService,
@@ -41,6 +42,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   ngOnInit() {
+    this.displayRealBoards = true;
     this.setSketch();
     this.linkService.all().then( ( links: LinkOption[] ) => {
       this.links = links;
@@ -53,6 +55,13 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
           this.activateBoard(data.message.mac);
         }
     });
+  }
+
+  showRealBoards(): void {
+    this.displayRealBoards = true;
+  }
+  showVirtualBoards(): void {
+    this.displayRealBoards = false;
   }
 
   setSketch(): void {
@@ -82,8 +91,14 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   markUsedBoards(): void {
     if (!!this.boards && !!this.sketch) {
-      for (const b of this.boards){
+      const realBoards = this.boards.filter( board => board.getSubType() === 'RealBoard');
+      const virtualBoards = this.boards.filter( board => board.getSubType() === 'VirtualBoard');
+      for (const b of reaBoards){
         b.used( b.inBoards(this.sketch.getBoards()) );
+      }
+      for (const b of virtualBoards){
+        const count = this.sketch.getBoards().filter( board => board.getType() === b.getType() ).length;
+        b.setCount(count);
       }
     }
   }
@@ -106,9 +121,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   private refreshBoardData(): void {
-    this.boardService.all().then( (boards: BoardConfig[]) => {
+    this.boardService.all('RealBoard').then( (boards: BoardConfig[]) => {
       this.boards = boards;
       this.markUsedBoards();
+      this.boardService.all('VirtualBoard').then( (bs: BoardConfig[]) => {
+        if (!!this.boards) { this.boards = bs.concat(this.boards); }
+      });
     });
    }
 
@@ -124,17 +142,12 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     }
     this.onLinkDeselected();
     this.onBoardDeselected();
-    if (this.operationMode !== 'Add') {
-      this.newBoard = null;
-    }
+    if (this.operationMode !== 'Add') { this.newBoard = null; }
   }
 
   onBoardSelected(selected_board: BoardConfig): void {
-    this.boardService.get(selected_board.getMac()).then( (board: BoardConfig ) => {
-      this.selectedBoard = board;
-      this.boardSelected = true;
-      console.log(selected_board);
-    });
+    this.selectedBoard = selected_board;
+    this.boardSelected = true;
   }
 
   onLinkSelected(link: Link): void {
@@ -187,7 +200,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onActiveBoardSelected(board: BoardConfig): void {
-    this.newBoard = board;
+    this.newBoard = board.newBoard(this.sketch.getBoardConfigs());
     this.changeMode('Add');
     this.onBoardSelected(board);
   }

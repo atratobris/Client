@@ -21,7 +21,7 @@ export class MarketplaceComponent implements OnInit {
 
   ngOnInit() {
     this.sketchService.marketplace().then( ( sketches: Sketch[] ) => this.sketches = sketches );
-    this.boardService.all().then( ( boards: BoardConfig[] ) => {
+    this.boardService.all('RealBoard').then( ( boards: BoardConfig[] ) => {
       this.boards = boards;
       this.boardTypes = this.boards.map((board) => board.getType());
     });
@@ -29,9 +29,9 @@ export class MarketplaceComponent implements OnInit {
 
   hardwareClass(type: string): string {
     if (this.boardTypes.includes(type)) {
-      return "owned";
+      return 'owned';
     }
-    return "not-owned";
+    return 'not-owned';
   }
 
   canBuySketch(sketch: Sketch): boolean {
@@ -59,7 +59,7 @@ export class MarketplaceComponent implements OnInit {
         missing.push(type);
       }
     }
-    return missing.join(", ");
+    return missing.join(', ');
   }
 
   mySketch(sketch: Sketch): boolean {
