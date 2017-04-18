@@ -30,7 +30,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (this.link) {
-      this.codeService.all("Led", this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
+      this.codeService.all(this.link.getEndBoard().getType(), this.linkTypes(this.link)).then( (codeSnippets: Code[]) => {
         this.codeSnippets = codeSnippets;
       })
     }
@@ -53,7 +53,10 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
         return code.getCode();
       }
     }
-    return "";
+    return '';
+  }
+
+  trigger(): void {
   }
 
   private linkTypes(link: Link): string[] {

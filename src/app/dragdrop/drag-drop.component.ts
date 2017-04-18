@@ -175,7 +175,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   getAvailableBoards(): void {
     this.availableBoards = [];
-    this.boardService.all().then( (boards: BoardConfig[]) => {
+    this.boardService.all('RealBoard').then( (boards: BoardConfig[]) => {
       for (let idx = 0; idx < boards.length; idx++) {
         let remove = false;
         for (const board of this.sketch.getBoards()) {
@@ -226,7 +226,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   clicked(event): void {
     const selectedPoint: Point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
     if (this.operationMode === 'Add') {
-      if (this.availableBoards.length > 0) {
+      if (!this.newBoard.in_use()) {
         const drawn = this.wsc.drawBoardAt(selectedPoint, this.newBoard);
         if (drawn) {
           this.availableBoards.splice(0, 1);

@@ -68,6 +68,10 @@ export class Board {
     ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2 + leftPadding, this.getPosY() - this.height / 2 + textHeight);
   }
 
+  getSubType(): string {
+    return this.getBoardConfig().getSubType();
+  }
+
   getWidth(): number {
     return this.width;
   }
@@ -165,6 +169,10 @@ export class Board {
 
   getMac(): string {
     return this.boardConfig.getMac();
+  }
+
+  getType(): string {
+    return this.boardConfig.getType();
   }
 
 }

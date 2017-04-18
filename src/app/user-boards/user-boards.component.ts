@@ -21,7 +21,7 @@ export class UserBoardsComponent implements OnInit {
   constructor(private boardService: BoardService) { }
 
   ngOnInit() {
-    this.boardService.all().then( (boards: BoardConfig[] ) => {
+    this.boardService.all('RealBoard').then( (boards: BoardConfig[] ) => {
       this.boards = boards;
     });
   }

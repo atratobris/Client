@@ -12,6 +12,7 @@ export interface IBoardConfig {
   colour: string;
   accepted_links: LinkOption[];
   metadata: any;
+  subtype: string;
 }
 
 export class BoardConfig {
@@ -26,12 +27,15 @@ export class BoardConfig {
   private animated: boolean = false;
   private is_used: boolean = false;
   private metadata: any;
+  private used_count: number = 0;
+  private subtype: string;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
     this.mac = obj && obj.mac || '';
     this.type = obj && obj.type || 'Input';
-    this.name = obj && obj.name || `${this.type} Component`;
+    this.subtype = obj && obj.subtype || 'RealBoard';
+    this.name = obj && obj.name || `${this.type}`;
     this.status = obj && obj.status || 'offline';
     this.last_activity = obj && obj.last_activity;
     this.colour = Colours.getColour(this.id);
@@ -51,6 +55,31 @@ export class BoardConfig {
       }
     }
   }
+
+  newBoard(configs: BoardConfig[]): BoardConfig {
+    if (this.subtype === 'RealBoard') { return this; }
+    if (this.subtype === 'VirtualBoard') {
+      const boards = configs.filter( config => config.getType() === this.type );
+      let index = 0;
+      while ( index < boards.length ) {
+        const mac = `${this.type}${index}`;
+        if ( boards.map(b => b.getMac()).indexOf(mac) === -1 ) { break; }
+        index++;
+      }
+      return this.nextBoard(index);
+    }
+  }
+
+  getSubType(): string {
+    return this.subtype;
+  }
+
+  nextBoard(index: number): BoardConfig {
+    this.mac = `${this.type}${index}`;
+    this.name = `${this.type}`;
+    return this.copy();
+  }
+
   setMac(mac: string): void {
     this.mac = mac;
   }
@@ -74,6 +103,14 @@ export class BoardConfig {
   inBoards(boards: Board[]): boolean {
     const b = boards.find((board) => board.getMac() === this.mac );
     return !!b;
+  }
+
+  setCount( count: number): void {
+    this.used_count = count;
+  }
+
+  getCount(): number {
+    return this.used_count;
   }
 
   animate(): void {
@@ -109,7 +146,26 @@ export class BoardConfig {
     return this.accepted_links;
   }
 
+  copy(): BoardConfig {
+    return new BoardConfig(this.prepare());
+  }
+
+  prepare(): IBoardConfig {
+    return {
+      id: null,
+      mac: this.mac,
+      type: this.type,
+      name: this.name,
+      status: this.status,
+      subtype: this.subtype,
+      last_activity: this.last_activity,
+      colour: this.colour,
+      accepted_links: this.accepted_links,
+    } as IBoardConfig;
+  }
+
   getType(): string {
     return this.type;
   }
+
 }
