@@ -54,7 +54,7 @@ import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
     UserBoardsComponent,
     AuthenticationComponent,
     VirtualBoardsPipe,
-    RealBoardsPipe
+    RealBoardsPipe,
     HomeComponent
   ],
   imports: [
