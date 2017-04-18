@@ -24,7 +24,6 @@ export class AuthenticationService implements CanActivate {
   }
 
   logIn(user: User): Promise<void> {
-    console.log(this.apiUrl);
     return this.http
       .post(`${this.apiUrl}.json`, JSON.stringify(user),  {headers: this.headers})
       .toPromise()
