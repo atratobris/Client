@@ -56,7 +56,7 @@ export class BoardConfig {
   newBoard(configs: BoardConfig[]): BoardConfig {
     if (this.subtype === 'RealBoard') { return this; }
     if (this.subtype === 'VirtualBoard') {
-      const boards = configs.filter( c => c.getType() === this.type );
+      const boards = configs.filter( config => config.getType() === this.type );
       let index = 0;
       while ( index < boards.length ) {
         const mac = `${this.type}${index}`;

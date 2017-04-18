@@ -91,13 +91,14 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   markUsedBoards(): void {
     if (!!this.boards && !!this.sketch) {
-      for (const b of this.boards.filter( board => board.getSubType() === 'RealBoard')){
+      const realBoards = this.boards.filter( board => board.getSubType() === 'RealBoard');
+      const virtualBoards = this.boards.filter( board => board.getSubType() === 'VirtualBoard');
+      for (const b of reaBoards){
         b.used( b.inBoards(this.sketch.getBoards()) );
       }
-      for (const b of this.boards.filter( board => board.getSubType() === 'VirtualBoard')){
+      for (const b of virtualBoards){
         const count = this.sketch.getBoards().filter( board => board.getType() === b.getType() ).length;
-        b.setCount( count );
-        console.log(b.getType(), b.getCount());
+        b.setCount(count);
       }
     }
   }
