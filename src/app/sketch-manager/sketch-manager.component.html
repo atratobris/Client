@@ -17,10 +17,10 @@
               <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event);"></app-click-to-edit>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx); $event.stopPropagation();">
+              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx, $event);">
                 Activate
               </button>
-              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx); $event.stopPropagation();">
+              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx, $event);">
                 Stop
               </button>
             </div>

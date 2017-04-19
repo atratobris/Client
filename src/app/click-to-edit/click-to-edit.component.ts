@@ -20,11 +20,13 @@ export class ClickToEditComponent implements OnInit {
   onClick(event): void {
     event.preventDefault();
     this.editable = true;
+    event.stopPropagation();
   }
 
   onSave(event): void {
     this.nameUpdated.emit(this.fieldValue);
     this.editable = false;
+    event.stopPropagation();
   }
 
 }
