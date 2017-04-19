@@ -105,6 +105,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         } else {
           this.wsc.removeLinkNextToPoint(point);
         }
+      } else {
+        this.finishedAddingBoard.emit();
       }
     }
 
@@ -141,6 +143,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       if (link_success) {
         this.selectLink();
       }
+    }
+    if (this.operationMode === 'Add') {
+      this.clicked(event);
     }
   }
 

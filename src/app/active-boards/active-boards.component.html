@@ -1,6 +1,6 @@
 <div *ngIf="boards" class="active-boards-container row">
   <div *ngFor="let board of boards" class="{{configuration.class}}">
-    <div class="board {{board.is_used ? 'used' : ''}} {{board.animated ? 'animate' : ''}} {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (click)="onBoardSelected(board)" >
+    <div class="board {{board.is_used ? 'used' : ''}} {{board.animated ? 'animate' : ''}} {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (mousedown)="onBoardSelected(board)" >
       <p class="text-center">
         {{board.name}}
         <!-- <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit>
