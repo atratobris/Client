@@ -42,6 +42,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch) => {
       this.sketches[id] = sketch;
     });
+    event.stopPropagation();
   }
 
   removeSketch(id: number): void {

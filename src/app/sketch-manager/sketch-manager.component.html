@@ -14,14 +14,13 @@
           </button>
           <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}} {{sketch.newPurchase ? 'new-purchase' : ''}}">
             <div class="text_center">
-              <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
+              <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event);"></app-click-to-edit>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-              <button *ngIf="sketch.status=='closed'" ty
-              pe="button" class="btn btn-secondary" (click)="activateSketch(idx)">
+              <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx); $event.stopPropagation();">
                 Activate
               </button>
-              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx)">
+              <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx); $event.stopPropagation();">
                 Stop
               </button>
             </div>
