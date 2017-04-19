@@ -45,7 +45,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     if (!!event) { event.stopPropagation(); }
   }
 
-  removeSketch(id: number, event = null): void {
+  removeSketch(id: number): void {
     this.sketchService.removeSketch(this.sketches[id]).then( removed => {
       if (removed) {
         if (this.sketches[id] === this.selectedSketch) {
@@ -54,12 +54,12 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
         this.sketches.splice(id, 1);
       }
     });
-    if (!!event) { event.stopPropagation(); }
   }
 
-  stopSketch(id: number): void {
+  stopSketch(id: number, event = null): void {
     this.sketches[id].changeStatus('closed');
     this.sketchService.updateStatus(this.sketches[id]);
+    if (!!event) { event.stopPropagation(); }
   }
 
   onSketchEdit(id: number): void {
