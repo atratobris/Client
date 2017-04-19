@@ -52,7 +52,6 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.ng2cable.subscription = this.ng2cable.cable.subscriptions
       .create({ channel: 'WatcherChannel', 'user_id': localStorage.getItem('atrato-user-id') }, {
         received: (data) => {
-          console.log(data.message);
           this.activateBoard(data.message.mac);
           this.updateMetadata(data.message.metadata, data.message.mac);
         }
