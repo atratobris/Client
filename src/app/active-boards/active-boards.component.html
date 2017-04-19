@@ -6,7 +6,7 @@
         <!-- <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit>
         <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i> -->
       </p>
-      <p class="text-center">
+      <p  *ngIf="board.subtype === 'RealBoard'" class="text-center">
         <span [class]="board.status">{{board.status}}</span>
       </p>
       <!-- <p class="text-center mac">{{board.mac}}</p> -->
