@@ -214,7 +214,6 @@ export class Link {
     // compute if checking point can be transposed onto the link
     let tx = point.getX() + slope * point.getY() - slope * b;
     tx = tx / (Math.pow(slope, 2) + 1);
-    console.log('tx', tx);
 
     let ty = slope * (point.getX() + slope * point.getY() - slope * b);
     ty = b + ty / ( Math.pow(slope, 2) + 1);
@@ -225,7 +224,6 @@ export class Link {
     if (ty > this.start.getY() && ty > this.end.getY() ) { return false; }
 
     const distance = Math.sqrt(Math.pow(tx - point.getX(), 2) + Math.pow(ty - point.getY(), 2) );
-    console.log('distance', distance);
 
     if ( distance < this.distanceTreshold ) {
       return true;
