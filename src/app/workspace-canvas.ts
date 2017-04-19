@@ -22,6 +22,8 @@ export class WorkspaceCanvas {
   private height: number;
   private completePath: Path2D;
 
+  private scaleFactor: number;
+
 
   constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
     this.ctx = ctx;
@@ -39,7 +41,7 @@ export class WorkspaceCanvas {
     return this.drawAtPoint(selectedPoint.getX(), selectedPoint.getY());
   }
 
-  drawAtPoint( x, y): boolean {
+  drawAtPoint( x, y ): boolean {
     const new_board: Board = this.cursor.copy();
     new_board.setCentre(this.cursor.getCentre());
     for (const board of this.boards) {
@@ -99,6 +101,7 @@ export class WorkspaceCanvas {
 
   redrawCanvas(): void {
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.scale(this.scaleFactor, this.scaleFactor);
     for (const board of this.boards) {
       board.draw(this.ctx);
     }
@@ -124,6 +127,7 @@ export class WorkspaceCanvas {
       this.selectedBoard.draw(this.ctx);
       this.ctx.fillStyle = 'black';
     }
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   updateCursorLocation(x: number, y: number): void {
@@ -266,6 +270,13 @@ export class WorkspaceCanvas {
     this.sketch.setLinks(this.links);
     this.sketch.saveChanges();
     return this.sketch;
+  }
+
+  refreshRect(rect: ClientRect, width: number, height: number, scaleFactor: number): void {
+    this.width = width;
+    this.height = height;
+    this.rect = rect;
+    this.scaleFactor = scaleFactor;
   }
 
 }
