@@ -8,7 +8,7 @@ import { Sketch } from './sketch/sketch';
 export class WorkspaceCanvas {
   private ctx: CanvasRenderingContext2D;
   private rect: ClientRect;
-  private boards: Board[];
+  // private boards: Board[];
   private links: Link[];
   private sketch: Sketch;
   private cursor: Board;
@@ -26,12 +26,16 @@ export class WorkspaceCanvas {
   constructor(ctx: CanvasRenderingContext2D, rect: ClientRect, width: number, height: number) {
     this.ctx = ctx;
     this.rect = rect;
-    this.boards = [];
+    // this.boards = [];
     this.links = [];
     this.currentLink = null;
     this.cursor = null;
     this.width = width;
     this.height = height;
+  }
+
+  private boards(): Board[] {
+    return this.sketch.getBoards();
   }
 
   drawBoardAt(selectedPoint: Point, b: BoardConfig): boolean {
@@ -42,7 +46,7 @@ export class WorkspaceCanvas {
   drawAtPoint( x, y): boolean {
     const new_board: Board = this.cursor.copy();
     new_board.setCentre(this.cursor.getCentre());
-    for (const board of this.boards) {
+    for (const board of this.boards()) {
       if (board.collides(new_board)) {
         return false;
       }
@@ -76,13 +80,13 @@ export class WorkspaceCanvas {
   }
 
   removeBoard(board: Board): void {
-    const index: number = this.boards.indexOf(board);
-    this.boards.splice(index, 1);
+    const index: number = this.boards().indexOf(board);
+    this.boards().splice(index, 1);
     this.sketch.changed();
   }
 
   addBoard(board: Board): void {
-    this.boards.push(board);
+    this.boards().push(board);
     this.sketch.changed();
   }
 
@@ -99,7 +103,7 @@ export class WorkspaceCanvas {
 
   redrawCanvas(): void {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    for (const board of this.boards) {
+    for (const board of this.boards()) {
       board.draw(this.ctx);
     }
     for (const link of this.links) {
@@ -110,7 +114,7 @@ export class WorkspaceCanvas {
     }
     if ( this.cursor ) {
       this.ctx.fillStyle = 'green';
-      for ( const board of this.boards) {
+      for ( const board of this.boards()) {
         if (board.collides(this.cursor)) {
           this.ctx.fillStyle = 'red';
           break;
@@ -205,7 +209,7 @@ export class WorkspaceCanvas {
 
   findBoardAt(x: number, y: number): Board {
     let clickedBoard: Board = null;
-    for (const board of this.boards) {
+    for (const board of this.boards()) {
       if (board.containsPoint(this.ctx, x, y)) {
         clickedBoard = board;
         break; // Never more than one board at one point
@@ -257,12 +261,12 @@ export class WorkspaceCanvas {
 
   loadSketch(sketch: Sketch): void {
     this.sketch = sketch;
-    this.boards = this.sketch.getBoards();
+    // this.boards() = this.sketch.getBoards();
     this.links = this.sketch.getLinks();
   }
 
   buildSketch(): Sketch {
-    this.sketch.setBoards(this.boards);
+    this.sketch.setBoards(this.boards());
     this.sketch.setLinks(this.links);
     this.sketch.saveChanges();
     return this.sketch;

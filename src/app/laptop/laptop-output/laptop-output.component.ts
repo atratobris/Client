@@ -30,10 +30,7 @@ export class LaptopOutputComponent implements OnInit, OnDestroy {
       received: (data) => {
         const message = data.message;
         this.events.push(`Received channel message with type: ${message.type}`);
-        if (message.type === 'link_opener') {
-          // this.events.push(`Going to open ${message.url}`);
-          window.open(message.url);
-        }
+        window.open(message.url);
       }
     });
     console.log("subscribed to channel as Output")

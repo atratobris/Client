@@ -92,6 +92,10 @@ export class BoardConfig {
     return  this.metadata;
   }
 
+  setMetadata(metadata: any): any {
+    this.metadata = metadata;
+  }
+
   in_use(): boolean {
     return this.is_used;
   }

@@ -52,7 +52,9 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.ng2cable.subscription = this.ng2cable.cable.subscriptions
       .create({ channel: 'WatcherChannel', 'user_id': localStorage.getItem('atrato-user-id') }, {
         received: (data) => {
+          console.log(data.message);
           this.activateBoard(data.message.mac);
+          this.updateMetadata(data.message.metadata, data.message.mac);
         }
     });
   }
@@ -120,6 +122,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
 
   navigateToSketches(): void {
     this.router.navigate(['/sketches']);
+  }
+
+  private updateMetadata(metadata: any, mac: string) {
+    const b = this.sketch.getBoards().find((board) => board.getMac() === mac );
+    if (!!b) { b.setMetadata(metadata); }
   }
 
   private activateBoard(mac: string) {
