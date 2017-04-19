@@ -1,6 +1,6 @@
 <div *ngIf="sketch" class="row">
   <div class="col-sm-3">
-    <button type="button" name="button" class="btn btn-success" (click)="navigateToSketches()">BACK</button>
+    <button type="button" name="button" class="btn btn-success" (click)="navigateToHome()">HOME</button>
   </div>
   <div class="col-sm-3 text-center mb-3 mt-3 h1">
       <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>

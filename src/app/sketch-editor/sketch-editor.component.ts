@@ -118,8 +118,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.sketchService.update(this.sketch);
   }
 
-  navigateToSketches(): void {
-    this.router.navigate(['/sketches']);
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
   }
 
   private activateBoard(mac: string) {
