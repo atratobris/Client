@@ -17,6 +17,8 @@ export class Board {
   private boardConfig: BoardConfig;
   private path: Path2D;
 
+  private image: HTMLImageElement;
+
   constructor(posX: number, posY: number, width: number, height: number, b_config?: BoardConfig);
   constructor(centre: BoardInterface);
   constructor(posXorBoardInterface: any, posY?: number, width?: number, height?: number, b_config?: BoardConfig) {
@@ -31,6 +33,12 @@ export class Board {
       this.boardConfig = new BoardConfig(posXorBoardInterface.boardConfig);
     }
     this.path = new Path2D();
+
+    this.image = new Image();
+    this.image.src = this.boardConfig.getImageUrl();
+    this.image.onload = function() {
+      console.log('loaded');
+    };
 
   }
 
@@ -49,11 +57,31 @@ export class Board {
     ctx.fillStyle = this.boardConfig.getColour();
 
     ctx.fill(this.drawRectangle());
-    this.drawText(ctx);
+    this.drawImage(ctx);
+    // this.drawText(ctx);
 
     ctx.fillStyle = oldColour;
   }
 
+
+  private drawImage(ctx: CanvasRenderingContext2D): void {
+    // image.width = 200;
+    // image.height = 100;
+
+    const translateX: number = this.getPosX() - this.width / 2;
+    const translateY: number = this.getPosY() - this.height / 2;
+
+    ctx.save();
+
+    ctx.translate(translateX, translateY);
+
+    ctx.drawImage(this.image, 0, 0, this.width, this.height);
+
+    ctx.translate(-translateX, -translateY);
+
+    ctx.restore();
+
+  }
   private drawRectangle(): Path2D {
     this.path = new Path2D();
     this.path.rect(this.getPosX() - this.width / 2, this.getPosY() - this.height / 2, this.width, this.height);

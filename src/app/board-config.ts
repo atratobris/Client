@@ -13,6 +13,7 @@ export interface IBoardConfig {
   accepted_links: LinkOption[];
   metadata: any;
   subtype: string;
+  image_url: string;
 }
 
 export class BoardConfig {
@@ -24,11 +25,12 @@ export class BoardConfig {
   public last_activity: string;
   private colour: string;
   private accepted_links: LinkOption[];
-  private animated: boolean = false;
-  private is_used: boolean = false;
+  private animated = false;
+  private is_used = false;
   private metadata: any;
-  private used_count: number = 0;
+  private used_count = 0;
   private subtype: string;
+  private image_url: string;
 
   constructor(obj?: IBoardConfig) {
     this.id = obj && obj.id;
@@ -41,6 +43,7 @@ export class BoardConfig {
     this.colour = Colours.getColour(this.id);
     this.accepted_links = [];
     this.metadata = obj && obj.metadata || {};
+    this.image_url = obj && obj.image_url || '';
     if (obj) {
       if (obj.accepted_links && 0 in obj.accepted_links) {
         for (let i = 0; i < obj.accepted_links.length; i++) {
@@ -165,11 +168,20 @@ export class BoardConfig {
       last_activity: this.last_activity,
       colour: this.colour,
       accepted_links: this.accepted_links,
+      image_url: this.image_url
     } as IBoardConfig;
   }
 
   getType(): string {
     return this.type;
+  }
+
+  getImageUrl(): string {
+    return this.image_url;
+  }
+
+  setImageUrl(new_url: string): void {
+    this.image_url = new_url;
   }
 
   isReal(): boolean {
