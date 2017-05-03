@@ -35,12 +35,10 @@ export class Board {
     }
     this.path = new Path2D();
 
-    const board_config = this.boardConfig;
-
-    if (!ImageService.getInstance().hasImage(board_config.getType())) {
-      ImageService.getInstance().setImage(board_config.getType(), this.boardConfig.getImageUrl());
+    if (!ImageService.getInstance().hasImage(this.boardConfig.getType())) {
+      ImageService.getInstance().setImage(this.boardConfig.getType(), this.boardConfig.getImageUrl());
     }
-    this.image = ImageService.getInstance().getImage(board_config.getType());
+    this.image = ImageService.getInstance().getImage(this.boardConfig.getType());
 
   }
 
