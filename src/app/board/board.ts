@@ -58,7 +58,7 @@ export class Board {
 
     ctx.fill(this.drawRectangle());
     this.drawImage(ctx);
-    // this.drawText(ctx);
+    this.drawText(ctx);
 
     ctx.fillStyle = oldColour;
   }
@@ -93,7 +93,7 @@ export class Board {
     const leftPadding = 10;
     ctx.fillStyle = 'black';
     ctx.font = `${textHeight}px serif`;
-    ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2 + leftPadding, this.getPosY() - this.height / 2 + textHeight);
+    ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2, this.getPosY() - this.height / 2 - 10);
   }
 
   getSubType(): string {
