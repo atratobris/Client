@@ -1,15 +1,17 @@
-<div class="row">
-  <div class="col-sm-4 offset-sm-4 register-form">
-    <span>
-      <label>Last 4 digits of MAC: </label> <br>
-      <input [(ngModel)]="code" placeholder="XXXX" />
-    </span>
-    <br>
-    <button type="button" name="button" (click)="registerBoard(code)" class="btn btn-success">Submit</button>
+<div class="user-boards-container">
+  <div class="row">
+    <div class="col-sm-4 offset-sm-4 register-form">
+      <span>
+        <label>Last 4 digits of MAC: </label> <br>
+        <input [(ngModel)]="code" placeholder="XXXX" />
+      </span>
+      <br>
+      <button type="button" name="button" (click)="registerBoard(code)" class="btn btn-success">Submit</button>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-12">
-    <app-active-boards [boards]="boards" [selectedBoard]="newBoard" (boardDeregisterEmitter)="deregisterBoard($event)" [config]="getActiveBoardsConfig()"></app-active-boards>
+  <div class="row">
+    <div class="col-sm-10 text-center">
+      <app-active-boards [boards]="boards" [selectedBoard]="newBoard" (boardDeregisterEmitter)="deregisterBoard($event)" [config]="getActiveBoardsConfig()"></app-active-boards>
+    </div>
   </div>
 </div>

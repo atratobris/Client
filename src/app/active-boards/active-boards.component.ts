@@ -17,7 +17,7 @@ export class ActiveBoardsComponent implements OnInit {
 
   private default_config = {
     'class': 'col-12',
-    'unregisterable': false
+    'unregisterable': false,
   };
 
   public configuration: {[key: string]: any};

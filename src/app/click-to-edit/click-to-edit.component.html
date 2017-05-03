@@ -5,7 +5,7 @@
 <div *ngIf="editable">
   <div class="form-inline edit-form">
     <div class="input-group">
-      <input [(ngModel)]="fieldValue" name="{{fieldName}}" class="form-control text-center" placeholder="{{fieldName}}">
+      <input [(ngModel)]="fieldValue" name="{{fieldName}}" (click)="$event.stopPropagation();"  class="form-control text-center" placeholder="{{fieldName}}">
       <button class="input-group-addon"><i class="fa fa-floppy-o" aria-hidden="true" (click)="onSave($event); "></i></button>
     </div>
   </div>
