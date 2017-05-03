@@ -34,6 +34,8 @@ import { HomeComponent } from './home/home.component';
 
 import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
 
+import { ImageService } from './image.service';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,7 @@ import { VirtualBoardsPipe, RealBoardsPipe } from './board-config.pipe';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService, CodeService],
+  providers: [SketchService, BoardService, Ng2Cable, Broadcaster, LinkService, AuthenticationService, CodeService, ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
