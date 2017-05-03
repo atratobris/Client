@@ -31,7 +31,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnDestroy(): void {
   }
 
-  activateSketch(id: number): void {
+  activateSketch(id: number, event = null): void {
     // stop all sketches before activating this one
     for ( let i = 0; i < this.sketches.length; i++ ) {
       if (this.sketches[i].getStatus() === 'active') {
@@ -42,6 +42,7 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.sketchService.updateStatus(this.sketches[id]).then((sketch: Sketch) => {
       this.sketches[id] = sketch;
     });
+    if (!!event) { event.stopPropagation(); }
   }
 
   removeSketch(id: number): void {
@@ -55,9 +56,10 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     });
   }
 
-  stopSketch(id: number): void {
+  stopSketch(id: number, event = null): void {
     this.sketches[id].changeStatus('closed');
     this.sketchService.updateStatus(this.sketches[id]);
+    if (!!event) { event.stopPropagation(); }
   }
 
   onSketchEdit(id: number): void {

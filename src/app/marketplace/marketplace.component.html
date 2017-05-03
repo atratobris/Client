@@ -11,7 +11,7 @@
           </p>
           <p>
             <b>Required Hardware</b>
-            <span *ngFor="let board of sketch.getBoardConfigs()" class="hardware-req {{hardwareClass(board.type)}}">
+            <span *ngFor="let board of sketch.getBoardConfigs() | realBoards " class="hardware-req {{hardwareClass(board.type)}}">
               {{board.type}}
             </span>
           </p>
@@ -19,7 +19,7 @@
             Created by: {{sketch.user}}
           </p>
           <p class="text-muted" *ngIf="!ownAllBoards(sketch)">
-            You don't own the following required hardware: {{missingBoards(sketch)}}
+            You don't own the following required hardware: {{missingBoards(sketch) }}
           </p>
           <p class="text-muted" *ngIf="mySketch(sketch)">
             You already own this sketch

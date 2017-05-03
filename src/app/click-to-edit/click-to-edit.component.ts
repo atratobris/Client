@@ -19,12 +19,17 @@ export class ClickToEditComponent implements OnInit {
 
   onClick(event): void {
     event.preventDefault();
+    event.stopPropagation();
     this.editable = true;
   }
 
   onSave(event): void {
-    this.nameUpdated.emit(this.fieldValue);
-    this.editable = false;
+    event.preventDefault();
+    event.stopPropagation();
+    if (!!this.fieldValue) {
+      this.nameUpdated.emit(this.fieldValue);
+      this.editable = false;
+    }
   }
 
 }

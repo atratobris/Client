@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
 import { BoardConfig } from '../board-config';
 import { BoardService } from '../board/board.service';
 
@@ -17,11 +17,15 @@ export class ActiveBoardsComponent implements OnInit {
 
   private default_config = {
     'class': 'col-12',
-    'unregisterable': false
+    'unregisterable': false,
   };
 
   public configuration: {[key: string]: any};
 
+  @HostListener('dragstart', ['$event'])
+  onDragStart(event) {
+    event.preventDefault();
+  }
   constructor(private boardService: BoardService) {
     this.configuration = {};
     Object.assign(this.configuration, this.default_config);

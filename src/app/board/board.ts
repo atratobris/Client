@@ -163,6 +163,11 @@ export class Board {
     this.boardConfig = conf;
   }
 
+  setMetadata(metadata: any): any {
+    this.boardConfig.setMetadata(metadata);
+  }
+
+
   copy(): Board {
     return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), this.getBoardConfig());
   }
@@ -170,6 +175,7 @@ export class Board {
   getMac(): string {
     return this.boardConfig.getMac();
   }
+
 
   getType(): string {
     return this.boardConfig.getType();
