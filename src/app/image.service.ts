@@ -5,7 +5,6 @@ export class ImageService {
   static instance: ImageService;
   static isCreating = false;
   private images: {[key: string]: HTMLImageElement};
-  private images_loading: {[key: string]: Boolean};
 
   static getInstance(): ImageService {
     if (ImageService.instance == null) {
@@ -24,12 +23,15 @@ export class ImageService {
       throw new Error('You shouldn\'t initialise multiple Image Services');
     }
     this.images = {};
-    this.images_loading = {};
   }
 
 
-  setImage(key: string, image: HTMLImageElement): void {
-    this.images[key] = image;
+  setImage(key: string, image_url: string): void {
+    this.images[key] = new Image();
+    this.images[key].src = image_url;
+    this.images[key].onload = function() {
+      console.log('Completed', key);
+    };
   }
 
   getImage(key: string): HTMLImageElement {
@@ -40,15 +42,9 @@ export class ImageService {
     return this.images;
   }
 
-  getImageLoadingStatus(key: string): Boolean {
-    return this.images_loading[key];
+  hasImage(key: string): Boolean {
+    return !!this.images[key];
   }
 
-  setImageLoadingStatus(key: string, loading: Boolean): void {
-    this.images_loading[key] = loading;
-  }
-  getImagesLoadingStatus(): {[key: string]: Boolean} {
-    return this.images_loading;
-  }
 
 }

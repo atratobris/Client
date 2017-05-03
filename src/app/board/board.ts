@@ -37,19 +37,10 @@ export class Board {
 
     const board_config = this.boardConfig;
 
-    this.image = ImageService.getInstance().getImage(this.boardConfig.getType());
-    const image_loading = ImageService.getInstance().getImageLoadingStatus(this.boardConfig.getType());
-
-    if (!this.image && !image_loading) {
-      ImageService.getInstance().setImageLoadingStatus(board_config.getType(), true);
-      const image_object = this.image = new Image();
-      this.image.src = this.boardConfig.getImageUrl();
-      this.image.onload = function() {
-        console.log('loaded', image_object);
-        ImageService.getInstance().setImage(board_config.getType(), image_object);
-        ImageService.getInstance().setImageLoadingStatus(board_config.getType(), false);
-      };
+    if (!ImageService.getInstance().hasImage(board_config.getType())) {
+      ImageService.getInstance().setImage(board_config.getType(), this.boardConfig.getImageUrl());
     }
+    this.image = ImageService.getInstance().getImage(board_config.getType());
 
   }
 
