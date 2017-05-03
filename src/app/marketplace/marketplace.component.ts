@@ -42,7 +42,9 @@ export class MarketplaceComponent implements OnInit {
   }
 
   ownAllBoards(sketch: Sketch): boolean {
-    const sketchTypes = sketch.getBoardConfigs().map( (config) => config.type );
+    const sketchTypes = sketch.getBoardConfigs()
+      .filter( (config) => config.isReal() )
+      .map( (config) => config.type );
     for (const type of sketchTypes) {
       if (!this.boardTypes.includes(type)) {
         return false;
@@ -52,8 +54,11 @@ export class MarketplaceComponent implements OnInit {
   }
 
   missingBoards(sketch: Sketch): string {
-    let missing: string[] = [];
-    const sketchTypes = sketch.getBoardConfigs().map( (config) => config.type );
+    const missing: string[] = [];
+    const sketchTypes = sketch.getBoardConfigs()
+      .filter( (config) => config.isReal() )
+      .map( (config) => config.type );
+
     for (const type of sketchTypes) {
       if (!this.boardTypes.includes(type)) {
         missing.push(type);

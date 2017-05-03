@@ -33,6 +33,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() finishedAddingBoard = new EventEmitter();
   @Output() finishedDeletingBoard = new EventEmitter();
   @ViewChild('myCanvas') canvasRef: ElementRef;
+  @ViewChild('myCanvasContainer') canvasContainerRef: ElementRef;
   dragging = false;
   canSelect = false;
   private ctx: CanvasRenderingContext2D;
@@ -49,15 +50,21 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   private mouseDown = false;
   private mouseUp = false;
 
+
+  private fullWidthX = 1600;
+  private fullWidthY = 900;
+
+  private scaleFactor: number;
+
   width = 990;
   height = 600;
 
   @HostListener('mouseenter', ['$event'])
   onMouseEnter(event) {
     event.preventDefault();
-    if (this.newBoard && this.operationMode === 'Add') {
-      const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
-      this.wsc.setCursor(new Board(point.getX(), point.getY(), 80, 80, this.newBoard));
+    if (!!this.newBoard && this.operationMode === 'Add') {
+      const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
+      this.wsc.setCursor(new Board(point.getX(), point.getY(), 160 / this.scaleFactor, 160 / this.scaleFactor, this.newBoard));
     }
   }
 
@@ -73,7 +80,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
-    const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     if (this.operationMode === 'Add' || ( this.mouseDown && this.dragging)) {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
@@ -88,7 +95,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent) {
     event.preventDefault();
-    const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     this.mouseDown = true;
     if (this.operationMode === 'Link') {
       this.linking = this.wsc.linkStart(point.getX(), point.getY());
@@ -105,6 +112,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
         } else {
           this.wsc.removeLinkNextToPoint(point);
         }
+      } else {
+        this.finishedAddingBoard.emit();
       }
     }
 
@@ -129,7 +138,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   onMouseup(event: MouseEvent) {
     event.preventDefault();
     this.mouseUp = false;
-    const point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     if (this.dragging) {
       this.wsc.dragEnd(point.getX(), point.getY());
       this.dragging = false;
@@ -141,6 +150,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
       if (link_success) {
         this.selectLink();
       }
+    }
+    if (this.operationMode === 'Add') {
+      this.clicked(event);
     }
   }
 
@@ -169,7 +181,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(): void {
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
+
     this.wsc = new WorkspaceCanvas(this.ctx, this.rect, this.width, this.height);
+    this.refreshRect();
     this.loadSketch();
   }
 
@@ -215,16 +229,27 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     if (this.operationMode === 'Add' && changes['newBoard']) {
-      this.wsc.setCursor(new Board(-100, -100, 80, 80, this.newBoard));
+      this.wsc.setCursor(
+        new Board(-100 / this.scaleFactor, -100 / this.scaleFactor, 160 / this.scaleFactor, 160 / this.scaleFactor, this.newBoard)
+      );
     }
   }
 
   refreshRect() {
+    this.width = this.canvasContainerRef.nativeElement.clientWidth;
+    this.height = this.canvasContainerRef.nativeElement.clientHeight;
+    this.canvasRef.nativeElement.width = this.width;
+    this.canvasRef.nativeElement.height = this.height;
+
+    this.scaleFactor = this.width / this.fullWidthX;
     this.rect = this.canvasRef.nativeElement.getBoundingClientRect();
+    this.wsc.refreshRect(this.rect, this.width, this.height, this.scaleFactor);
   }
 
   clicked(event): void {
-    const selectedPoint: Point = new Point(event.clientX - this.rect.left, event.clientY - this.rect.top);
+    const selectedPoint: Point = new Point(
+      (event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor
+    );
     if (this.operationMode === 'Add') {
       if (!this.newBoard.in_use()) {
         const drawn = this.wsc.drawBoardAt(selectedPoint, this.newBoard);

@@ -53,6 +53,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
       .create({ channel: 'WatcherChannel', 'user_id': localStorage.getItem('atrato-user-id') }, {
         received: (data) => {
           this.activateBoard(data.message.mac);
+          this.updateMetadata(data.message.metadata, data.message.mac);
         }
     });
   }
@@ -118,8 +119,13 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.sketchService.update(this.sketch);
   }
 
-  navigateToSketches(): void {
-    this.router.navigate(['/sketches']);
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  private updateMetadata(metadata: any, mac: string) {
+    const b = this.sketch.getBoards().find((board) => board.getMac() === mac );
+    if (!!b) { b.setMetadata(metadata); }
   }
 
   private activateBoard(mac: string) {
@@ -210,8 +216,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onActiveBoardSelected(board: BoardConfig): void {
-    this.newBoard = board.newBoard(this.sketch.getBoardConfigs());
     this.changeMode('Add');
+    this.newBoard = board.newBoard(this.sketch.getBoardConfigs());
     this.onBoardSelected(board);
   }
 

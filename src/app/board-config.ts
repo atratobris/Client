@@ -45,7 +45,7 @@ export class BoardConfig {
     this.metadata = obj && obj.metadata || {};
     this.image_url = obj && obj.image_url || '';
     if (obj) {
-      if (0 in obj.accepted_links) {
+      if (obj.accepted_links && 0 in obj.accepted_links) {
         for (let i = 0; i < obj.accepted_links.length; i++) {
           this.accepted_links.push(obj.accepted_links[i]);
         }
@@ -93,6 +93,10 @@ export class BoardConfig {
 
   getMetadata(): any {
     return  this.metadata;
+  }
+
+  setMetadata(metadata: any): any {
+    this.metadata = metadata;
   }
 
   in_use(): boolean {
@@ -180,4 +184,7 @@ export class BoardConfig {
     this.image_url = new_url;
   }
 
+  isReal(): boolean {
+    return this.subtype === 'RealBoard';
+  }
 }

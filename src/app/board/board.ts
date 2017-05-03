@@ -11,8 +11,8 @@ export interface BoardInterface {
 
 export class Board {
   private centre: Point;
-  private width = 80;
-  private height = 40;
+  private width = 160;
+  private height = 80;
   private offset: Point;
   private boardConfig: BoardConfig;
   private path: Path2D;
@@ -24,7 +24,7 @@ export class Board {
   constructor(posXorBoardInterface: any, posY?: number, width?: number, height?: number, b_config?: BoardConfig) {
     // debugger
     this.boardConfig = b_config || new BoardConfig();
-    this.offset = new Point( 0, 0);
+    this.offset = new Point(0, 0);
 
     if ( typeof posXorBoardInterface === 'number') {
       this.centre = new Point(posXorBoardInterface, posY);
@@ -89,8 +89,8 @@ export class Board {
   }
 
   private drawText(ctx: CanvasRenderingContext2D): void {
-    const textHeight = 15;
-    const leftPadding = 5;
+    const textHeight = 30;
+    const leftPadding = 10;
     ctx.fillStyle = 'black';
     ctx.font = `${textHeight}px serif`;
     ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2 + leftPadding, this.getPosY() - this.height / 2 + textHeight);
@@ -191,6 +191,11 @@ export class Board {
     this.boardConfig = conf;
   }
 
+  setMetadata(metadata: any): any {
+    this.boardConfig.setMetadata(metadata);
+  }
+
+
   copy(): Board {
     return new Board(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), this.getBoardConfig());
   }
@@ -198,6 +203,7 @@ export class Board {
   getMac(): string {
     return this.boardConfig.getMac();
   }
+
 
   getType(): string {
     return this.boardConfig.getType();
