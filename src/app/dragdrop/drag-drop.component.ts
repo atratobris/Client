@@ -63,8 +63,8 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   onMouseEnter(event) {
     event.preventDefault();
     if (!!this.newBoard && this.operationMode === 'Add') {
-      const point = new Point((event.clientX - this.rect.left)/this.scaleFactor, (event.clientY - this.rect.top)/this.scaleFactor);
-      this.wsc.setCursor(new Board(point.getX(), point.getY(), 160/this.scaleFactor, 160/this.scaleFactor, this.newBoard));
+      const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
+      this.wsc.setCursor(new Board(point.getX(), point.getY(), 160 / this.scaleFactor, 160 / this.scaleFactor, this.newBoard));
     }
   }
 
@@ -80,7 +80,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousemove', ['$event'])
   onMousemove(event: MouseEvent) {
     event.preventDefault();
-    const point = new Point((event.clientX - this.rect.left)/this.scaleFactor, (event.clientY - this.rect.top)/this.scaleFactor);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     if (this.operationMode === 'Add' || ( this.mouseDown && this.dragging)) {
       this.wsc.updateCursorLocation(point.getX(), point.getY());
     }
@@ -95,7 +95,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent) {
     event.preventDefault();
-    const point = new Point((event.clientX - this.rect.left)/this.scaleFactor, (event.clientY - this.rect.top)/this.scaleFactor);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     this.mouseDown = true;
     if (this.operationMode === 'Link') {
       this.linking = this.wsc.linkStart(point.getX(), point.getY());
@@ -136,7 +136,7 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   onMouseup(event: MouseEvent) {
     event.preventDefault();
     this.mouseUp = false;
-    const point = new Point((event.clientX - this.rect.left)/this.scaleFactor, (event.clientY - this.rect.top)/this.scaleFactor);
+    const point = new Point((event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor);
     if (this.dragging) {
       this.wsc.dragEnd(point.getX(), point.getY());
       this.dragging = false;
@@ -224,7 +224,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     if (this.operationMode === 'Add' && changes['newBoard']) {
-      this.wsc.setCursor(new Board(-100/this.scaleFactor, -100/this.scaleFactor, 160/this.scaleFactor, 160/this.scaleFactor, this.newBoard));
+      this.wsc.setCursor(
+        new Board(-100 / this.scaleFactor, -100 / this.scaleFactor, 160 / this.scaleFactor, 160 / this.scaleFactor, this.newBoard)
+      );
     }
   }
 
@@ -240,7 +242,9 @@ export class DragDropComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   clicked(event): void {
-    const selectedPoint: Point = new Point((event.clientX - this.rect.left)/this.scaleFactor, (event.clientY - this.rect.top)/this.scaleFactor);
+    const selectedPoint: Point = new Point(
+      (event.clientX - this.rect.left) / this.scaleFactor, (event.clientY - this.rect.top) / this.scaleFactor
+    );
     if (this.operationMode === 'Add') {
       if (!this.newBoard.in_use()) {
         const drawn = this.wsc.drawBoardAt(selectedPoint, this.newBoard);
