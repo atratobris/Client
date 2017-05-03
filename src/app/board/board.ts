@@ -35,7 +35,7 @@ export class Board {
     this.path = new Path2D();
 
     this.image = new Image();
-    this.image.src = 'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/rails.svg';
+    this.image.src = this.boardConfig.getImageUrl();
     this.image.onload = function() {
       console.log('loaded');
     };
