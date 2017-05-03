@@ -1,2 +1,4 @@
-<canvas #myCanvas width="{{width}}" height="{{height}}" (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
-</canvas>
+<div class="sixteen-nine" #myCanvasContainer>
+  <canvas class="canvas" #myCanvas (click)='clicked($event)' [ngClass]="{'dragging': dragging, 'draggable': canSelect}">
+  </canvas>
+</div>
