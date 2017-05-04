@@ -110,4 +110,8 @@ export class Sketch {
   getUserId(): number {
     return this.user_id;
   }
+
+  getDescription(): string {
+    return this.description;
+  }
 }
