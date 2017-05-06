@@ -16,15 +16,12 @@ export class ImageService {
     return ImageService.instance;
   }
 
-
-
   constructor() {
     if (!ImageService.isCreating) {
       throw new Error('You shouldn\'t initialise multiple Image Services');
     }
     this.images = {};
   }
-
 
   setImage(key: string, image_url: string): void {
     this.images[key] = new Image();
