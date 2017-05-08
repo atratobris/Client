@@ -25,6 +25,7 @@ export class MarketplaceComponent implements OnInit {
       this.boards = boards;
       this.boardTypes = this.boards.map((board) => board.getType());
     });
+    (<any>window).$.getScript( "https://checkout.stripe.com/checkout.js", ( data, textStatus, jqxhr ) => {});
   }
 
   hardwareClass(type: string): string {
@@ -80,4 +81,20 @@ export class MarketplaceComponent implements OnInit {
       .then( (sketch) => this.authenticationService.redirectToRoot({id: sketch.getId()}) );
   }
 
+  openCheckout(sketch: Sketch) {
+    const handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_8lOLmwnqNxolTOAC5sGEOwng',
+      locale: 'auto',
+      currency: 'gbp',
+      token: (token: any) => {
+        this.buySketch(sketch);
+      }
+    });
+
+    handler.open({
+      name: sketch.getName(),
+      description: sketch.getDescription(),
+      amount: 500
+    });
+  }
 }

@@ -1,3 +1,4 @@
+<script src="https://checkout.stripe.com/checkout.js"></script>
 <div *ngIf="sketches && boards" class="row">
   <div class="col-sm-6 offset-sm-3">
     <ul class="list-group">
@@ -25,8 +26,11 @@
             You already own this sketch
           </p>
         </div>
-        <div class="col-2">
-            <button disabled="{{canBuySketch(sketch) ? '' : true}}" class="btn btn-info" (click)="buySketch(sketch)">Buy</button>
+        <div *ngIf="canBuySketch(sketch)">
+          <button (click)="openCheckout(sketch)" class="btn btn-info">Buy</button>
+        </div>
+        <div *ngIf="!canBuySketch(sketch)">
+          <button disabled="disabled" class="btn btn-info">Buy</button>
         </div>
       </li>
     </ul>
