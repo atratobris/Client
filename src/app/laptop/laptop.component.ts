@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-laptop',
@@ -9,7 +10,7 @@ export class LaptopComponent implements OnInit, OnDestroy {
   private input: boolean;
   private output: boolean;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
   }
@@ -18,14 +19,11 @@ export class LaptopComponent implements OnInit, OnDestroy {
   }
 
   activateOutput(): void {
-    this.input = false;
-    this.output = true;
-
+    this.router.navigate(['/laptop-output']);
   }
 
   activateInput(): void {
-    this.output = false;
-    this.input = true;
+    this.router.navigate(['/laptop-input']);
   }
 
 }

@@ -5,6 +5,8 @@ import { DragDropComponent } from './dragdrop/drag-drop.component';
 import { SketchManagerComponent } from './sketch-manager/sketch-manager.component';
 import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
 import { LaptopComponent } from './laptop/laptop.component';
+import { LaptopInputComponent } from './laptop/laptop-input/laptop-input.component';
+import { LaptopOutputComponent } from './laptop/laptop-output/laptop-output.component';
 import { LogsComponent } from './logs/logs.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { UserBoardsComponent } from './user-boards/user-boards.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'authentication', component: AuthenticationComponent },
   { path: 'dashboard', component:  SketchEditorComponent, canActivate: [AuthenticationService] },
   { path: 'laptop', component: LaptopComponent },
+  { path: 'laptop-input', component: LaptopInputComponent },
+  { path: 'laptop-output', component: LaptopOutputComponent },
   { path: 'logs', component: LogsComponent },
   { path: 'myboards', component: UserBoardsComponent },
   { path: 'marketplace', component: MarketplaceComponent, canActivate: [AuthenticationService] },
