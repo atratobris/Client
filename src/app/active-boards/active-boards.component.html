@@ -3,8 +3,8 @@
     <div class="board {{board.is_used ? 'used' : ''}} {{board.animated ? 'animate' : ''}} {{selectedBoard === board ? 'selected' : ''}}" [ngStyle]="{'background-color': board.colour}" (mousedown)="onBoardSelected(board)" >
       <p class="text-center"  [ngClass]="{'mb-2 mt-2': board.subtype==='VirtualBoard' }">
         {{board.name}}
-        <!-- <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit>
-        <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i> -->
+        <!-- <app-click-to-edit [fieldValue]="board.getName()" [fieldName]="'Board name'" (nameUpdated)="onNameUpdated($event, board)"></app-click-to-edit> -->
+        <i *ngIf="configuration.unregisterable" (click)="onDeregisterBoard(board)" class="fa fa-power-off pull-right" aria-hidden="true"></i>
       </p>
       <div *ngIf="board.subtype === 'RealBoard'">
         <p class="text-center">
