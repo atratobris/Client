@@ -74,10 +74,11 @@ export class SketchManagerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.selectedSketch = this.sketches[id];
   }
 
-  onNameUpdated(newName): void {
-    this.selectedSketch.setName(newName);
-    this.sketchService.update(this.selectedSketch).then( (sketch: Sketch) => {
-      this.selectedSketch = sketch;
+  onNameUpdated(idx, newName): void {
+    const sketch = this.sketches[idx];
+    sketch.setName(newName);
+    this.sketchService.update(sketch).then( (s: Sketch) => {
+      this.selectedSketch = s;
     });
   }
 

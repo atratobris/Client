@@ -4,17 +4,16 @@
   <i class="fa fa-arrow-right" aria-hidden="true"></i>
   <span>{{link.endBoard.getName()}}</span>
   <span>
-    <select [(ngModel)]="link.logic" name="Logic Type" class="form-control">
+    <select (ngModelChange)="updateLink(link)" [(ngModel)]="link.logic" name="Logic Type" class="form-control">
       <option *ngFor="let option of link.getEndBoard().getBoardConfig().getAcceptedLinks()" [attr.value]="option.name">{{option.description}}</option>
     </select>
   </span>
   <div *ngIf="codeSnippets">
-    <button (click)="toggle()" class="btn full btn-link" type="button" name="button">{{showCode ? 'Hide' : 'Show Code'}}</button>
+    <button (click)="toggle()" class="btn full btn-info mt-3 mb-2" type="button" name="button">{{showCode ? 'Hide' : 'Show Code'}}</button>
     <pre *ngIf="showCode">
       {{renderCodeSnippet()}}
     </pre>
   </div>
-  <button type="button" name="button" (click)="updateLink(link)" class="btn btn-success">update</button>
 </div>
 <div *ngIf="board" class="details">
   <h2 class="text-center mb-0">Board </h2>

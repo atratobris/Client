@@ -173,15 +173,7 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   }
 
   onLinkSave(link: LinkInterface): void {
-    const links = this.sketch.getLinks();
-    for (const l of links) {
-      if (link['to'] === l['to'] && link['from'] === l['from']) {
-        l.setLogic( link.logic );
-        break;
-      }
-    }
-    this.sketchService.updateLinks(this.sketch, links);
-    this.onLinkDeselected();
+    this.sketch.changed();
   }
 
   onBoardSave(b: BoardConfig): void {
