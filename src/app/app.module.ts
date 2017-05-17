@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DasherizePipe } from './pipes/dasherize.pipe';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 import { AppComponent } from './app.component';
 import { SketchEditorComponent } from './sketch-editor/sketch-editor.component';
@@ -52,6 +53,7 @@ import { ImageService } from './image.service';
     LogsComponent,
     CapitalizePipe,
     DasherizePipe,
+    TruncatePipe,
     MarketplaceComponent,
     UserBoardsComponent,
     AuthenticationComponent,
