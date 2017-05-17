@@ -10,9 +10,7 @@
   </span>
   <div *ngIf="codeSnippets">
     <button (click)="toggle()" class="btn full btn-info mt-3 mb-2" type="button" name="button">{{showCode ? 'Hide' : 'Show Code'}}</button>
-    <pre *ngIf="showCode">
-      {{renderCodeSnippet()}}
-    </pre>
+    <pre *ngIf="showCode">  {{renderCodeSnippet()}}</pre>
   </div>
 </div>
 <div *ngIf="board" class="details">

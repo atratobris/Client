@@ -54,6 +54,8 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
         received: (data) => {
           this.activateBoard(data.message.mac);
           this.updateMetadata(data.message.metadata, data.message.mac);
+          this.updateStatus(data.message.status, data.message.mac);
+          console.log(data.message.status);
         }
     });
   }
@@ -126,6 +128,14 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
   private updateMetadata(metadata: any, mac: string) {
     const b = this.sketch.getBoards().find((board) => board.getMac() === mac );
     if (!!b) { b.setMetadata(metadata); }
+  }
+
+  private updateStatus(status: string, mac: string) {
+    const b = this.boards.find((board) => board.getMac() === mac );
+    if (!!b) {
+      b.setStatus(status);
+      console.log(`changed status to ${status}`);
+    }
   }
 
   private activateBoard(mac: string) {

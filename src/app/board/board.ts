@@ -96,6 +96,10 @@ export class Board {
     ctx.fillText(this.boardConfig.getName(), this.getPosX() - this.width / 2, this.getPosY() - this.height / 2 - 10);
   }
 
+  setStatus(status: string): void {
+    this.boardConfig.setStatus(status);
+  }
+
   getSubType(): string {
     return this.getBoardConfig().getSubType();
   }

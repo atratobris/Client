@@ -77,6 +77,10 @@ export class BoardConfig {
     return this.subtype;
   }
 
+  setStatus(status: string): void {
+    this.status = status;
+  }
+
   nextBoard(index: number): BoardConfig {
     this.mac = `${this.type}${index}`;
     this.name = `${this.type}`;
