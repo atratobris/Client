@@ -22,6 +22,7 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   @Output() onLinkSave = new EventEmitter<LinkInterface>();
   codeSnippets: Code[];
   metadata: any[];
+  showCode = false;
 
   constructor(private codeService: CodeService) { }
 
@@ -57,6 +58,10 @@ export class BoardDetailsComponent implements OnInit, OnChanges {
   }
 
   trigger(): void {
+  }
+
+  toggle(): void {
+    this.showCode = !this.showCode;
   }
 
   private linkTypes(link: Link): string[] {
