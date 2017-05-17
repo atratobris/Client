@@ -16,7 +16,7 @@
 <div *ngIf="board" class="details">
   <h2 class="text-center mb-0">Board </h2>
   <div class="text-center">
-    ({{board.mac}})
+    ({{board.mac | truncate}})
   </div>
   <p>
     <label class="mb-0">Type:</label>

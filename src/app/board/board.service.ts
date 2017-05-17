@@ -19,7 +19,7 @@ export class BoardService {
     const search: URLSearchParams = new URLSearchParams();
     search.set('user_id', localStorage.getItem('atrato-user-id'));
     return this.http
-      .get(`${this.apiUrl}/${mac}.json`, {search})
+      .get(`${this.apiUrl}/${mac.split('.').join('%2E')}.json`, {search})
       .toPromise()
       .then( response => new BoardConfig( response.json()) )
       .catch(this.handleError);
@@ -37,9 +37,9 @@ export class BoardService {
   }
 
   update(board: BoardConfig): Promise<BoardConfig> {
-    const url = `${this.apiUrl}/${board.getMac()}`;
+    const url = `${this.apiUrl}/${board.getMac().split('.').join('%2E')}`;
     return this.http
-      .put(url, this.board_params(board), {headers: this.headers})
+      .put(encodeURI(url), this.board_params(board), {headers: this.headers})
       .toPromise()
       .then(() => board)
       .catch(this.handleError);
