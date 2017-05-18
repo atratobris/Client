@@ -15,7 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './authentication/authentication.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/authentication', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home' , component: HomeComponent, canActivate: [AuthenticationService] },
   { path: 'authentication', component: AuthenticationComponent },
   { path: 'dashboard', component:  SketchEditorComponent, canActivate: [AuthenticationService] },

@@ -50,9 +50,9 @@ export class AuthenticationService implements CanActivate {
       const navigationExtras: NavigationExtras = {
         queryParams: params,
       };
-      this.router.navigate(['/sketches'], navigationExtras);
+      this.router.navigate(['/home'], navigationExtras);
     } else {
-      this.router.navigate(['/sketches']);
+      this.router.navigate(['/home']);
     }
   }
 
