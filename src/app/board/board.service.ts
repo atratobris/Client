@@ -55,13 +55,11 @@ export class BoardService {
       .catch(this.handleError);
   }
 
-  deregister(board: BoardConfig): Promise<void> {
+  deregister(board: BoardConfig): Promise<BoardConfig> {
     return this.http
       .post(`${this.apiUrl}/deregister.json`, this.board_params(board), {headers: this.headers})
       .toPromise()
-      .then((response) => {
-        console.log('Success');
-      })
+      .then((response) => new BoardConfig(response.json() as IBoardConfig))
       .catch(this.handleError);
   }
 

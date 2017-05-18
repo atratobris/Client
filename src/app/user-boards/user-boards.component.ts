@@ -35,7 +35,12 @@ export class UserBoardsComponent implements OnInit {
   }
 
   deregisterBoard(board: BoardConfig): void {
-    this.boardService.deregister(board);
+    this.boardService.deregister(board).then((b: BoardConfig) => {
+      if (board.mac === b.mac) {
+        const idx = this.boards.indexOf(board);
+        this.boards.splice(idx, 1);
+      }
+    });
   }
 
 }
