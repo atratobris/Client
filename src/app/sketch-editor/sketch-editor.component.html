@@ -42,7 +42,7 @@ Stop
 </div>
 </div>
   <div class="row">
-    <div class="col-md-2 pt-2">
+    <div class="col-md-3  col-lg-2 col-sm-12 pt-2 mb-3">
       <div *ngIf="boards">
         <ul class="nav nav-tabs">
           <li class="nav-item">
@@ -62,25 +62,29 @@ Stop
         </div>
       </div>
     </div>
-    <div class="col-md-8">
-      <div class="mb-2 row" role="group" aria-label="First group">
-        <div class="col-sm-3">
-          <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary btn-danger btn-lg btn-block" (click)="changeMode('Delete')"> Delete </button>
+    <div class="col-md-9 col-lg-10">
+      <div class="row">
+        <div class="col-lg-8 col-xl-9">
+          <div class="mb-2 row" role="group" aria-label="First group">
+            <div class="col-sm-3">
+              <button [ngClass]="{'selected': operationMode==='Delete' }" type="button" class="btn btn-secondary btn-danger btn-lg btn-block" (click)="changeMode('Delete')"> Delete </button>
+            </div>
+            <div class="col-sm-3">
+              <button *ngIf="!sketch.saved" type="button" class="btn btn-success btn-lg btn-block" (click)="drag_drop.saveSketch()"> Save </button>
+            </div>
+            <div class="col-sm-3">
+              <button *ngIf="!sketch.saved" type="button" class="btn btn-warning btn-lg btn-block" (click)="revertToActive()" >Revert</button>
+            </div>
+            <div class="col-sm-3">
+              <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-primary btn-lg btn-block" (click)="changeMode('Link')"> Link </button>
+            </div>
+          </div>
+          <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
+          <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description mb-3" placeholder="Sketch description (for marketplace)">
         </div>
-        <div class="col-sm-3">
-          <button *ngIf="!sketch.saved" type="button" class="btn btn-success btn-lg btn-block" (click)="drag_drop.saveSketch()"> Save </button>
-        </div>
-        <div class="col-sm-3">
-          <button *ngIf="!sketch.saved" type="button" class="btn btn-warning btn-lg btn-block" (click)="revertToActive()" >Revert</button>
-        </div>
-        <div class="col-sm-3">
-          <button [ngClass]="{'selected': operationMode==='Link' }" type="button" class="btn btn-primary btn-lg btn-block" (click)="changeMode('Link')"> Link </button>
-        </div>
+        <app-board-details class='col-lg-4 col-xl-3' [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
       </div>
-      <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
-      <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description" placeholder="Sketch description (for marketplace)">
     </div>
-    <app-board-details class='col-md-2' [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
   </div>
 
 </div>
