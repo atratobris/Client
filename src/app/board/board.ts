@@ -10,13 +10,17 @@ export interface BoardInterface {
   boardConfig: BoardConfig;
 }
 
+const DEFAULT_WIDTH = 160;
+const DEFAULT_HEIGHT = 80;
+
 export class Board {
   private centre: Point;
-  private width = 160;
-  private height = 80;
+  private width = DEFAULT_WIDTH;
+  private height = DEFAULT_HEIGHT;
   private offset: Point;
   private boardConfig: BoardConfig;
   private path: Path2D;
+  private animationInterval: any;
 
   private image: HTMLImageElement;
 
@@ -117,16 +121,23 @@ export class Board {
   }
 
   shake(): void {
-    // this.boardConfig.animate();
-    const initialWidth = this.width;
-    const initialHeight = this.height;
-    const shaking = setInterval( () => {
+
+    const cancelTheInterval = () => {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+      this.width = DEFAULT_WIDTH;
+      this.height = DEFAULT_HEIGHT;
+    }
+
+    if (!!this.animationInterval) {
+      cancelTheInterval();
+    }
+
+    this.animationInterval = setInterval( () => {
       this.width += 5;
       this.height += 5;
-      if (this.width > initialWidth * 1.5 || this.height > initialHeight * 2) {
-        clearInterval(shaking);
-        this.width = initialWidth;
-        this.height = initialHeight;
+      if (this.width > DEFAULT_WIDTH * 1.5 || this.height > DEFAULT_HEIGHT * 2) {
+        cancelTheInterval()
       }
     }, 10);
   }
