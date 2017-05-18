@@ -1,5 +1,5 @@
 <div class="box-size-proper">
-  <div class="row justify-content-md-center">
+  <div class="row justify-content-sm-center">
     <div class="col-sm-8 pt-2">
       <div *ngIf="sketches" class="sketchesBar">
         <div  class="text-center sketch {{sketch.status}}" *ngFor="let sketch of sketches; let idx = index">
@@ -14,7 +14,7 @@
           </button>
           <div (click)="onSketchEdit(idx)" class="info {{sketch.status}} {{sketch === selectedSketch ? 'selected' : ''}} {{sketch.newPurchase ? 'new-purchase' : ''}}">
             <div class="text_center">
-              <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated(idx, $event);"></app-click-to-edit>
+              <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated(i$event);"></app-click-to-edit>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
               <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx, $event);">

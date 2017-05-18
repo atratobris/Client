@@ -1,23 +1,23 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
-<div *ngIf="sketches && boards" class="row">
-  <div class="col-sm-6 offset-sm-3">
+<div *ngIf="sketches && boards" class="row justify-content-sm-center mt-3">
+  <div class="col-sm-6">
     <ul class="list-group">
-      <li class="list-group-item row" *ngFor="let sketch of sketches">
-        <div class="col-10">
+      <li class="list-group-item row mb-3 sketch" *ngFor="let sketch of sketches; let idx = index">
+        <div class="col-sm-12">
           <h3>
-            {{sketch.id}}. {{sketch.name}}
+            {{idx+1}}. {{sketch.name}}
           </h3>
+          <p class="text-right">
+            Created by: {{sketch.user}}
+          </p>
           <p class="text-muted">
             {{sketch.description}}
           </p>
           <p>
-            <b>Required Hardware</b>
+            <b>Required Hardware:</b>
             <span *ngFor="let board of sketch.getBoardConfigs() | realBoards " class="hardware-req {{hardwareClass(board.type)}}">
               {{board.type}}
             </span>
-          </p>
-          <p class="text-right">
-            Created by: {{sketch.user}}
           </p>
           <p class="text-muted" *ngIf="!ownAllBoards(sketch)">
             You don't own the following required hardware: {{missingBoards(sketch) }}
@@ -25,20 +25,20 @@
           <p class="text-muted" *ngIf="mySketch(sketch)">
             You already own this sketch
           </p>
-        </div>
-        <div *ngIf="canBuySketch(sketch)">
-          <button (click)="openCheckout(sketch)" class="btn btn-info">Buy</button>
-        </div>
-        <div *ngIf="!canBuySketch(sketch)">
-          <button disabled="disabled" class="btn btn-info">Buy</button>
+          <div *ngIf="canBuySketch(sketch)">
+            <button (click)="openCheckout(sketch)" class="btn btn-primary btn-lg btn-block">Buy</button>
+          </div>
+          <div *ngIf="!canBuySketch(sketch)">
+            <button disabled="disabled" class="btn btn-primary btn-lg btn-block">Buy</button>
+          </div>
         </div>
       </li>
     </ul>
   </div>
 </div>
 
-<div *ngIf="sketches && sketches.length == 0" class="row">
-  <div class="col-sm-6 offset-sm-3">
+<div *ngIf="sketches && sketches.length == 0" class="row justify-content-sm-center">
+  <div class="col-sm-6">
     <p class="text-muted text-center">
       There are no sketches for sale at the moment..
     </p>
