@@ -31,5 +31,61 @@ input.description
       background-color: #e57373
       &.selected
         border: 4px solid #b71c1c
+
+.sketch
+  list-style-type: none
+  margin-bottom: 2rem
+  border-radius: 5px
+  position: relative
+
+  .info
+    padding: 10px
+    border: 4px solid white
+    border-radius: 10px
+    &.active
+      background-color: #81c784
+      &.selected
+        border: 4px solid #1b5e20
+    &.closed
+      background-color: #e57373
+      &.selected
+        border: 4px solid #b71c1c
+    &.new-purchase
+      background-color: #ab47bc
+      &.selected
+        border: 4px solid #4a148c
+
+  &.new-button
+    border: 1px solid gray
+    padding: 10px
+    cursor: pointer
+
+  .removeButton
+    border-radius: 7px
+    border: 0px
+    position: absolute
+    right: -10px
+    top: -10px
+    cursor: pointer
+
+  .marketplace-button
+    border-radius: 7px
+    border: 0px
+    position: absolute
+    right: -10px
+    bottom: -10px
+    cursor: pointer
+    &.publish-to-market
+      background-color: #2196f3
+    &.remove-from-market
+      background-color: #ff9800
+
+    .fa-cloud-upload
+      padding: 5px
+    .fa-usd
+      padding: 5px 10px
+
+app-click-to-edit
+  display: inline-block
 app-click-to-edit
   display: inline-block

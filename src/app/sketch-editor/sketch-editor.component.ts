@@ -87,6 +87,11 @@ export class SketchEditorComponent implements OnInit, AfterViewInit, OnChanges, 
     this.sketchService.updateStatus(this.sketch);
   }
 
+  publishToMarket(id: number): void {
+    this.sketch.listed = true;
+    this.sketchService.update(this.sketch).then( (sketch) => this.sketch = sketch );
+  }
+
   ngOnDestroy() {
     this.ng2cable.unsubscribe();
   }
