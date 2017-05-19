@@ -172,7 +172,8 @@ export class BoardConfig {
       last_activity: this.last_activity,
       colour: this.colour,
       accepted_links: this.accepted_links,
-      image_url: this.image_url
+      image_url: this.image_url,
+      metadata: this.metadata
     } as IBoardConfig;
   }
 
