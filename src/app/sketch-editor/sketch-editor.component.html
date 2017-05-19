@@ -5,41 +5,22 @@
   </div> -->
   <div class="col-sm-12">
     <div  class="text-center sketch {{sketch.status}}">
-      <button class="marketplace-button remove-from-market" *ngIf="sketch.listed" (click)="removeFromMarket(idx)">
-        <i class="fa fa-usd" aria-hidden="true"></i>
-      </button>
-      <button class="marketplace-button publish-to-market" *ngIf="!sketch.listed" (click)="publishToMarket(idx)">
-        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-      </button>
+
       <div class="info {{sketch.status}}">
         <div class="text_center">
           <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
         </div>
         <div class="btn-group mr-2" role="group" aria-label="First group">
-          <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch(idx);">
+          <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary" (click)="activateSketch();">
             Activate
           </button>
-          <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch(idx);">
+          <button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary" (click)="stopSketch();">
             Stop
           </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="col-sm-3 text-center mb-3 mt-3 h1">
-  <app-click-to-edit [fieldValue]="sketch.getName()" [fieldName]="'Sketch name'" (nameUpdated)="onNameUpdated($event)"></app-click-to-edit>
-  <div class="btn-group mr-2 status-button" role="group" aria-label="First group">
-  <button *ngIf="sketch.status=='closed'" type="button" class="btn btn-secondary closed" (click)="activateSketch(idx)">
-  Activate
-</button>
-<button *ngIf="sketch.status=='active'" type="button" class="btn btn-secondary active" (click)="stopSketch(idx)">
-Stop
-</button>
-</div>
-</div> -->
-<div class="col-sm-6">
-
-</div>
 </div>
   <div class="row">
     <div class="col-md-3  col-lg-2 col-sm-12 pt-2 mb-3">
@@ -81,9 +62,14 @@ Stop
           </div>
           <app-drag-drop #drag_drop [sketch]="sketch" [newBoard]="newBoard" [operationMode]="operationMode" (onLinkSelected)="onLinkSelected($event)" (onLinkDeselected)="onLinkDeselected()" (onBoardSelected)="onBoardSelected($event)" (onBoardDeselected)="onBoardDeselected()" (finishedDeletingBoard)="onFinishedDeletingBoard($event)" (finishedAddingBoard)="onFinishedAddingBoard($event)"></app-drag-drop>
           <input [(ngModel)]="sketch.description" name="sketch-description" class="form-control description mb-3" placeholder="Sketch description (for marketplace)">
+          <div class="mb-3">
+            <button class="btn btn-info btn-lg btn-block" *ngIf="sketch.listed" (click)="removeFromMarket()">Remove from marketplace</button>
+            <button class="btn btn-success btn-lg btn-block" *ngIf="!sketch.listed" (click)="publishToMarket()">Upload to marketplace</button>
+          </div>
         </div>
         <app-board-details class='col-lg-4 col-xl-3' [board]="selectedBoard" (onBoardSave)="onBoardSave($event)" [link]="selectedLink" (onLinkSave)="onLinkSave($event)" [linkOptions]="links"></app-board-details>
       </div>
+
     </div>
   </div>
 
